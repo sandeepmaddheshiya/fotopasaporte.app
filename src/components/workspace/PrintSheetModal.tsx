@@ -24,15 +24,15 @@ export function PrintSheetModal({
   const [includeCropMarks, setIncludeCropMarks] = useState(true);
   const [isDownloading, setIsDownloading] = useState(false);
 
-  // Compute photos count
+  // Compute photos count for A4
   const isLarge = spec.widthMm >= 50 && spec.heightMm >= 50;
-  const photosCount = isLarge ? 4 : 6;
+  const photosCount = isLarge ? 12 : 16;
 
   useEffect(() => {
     if (!isOpen || !singlePhotoCanvas) return;
 
     const options: PrintSheetOptions = {
-      paperSize: '4x6',
+      paperSize: 'a4',
       photosCount,
       includeCropMarks,
     };
@@ -40,14 +40,14 @@ export function PrintSheetModal({
     const sheetCanvas = generatePrintSheetCanvas(singlePhotoCanvas, spec, options);
     fullSheetCanvasRef.current = sheetCanvas;
 
-    // Draw scaled preview onto modal display canvas
+    // Draw scaled preview onto modal display canvas (A4 aspect ratio)
     const previewCanvas = previewCanvasRef.current;
     if (previewCanvas) {
-      previewCanvas.width = 600;
-      previewCanvas.height = 400;
+      previewCanvas.width = 420;
+      previewCanvas.height = 594;
       const ctx = previewCanvas.getContext('2d');
       if (ctx) {
-        ctx.drawImage(sheetCanvas, 0, 0, 600, 400);
+        ctx.drawImage(sheetCanvas, 0, 0, 420, 594);
       }
     }
   }, [isOpen, singlePhotoCanvas, spec, includeCropMarks, photosCount]);
@@ -66,7 +66,7 @@ export function PrintSheetModal({
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = `fotopasaporte_hoja_imprimir_${spec.widthMm}x${spec.heightMm}mm.jpg`;
+        link.download = `fotopasaporte_hoja_imprimir_a4_${spec.widthMm}x${spec.heightMm}mm.jpg`;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -96,9 +96,9 @@ export function PrintSheetModal({
         <!DOCTYPE html>
         <html>
           <head>
-            <title>Imprimir Hoja de Fotos - FotoPasaporte</title>
+            <title>Imprimir Hoja A4 de Fotos - FotoPasaporte</title>
             <style>
-              @page { size: 10cm 15cm; margin: 0; }
+              @page { size: A4; margin: 0; }
               body { margin: 0; display: flex; align-items: center; justify-content: center; background: #fff; }
               img { width: 100%; height: 100%; object-fit: contain; }
             </style>
@@ -119,10 +119,10 @@ export function PrintSheetModal({
         <div className="flex items-center justify-between border-b border-[#E5E5EA] pb-4">
           <div>
             <h3 className="text-[18px] font-semibold text-[#1D1D1F]">
-              Hoja para imprimir (10 × 15 cm / 4×6&quot;)
+              Hoja para imprimir A4 (210 × 297 mm)
             </h3>
             <p className="text-[13px] text-[#6E6E73]">
-              Plantilla con {photosCount} fotos de {spec.widthMm} × {spec.heightMm} mm a 300 DPI lista para imprimir
+              Plantilla A4 con {photosCount} fotos de {spec.widthMm} × {spec.heightMm} mm a 300 DPI lista para imprimir
             </p>
           </div>
           <button
@@ -139,11 +139,11 @@ export function PrintSheetModal({
           <div className="overflow-hidden rounded-lg border border-[#D2D2D7] bg-white shadow-md">
             <canvas
               ref={previewCanvasRef}
-              className="max-h-[280px] w-auto max-w-full"
+              className="max-h-[320px] w-auto max-w-full"
             />
           </div>
           <p className="mt-2 text-[11px] text-[#8E8E93]">
-            Escala normalizada para papel estándar 10 × 15 cm (4×6 pulgadas)
+            Escala normalizada para papel estándar A4 (210 × 297 mm) al 100%
           </p>
         </div>
 

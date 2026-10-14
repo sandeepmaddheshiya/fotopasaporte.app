@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { Menu, X, ArrowRight } from 'lucide-react';
 
 interface HeaderProps {
@@ -15,6 +16,8 @@ export function Header({ onStartClick }: HeaderProps) {
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      window.location.href = `/#${id}`;
     }
   };
 
@@ -22,33 +25,28 @@ export function Header({ onStartClick }: HeaderProps) {
     <header className="sticky top-0 z-50 w-full border-b border-[#D2D2D7]/60 bg-white/80 backdrop-blur-md transition-all">
       <div className="mx-auto flex h-14 max-w-[1200px] items-center justify-between px-4 sm:px-6">
         {/* Brand */}
-        <a
-          href="#"
-          className="group flex items-center gap-2.5 text-[#1D1D1F] transition-opacity hover:opacity-80"
+        <Link
+          href="/"
+          className="group flex items-center gap-2.5 text-[#1D1D1F] transition-opacity hover:opacity-80 cursor-pointer"
           aria-label="FotoPasaporte - Inicio"
         >
-          {/* Minimalist crop-corner brand icon */}
-          <div className="relative flex h-7 w-7 items-center justify-center rounded-lg border border-[#D2D2D7] bg-[#F5F5F7] shadow-xs">
-            <svg
-              className="h-4 w-4 text-[#0071E3]"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M6 3v3H3" />
-              <path d="M18 3v3h3" />
-              <path d="M6 21v-3H3" />
-              <path d="M18 21v-3h3" />
-              <circle cx="12" cy="12" r="3" />
-            </svg>
-          </div>
+          {/* Official Shield Brand Icon */}
+          <svg
+            className="h-6 w-6 text-[#0071E3] shrink-0"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+            <path d="m9 12 2 2 4-4" />
+          </svg>
           <span className="text-[17px] font-semibold tracking-tight text-[#1D1D1F]">
-            FotoPasaporte
+            FotoPasaporte<span className="text-[#0071E3]">.app</span>
           </span>
-        </a>
+        </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden items-center gap-7 md:flex" aria-label="Navegación principal">

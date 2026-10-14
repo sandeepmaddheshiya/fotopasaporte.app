@@ -204,7 +204,8 @@ export async function exportPhotoBlob(
 }
 
 /**
- * Generate a printable 4x6 inch (10x15 cm) photo sheet at 300 DPI (1800 x 1200 px)
+ * Generate a printable photo sheet at 300 DPI
+ * Supports both standard A4 (210×297 mm, 2480×3508 px) and 4×6 inch (10×15 cm, 1800×1200 px)
  * with corner crop marks and document metadata
  */
 export function generatePrintSheetCanvas(
@@ -212,10 +213,18 @@ export function generatePrintSheetCanvas(
   spec: DocumentSpec,
   options: PrintSheetOptions
 ): HTMLCanvasElement {
+  const isA4 = options.paperSize === 'a4';
   const sheet = document.createElement('canvas');
-  // 4x6 inches at 300 DPI
-  const sheetWidth = 1800; // 6 inches = 152.4 mm
-  const sheetHeight = 1200; // 4 inches = 101.6 mm
+
+  // Dimensions at 300 DPI (1 mm ≈ 11.811 px)
+  const pxPerMm = 300 / 25.4;
+  const photoW = Math.round(spec.widthMm * pxPerMm);
+  const photoH = Math.round(spec.heightMm * pxPerMm);
+
+  // A4: 210 x 297 mm -> 2480 x 3508 px
+  // 4x6: 152.4 x 101.6 mm -> 1800 x 1200 px
+  const sheetWidth = isA4 ? 2480 : 1800;
+  const sheetHeight = isA4 ? 3508 : 1200;
 
   sheet.width = sheetWidth;
   sheet.height = sheetHeight;
@@ -227,41 +236,49 @@ export function generatePrintSheetCanvas(
   ctx.fillStyle = '#FFFFFF';
   ctx.fillRect(0, 0, sheetWidth, sheetHeight);
 
-  // Convert spec mm to sheet pixels at 300 DPI (1 mm ≈ 11.811 px)
-  const pxPerMm = 300 / 25.4;
-  const photoW = Math.round(spec.widthMm * pxPerMm);
-  const photoH = Math.round(spec.heightMm * pxPerMm);
-
-  // Determine grid layout based on dimensions
   let cols = 3;
   let rows = 2;
+  let gapX = Math.round(3 * pxPerMm);
+  let gapY = Math.round(3 * pxPerMm);
 
-  if (spec.widthMm >= 50 && spec.heightMm >= 50) {
-    // 2x2 inches or 50x70mm
-    if (spec.heightMm > 60) {
-      cols = 2;
-      rows = 1;
+  if (isA4) {
+    gapX = Math.round(4 * pxPerMm); // 4mm gap
+    gapY = Math.round(4 * pxPerMm);
+    if (spec.widthMm >= 50 || spec.heightMm >= 50) {
+      if (spec.heightMm > 60) {
+        cols = 3;
+        rows = 3; // 9 photos (e.g. 50x70mm)
+      } else {
+        cols = 3;
+        rows = 4; // 12 photos (e.g. 50x50mm US)
+      }
     } else {
-      cols = 2;
-      rows = 2;
+      cols = 4;
+      rows = 4; // 16 photos (e.g. 35x45mm Schengen/Spain)
     }
   } else {
-    // 35x45mm or 30x40mm: fits 6 or 8 photos nicely
-    cols = 3;
-    rows = 2;
+    // 4x6 inch (10x15 cm)
+    if (spec.widthMm >= 50 && spec.heightMm >= 50) {
+      if (spec.heightMm > 60) {
+        cols = 2;
+        rows = 1;
+      } else {
+        cols = 2;
+        rows = 2;
+      }
+    } else {
+      cols = 3;
+      rows = 2;
+    }
   }
 
-  const totalGridW = cols * photoW;
-  const totalGridH = rows * photoH;
-
-  // Margin calculation to center grid
-  const gapX = Math.round(3 * pxPerMm); // 3mm gap
-  const gapY = Math.round(3 * pxPerMm);
   const fullW = cols * photoW + (cols - 1) * gapX;
   const fullH = rows * photoH + (rows - 1) * gapY;
 
   const startX = Math.round((sheetWidth - fullW) / 2);
-  const startY = Math.round((sheetHeight - fullH) / 2) - 20;
+  const startY = isA4
+    ? Math.round((sheetHeight - fullH) / 2) + 20
+    : Math.round((sheetHeight - fullH) / 2) - 20;
 
   // Render photos into grid
   for (let r = 0; r < rows; r++) {
@@ -274,54 +291,92 @@ export function generatePrintSheetCanvas(
 
       // Draw thin delicate crop marks if requested
       if (options.includeCropMarks) {
-        ctx.strokeStyle = '#8E8E93';
-        ctx.lineWidth = 1;
-        const markLen = 14;
+        ctx.strokeStyle = '#94A3B8';
+        ctx.lineWidth = isA4 ? 1.5 : 1;
+        const markLen = isA4 ? 18 : 14;
+        const offset = isA4 ? 6 : 4;
 
         // Top-left
         ctx.beginPath();
-        ctx.moveTo(x - 4, y);
+        ctx.moveTo(x - offset, y);
         ctx.lineTo(x - markLen, y);
-        ctx.moveTo(x, y - 4);
+        ctx.moveTo(x, y - offset);
         ctx.lineTo(x, y - markLen);
         ctx.stroke();
 
         // Top-right
         ctx.beginPath();
-        ctx.moveTo(x + photoW + 4, y);
+        ctx.moveTo(x + photoW + offset, y);
         ctx.lineTo(x + photoW + markLen, y);
-        ctx.moveTo(x + photoW, y - 4);
+        ctx.moveTo(x + photoW, y - offset);
         ctx.lineTo(x + photoW, y - markLen);
         ctx.stroke();
 
         // Bottom-left
         ctx.beginPath();
-        ctx.moveTo(x - 4, y + photoH);
+        ctx.moveTo(x - offset, y + photoH);
         ctx.lineTo(x - markLen, y + photoH);
-        ctx.moveTo(x, y + photoH + 4);
+        ctx.moveTo(x, y + photoH + offset);
         ctx.lineTo(x, y + photoH + markLen);
         ctx.stroke();
 
         // Bottom-right
         ctx.beginPath();
-        ctx.moveTo(x + photoW + 4, y + photoH);
+        ctx.moveTo(x + photoW + offset, y + photoH);
         ctx.lineTo(x + photoW + markLen, y + photoH);
-        ctx.moveTo(x + photoW, y + photoH + 4);
+        ctx.moveTo(x + photoW, y + photoH + offset);
         ctx.lineTo(x + photoW, y + photoH + markLen);
         ctx.stroke();
       }
     }
   }
 
-  // Footer notes for printing
-  ctx.font = '14px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-  ctx.fillStyle = '#8E8E93';
-  ctx.textAlign = 'center';
-  ctx.fillText(
-    `FotoPasaporte.app · ${spec.name} (${spec.widthMm} × ${spec.heightMm} mm) · Hoja 10 × 15 cm (4×6") a 300 DPI · Imprimir a escala 100% sin ajustar`,
-    sheetWidth / 2,
-    sheetHeight - 35
-  );
+  if (isA4) {
+    // Header for A4
+    ctx.font = 'bold 30px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+    ctx.fillStyle = '#0F172A';
+    ctx.textAlign = 'center';
+    ctx.fillText(
+      'FotoPasaporte.app — Plantilla de Impresión Oficial A4 (210 × 297 mm)',
+      sheetWidth / 2,
+      startY - 90
+    );
+
+    ctx.font = '20px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+    ctx.fillStyle = '#64748B';
+    ctx.fillText(
+      `${spec.name} (${spec.widthMm} × ${spec.heightMm} mm) · Calibración 300 DPI · ${cols * rows} fotos con marcas de corte`,
+      sheetWidth / 2,
+      startY - 50
+    );
+
+    // Footer for A4
+    ctx.font = 'bold 20px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+    ctx.fillStyle = '#334155';
+    ctx.fillText(
+      'INSTRUCCIONES: Imprimir en papel A4 (estándar o fotográfico) al 100% de escala (tamaño real, sin ajustar ni reducir).',
+      sheetWidth / 2,
+      startY + fullH + 90
+    );
+
+    ctx.font = '16px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+    ctx.fillStyle = '#94A3B8';
+    ctx.fillText(
+      'Normativa oficial OACI Doc 9303 · Recortar por las líneas guía perimetrales.',
+      sheetWidth / 2,
+      startY + fullH + 125
+    );
+  } else {
+    // Footer notes for 4x6 printing
+    ctx.font = '14px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+    ctx.fillStyle = '#8E8E93';
+    ctx.textAlign = 'center';
+    ctx.fillText(
+      `FotoPasaporte.app · ${spec.name} (${spec.widthMm} × ${spec.heightMm} mm) · Hoja 10 × 15 cm (4×6") a 300 DPI · Imprimir a escala 100% sin ajustar`,
+      sheetWidth / 2,
+      sheetHeight - 35
+    );
+  }
 
   return sheet;
 }
