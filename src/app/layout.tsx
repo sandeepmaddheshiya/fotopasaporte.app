@@ -1,0 +1,57 @@
+import type { Metadata } from 'next';
+import { Geist, Geist_Mono } from 'next/font/google';
+import './globals.css';
+
+const geistSans = Geist({
+  variable: '--font-geist-sans',
+  subsets: ['latin'],
+});
+
+const geistMono = Geist_Mono({
+  variable: '--font-geist-mono',
+  subsets: ['latin'],
+});
+
+export const metadata: Metadata = {
+  title: 'FotoPasaporte.app — Tu foto de pasaporte, lista para usar',
+  description:
+    'Prepara tu foto para pasaporte, visado y documentos con las medidas y el encuadre exactos. Procesamiento privado en tu navegador, sin registros innecesarios.',
+  keywords: [
+    'foto pasaporte',
+    'foto visado',
+    'foto carnet',
+    'foto DNI españa',
+    'foto visa estados unidos',
+    'redimensionar foto pasaporte',
+    'recortar foto 35x45',
+    'foto 2x2 pulgadas',
+  ],
+  authors: [{ name: 'FotoPasaporte.app' }],
+  metadataBase: new URL('https://fotopasaporte.app'),
+  openGraph: {
+    title: 'FotoPasaporte.app — Tu foto de pasaporte, lista para usar',
+    description:
+      'Prepara tu foto para pasaporte, visado y documentos con las medidas y el encuadre que necesitas.',
+    url: 'https://fotopasaporte.app',
+    siteName: 'FotoPasaporte',
+    locale: 'es_ES',
+    type: 'website',
+  },
+  icons: {
+    icon: '/favicon.ico',
+  },
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="es" className={`${geistSans.variable} ${geistMono.variable} scroll-smooth`}>
+      <body className="min-h-screen bg-white text-[#1D1D1F] antialiased selection:bg-[#0071E3]/20">
+        {children}
+      </body>
+    </html>
+  );
+}
