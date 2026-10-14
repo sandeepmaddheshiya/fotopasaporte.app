@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import {
   getCountryBySlugOrCode,
   POPULAR_COUNTRIES,
@@ -12,6 +12,7 @@ import {
   getCountryAuthorityInfo,
   getCountryRejectionReasons,
   getCountryFAQs,
+  isIndexableCountry,
 } from '@/data/country-seo-data';
 import { Header } from '@/components/Header';
 import { PhotoMaker } from '@/components/workspace/PhotoMaker';
@@ -32,6 +33,10 @@ import {
   Shirt,
   Sparkles,
   Camera,
+  Printer,
+  CalendarCheck,
+  Eye,
+  Sliders,
 } from 'lucide-react';
 
 interface CountryPageProps {
@@ -40,16 +45,15 @@ interface CountryPageProps {
   }>;
 }
 
+// ---------------------------------------------------------------------------
+// Static params: only pre-generate and index verified Tier 1/2 destinations
+// to prevent Google Scaled Content Abuse / Spam Content Expansion flags.
+// ---------------------------------------------------------------------------
 export async function generateStaticParams() {
-  const topList = COUNTRIES_DATA.slice(0, 50);
-  const params: { country: string }[] = [];
-
-  for (const c of topList) {
-    params.push({ country: toCountrySlug(c) });
-    params.push({ country: c.code.toLowerCase() });
-  }
-
-  return params;
+  const indexable = COUNTRIES_DATA.filter((c) => isIndexableCountry(c.code));
+  return indexable.map((c) => ({
+    country: toCountrySlug(c),
+  }));
 }
 
 export async function generateMetadata({ params }: CountryPageProps): Promise<Metadata> {
@@ -64,6 +68,7 @@ export async function generateMetadata({ params }: CountryPageProps): Promise<Me
 
   const primaryDoc = country.documents[0];
   const auth = getCountryAuthorityInfo(country);
+  const indexable = isIndexableCountry(country.code);
   const title = `Foto de Pasaporte para ${country.name} (${primaryDoc.widthMm} × ${primaryDoc.heightMm} mm) · Medidas Oficiales y Creador`;
   const description = `Guía oficial y herramienta para recortar tu foto de pasaporte o visado de ${country.name}. Medidas oficiales de ${primaryDoc.widthMm} × ${primaryDoc.heightMm} mm (${primaryDoc.widthPx} × ${primaryDoc.heightPx} px a 300 DPI), fondo ${primaryDoc.backgroundColor.toLowerCase()} y cumplimiento de las directrices de ${auth.authorityName}.`;
 
@@ -89,6 +94,17 @@ export async function generateMetadata({ params }: CountryPageProps): Promise<Me
     alternates: {
       canonical: `https://fotopasaporte.app/foto-pasaporte/${toCountrySlug(country)}`,
     },
+    robots: {
+      index: indexable,
+      follow: true,
+      googleBot: {
+        index: indexable,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
   };
 }
 
@@ -98,6 +114,12 @@ export default async function CountryPage({ params }: CountryPageProps) {
 
   if (!country) {
     notFound();
+  }
+
+  // Canonical redirection: avoid duplicate indexing of country codes (e.g. /foto-pasaporte/es -> /foto-pasaporte/espana)
+  const canonicalSlug = toCountrySlug(country);
+  if (countryParam !== canonicalSlug) {
+    redirect(`/foto-pasaporte/${canonicalSlug}`);
   }
 
   const primaryDoc = country.documents[0];
@@ -235,7 +257,7 @@ export default async function CountryPage({ params }: CountryPageProps) {
               </h1>
 
               <p className="mt-3 text-[16px] leading-relaxed text-[#6E6E73] sm:text-[18px]">
-                Guía completa y herramienta online para recortar y ajustar tu fotografía con las medidas oficiales de{' '}
+                Guía oficial y herramienta online para recortar y ajustar tu fotografía con las medidas oficiales de{' '}
                 <strong className="text-[#1D1D1F]">
                   {primaryDoc.widthMm} × {primaryDoc.heightMm} mm
                 </strong>
@@ -331,12 +353,114 @@ export default async function CountryPage({ params }: CountryPageProps) {
                 ))}
               </ul>
             </div>
+
+            {/* Official Portal Direct Link if Available */}
+            {auth.officialPortalUrl && (
+              <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-[#E5E5EA] pt-4">
+                <span className="text-[13px] text-[#6E6E73]">
+                  Portal oficial de información y trámites consulares:
+                </span>
+                <a
+                  href={auth.officialPortalUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded-xl border border-[#D2D2D7] bg-white px-3.5 py-1.5 text-[12px] font-semibold text-[#0071E3] hover:border-[#0071E3] hover:bg-[#F5F5F7] transition-all"
+                >
+                  <span>Visitar sitio web oficial</span>
+                  <ExternalLink className="h-3.5 w-3.5" />
+                </a>
+              </div>
+            )}
+
+            {/* E-E-A-T Editorial Verification & Independence Statement */}
+            <div className="mt-6 rounded-2xl border border-[#D2D2D7]/80 bg-[#F5F5F7]/70 p-4 text-[12px] text-[#6E6E73]">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#E5E5EA] pb-2.5">
+                <div className="flex items-center gap-2 font-medium text-[#1D1D1F]">
+                  <Shield className="h-4 w-4 text-[#34C759]" />
+                  <span>Verificación técnica editorial y control de calidad</span>
+                </div>
+                <span className="text-[11px] text-[#8E8E93]">
+                  Última actualización: Octubre 2026 · Estándar OACI Doc 9303
+                </span>
+              </div>
+              <p className="mt-2.5 leading-relaxed">
+                <strong>Aviso de independencia y transparencia:</strong> FotoPasaporte.app es una aplicación técnica independiente de edición de imagen y calibración geométrica. No emitimos pasaportes ni estamos afiliados a {auth.authorityName} ni a ninguna embajada gubernamental. Los requisitos oficiales se reproducen con fines técnicos y orientativos para garantizar la conformidad de tu archivo.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 5. Comprehensive Technical Specification Matrix from countries.json */}
+      {/* 5. Step-by-Step Home Studio Setup Guide for this Country */}
       <section className="bg-white py-16 sm:py-24 border-t border-[#E5E5EA]">
+        <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
+          <div className="mx-auto max-w-2xl text-center">
+            <div className="inline-flex items-center gap-1.5 text-[12px] font-semibold tracking-wider text-[#0071E3] uppercase">
+              <Camera className="h-4 w-4" />
+              <span>Estudio en casa</span>
+            </div>
+            <h2 className="mt-2 text-[28px] font-semibold tracking-tight text-[#1D1D1F] sm:text-[36px]">
+              Cómo tomar la foto perfecta para {country.name} en 4 pasos
+            </h2>
+            <p className="mt-3 text-[16px] text-[#6E6E73]">
+              No necesitas ir a un estudio profesional. Sigue estas pautas para obtener un resultado 100% válido con tu teléfono móvil.
+            </p>
+          </div>
+
+          <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="rounded-3xl border border-[#D2D2D7] bg-[#F5F5F7]/40 p-6">
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white border border-[#D2D2D7] text-[#0071E3] font-bold text-[15px] shadow-2xs">
+                01
+              </div>
+              <h3 className="mt-4 text-[17px] font-semibold text-[#1D1D1F]">
+                Luz natural difusa
+              </h3>
+              <p className="mt-2 text-[13px] leading-relaxed text-[#6E6E73]">
+                Colócate frente a una ventana durante el día. La luz natural ilumina ambos lados de la cara de manera uniforme y evita las sombras duras bajo la nariz y la barbilla.
+              </p>
+            </div>
+
+            <div className="rounded-3xl border border-[#D2D2D7] bg-[#F5F5F7]/40 p-6">
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white border border-[#D2D2D7] text-[#0071E3] font-bold text-[15px] shadow-2xs">
+                02
+              </div>
+              <h3 className="mt-4 text-[17px] font-semibold text-[#1D1D1F]">
+                Fondo {primaryDoc.backgroundColor.toLowerCase()}
+              </h3>
+              <p className="mt-2 text-[13px] leading-relaxed text-[#6E6E73]">
+                Ponte a 50 cm de una pared lisa. Para {country.name} se requiere un fondo {primaryDoc.backgroundColor.toLowerCase()}. Estar separado de la pared previene sombras detrás de la cabeza.
+              </p>
+            </div>
+
+            <div className="rounded-3xl border border-[#D2D2D7] bg-[#F5F5F7]/40 p-6">
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white border border-[#D2D2D7] text-[#0071E3] font-bold text-[15px] shadow-2xs">
+                03
+              </div>
+              <h3 className="mt-4 text-[17px] font-semibold text-[#1D1D1F]">
+                Cámara a 1,5–2 metros
+              </h3>
+              <p className="mt-2 text-[13px] leading-relaxed text-[#6E6E73]">
+                Pide a otra persona que te tome la fotografía a la altura de tus ojos. No utilices cámara frontal tipo selfie, ya que deforma la perspectiva del rostro y oculta las orejas.
+              </p>
+            </div>
+
+            <div className="rounded-3xl border border-[#D2D2D7] bg-[#F5F5F7]/40 p-6">
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white border border-[#D2D2D7] text-[#0071E3] font-bold text-[15px] shadow-2xs">
+                04
+              </div>
+              <h3 className="mt-4 text-[17px] font-semibold text-[#1D1D1F]">
+                Ajuste biométrico
+              </h3>
+              <p className="mt-2 text-[13px] leading-relaxed text-[#6E6E73]">
+                Sube la imagen a nuestro creador online. Aplicará automáticamente la plantilla oficial de {primaryDoc.widthMm} × {primaryDoc.heightMm} mm a 300 DPI para su descarga directa.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. Comprehensive Technical Specification Matrix from countries.json */}
+      <section className="bg-[#F5F5F7] py-16 sm:py-24 border-t border-[#E5E5EA]">
         <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-[28px] font-semibold tracking-tight text-[#1D1D1F] sm:text-[36px]">
@@ -511,8 +635,8 @@ export default async function CountryPage({ params }: CountryPageProps) {
         </div>
       </section>
 
-      {/* 6. Critical Section: 6 Common Rejection Reasons in this Country */}
-      <section className="bg-[#F5F5F7] py-16 sm:py-24 border-t border-[#E5E5EA]">
+      {/* 7. Critical Section: 6 Common Rejection Reasons in this Country */}
+      <section className="bg-white py-16 sm:py-24 border-t border-[#E5E5EA]">
         <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
           <div className="mx-auto max-w-2xl text-center">
             <div className="inline-flex items-center gap-1.5 text-[12px] font-semibold tracking-wider text-[#FF9500] uppercase">
@@ -531,7 +655,7 @@ export default async function CountryPage({ params }: CountryPageProps) {
             {rejectionReasons.map((reason, idx) => (
               <div
                 key={idx}
-                className="flex flex-col justify-between rounded-3xl border border-[#D2D2D7] bg-white p-6 shadow-2xs"
+                className="flex flex-col justify-between rounded-3xl border border-[#D2D2D7] bg-[#F5F5F7]/30 p-6 shadow-2xs hover:border-[#B0B0B5] transition-all"
               >
                 <div>
                   <div className="flex items-center justify-between">
@@ -560,7 +684,7 @@ export default async function CountryPage({ params }: CountryPageProps) {
 
                 <div className="mt-6 border-t border-[#E5E5EA] pt-3 text-[12px] text-[#0071E3] font-medium flex items-center gap-1">
                   <CheckCircle2 className="h-3.5 w-3.5" />
-                  <span>FotoPasaporte te ayuda a evitarlo automáticamente</span>
+                  <span>FotoPasaporte calibra este parámetro automáticamente</span>
                 </div>
               </div>
             ))}
@@ -568,8 +692,8 @@ export default async function CountryPage({ params }: CountryPageProps) {
         </div>
       </section>
 
-      {/* 7. Clothing, Contrast & Studio Tips */}
-      <section className="bg-white py-16 sm:py-24 border-t border-[#E5E5EA]">
+      {/* 8. Clothing, Contrast & Printing Guide */}
+      <section className="bg-[#F5F5F7] py-16 sm:py-24 border-t border-[#E5E5EA]">
         <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
           <div className="mx-auto max-w-3xl">
             <div className="flex items-center gap-2 text-[12px] font-semibold tracking-wider text-[#6E6E73] uppercase">
@@ -612,12 +736,40 @@ export default async function CountryPage({ params }: CountryPageProps) {
                 </ul>
               </div>
             </div>
+
+            {/* Printing Guide Card */}
+            <div className="mt-8 rounded-3xl border border-[#D2D2D7] bg-white p-6 sm:p-8 shadow-xs">
+              <div className="flex items-center gap-2 text-[12px] font-semibold tracking-wider text-[#0071E3] uppercase">
+                <Printer className="h-4 w-4" />
+                <span>Guía de Impresión en Papel</span>
+              </div>
+              <h3 className="mt-2 text-[20px] font-semibold text-[#1D1D1F]">
+                Cómo imprimir tu foto con las medidas exactas de {country.name}
+              </h3>
+              <p className="mt-2 text-[14px] leading-relaxed text-[#6E6E73]">
+                Si vas a presentar tu solicitud presencialmente en el consulado o comisaría, utiliza la función <strong>«Preparar hoja para imprimir»</strong> de FotoPasaporte.app:
+              </p>
+              <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4 text-[13px]">
+                <div className="rounded-2xl bg-[#F5F5F7] p-4">
+                  <span className="font-semibold text-[#1D1D1F] block mb-1">Tamaño de papel</span>
+                  <p className="text-[#6E6E73]">Hoja estándar de 10 × 15 cm (4×6 pulgadas) con múltiples copias idénticas y marcas de corte milimétricas.</p>
+                </div>
+                <div className="rounded-2xl bg-[#F5F5F7] p-4">
+                  <span className="font-semibold text-[#1D1D1F] block mb-1">Ajuste de impresora</span>
+                  <p className="text-[#6E6E73]">Selecciona siempre <strong>«Escala 100%»</strong> o «Tamaño real». No elijas «Ajustar a página» para evitar cambios de proporción.</p>
+                </div>
+                <div className="rounded-2xl bg-[#F5F5F7] p-4">
+                  <span className="font-semibold text-[#1D1D1F] block mb-1">Tipo de papel</span>
+                  <p className="text-[#6E6E73]">Papel fotográfico brillante (glossy) o satinado mate de alta densidad a 300 DPI, sin granulado.</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 8. Detailed FAQs for this Country */}
-      <section className="bg-[#F5F5F7] py-16 sm:py-24 border-t border-[#E5E5EA]">
+      {/* 9. Detailed FAQs for this Country */}
+      <section className="bg-white py-16 sm:py-24 border-t border-[#E5E5EA]">
         <div className="mx-auto max-w-[860px] px-4 sm:px-6">
           <div className="text-center">
             <div className="inline-flex items-center gap-1.5 text-[12px] font-semibold tracking-wider text-[#0071E3] uppercase">
@@ -650,8 +802,8 @@ export default async function CountryPage({ params }: CountryPageProps) {
         </div>
       </section>
 
-      {/* 9. Related Countries from the same region */}
-      <section className="bg-white py-16 sm:py-20 border-t border-[#E5E5EA]">
+      {/* 10. Related Countries from the same region */}
+      <section className="bg-[#F5F5F7] py-16 sm:py-20 border-t border-[#E5E5EA]">
         <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
           <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
             <div>
@@ -696,7 +848,7 @@ export default async function CountryPage({ params }: CountryPageProps) {
         </div>
       </section>
 
-      {/* 10. Final Call to Action & Footer */}
+      {/* 11. Final Call to Action & Footer */}
       <FinalCTA />
       <Footer />
     </div>
