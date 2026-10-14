@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { Search, ArrowUpRight, Check, Shield } from 'lucide-react';
-import { COUNTRIES_DATA } from '@/data/countries';
+import { COUNTRIES_DATA, toCountrySlug } from '@/data/countries';
 import { CountryInfo } from '@/types';
 
 interface RequirementsSectionProps {
@@ -121,7 +122,7 @@ export function RequirementsSection({ onSelectCountryForMaker }: RequirementsSec
                   </div>
                 </div>
 
-                <div className="mt-5 pt-3">
+                <div className="mt-5 flex flex-col gap-2 pt-3">
                   <button
                     type="button"
                     onClick={() => {
@@ -129,11 +130,18 @@ export function RequirementsSection({ onSelectCountryForMaker }: RequirementsSec
                       const el = document.getElementById('creador');
                       if (el) el.scrollIntoView({ behavior: 'smooth' });
                     }}
-                    className="inline-flex w-full items-center justify-center gap-1.5 rounded-xl border border-[#D2D2D7] bg-white py-2 text-[13px] font-medium text-[#0071E3] transition-colors group-hover:border-[#0071E3] group-hover:bg-[#0071E3] group-hover:text-white"
+                    className="inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-[#0071E3] py-2 text-[13px] font-medium text-white shadow-2xs transition-all hover:bg-[#0077ED] active:scale-[0.98]"
                   >
-                    <span>Preparar foto para {country.name}</span>
+                    <span>Crear foto para {country.name}</span>
                     <ArrowUpRight className="h-3.5 w-3.5" />
                   </button>
+
+                  <Link
+                    href={`/foto-pasaporte/${toCountrySlug(country)}`}
+                    className="inline-flex w-full items-center justify-center gap-1.5 rounded-xl border border-[#D2D2D7] bg-white py-1.5 text-[12px] font-medium text-[#6E6E73] transition-colors hover:border-[#1D1D1F] hover:text-[#1D1D1F]"
+                  >
+                    <span>Ver requisitos de {country.name}</span>
+                  </Link>
                 </div>
               </div>
             );

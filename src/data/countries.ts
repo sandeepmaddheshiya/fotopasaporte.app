@@ -20,6 +20,8 @@ interface RawCountryEntry {
   face_width_max?: number;
   eye_height_min?: number;
   eye_height_max?: number;
+  max_tilt_degrees?: number;
+  color_space?: string;
   glasses_allowed: boolean;
   glasses_notes?: string;
   smile_allowed: boolean;
@@ -331,6 +333,19 @@ for (const [code, entries] of countryMap.entries()) {
       sourceUrl: entry.source_url,
       printFinish: entry.print_finish,
       mouthClosed: entry.mouth_closed ?? true,
+      sizeInches: entry.size_inches as [number, number] | undefined,
+      bgRgbMin: entry.bg_rgb_min,
+      bgRgbMax: entry.bg_rgb_max,
+      maxTiltDegrees: entry.max_tilt_degrees,
+      glassesNotes: entry.glasses_notes,
+      smileAllowed: entry.smile_allowed,
+      teethVisibleAllowed: entry.teeth_visible_allowed,
+      teethNotes: entry.teeth_notes,
+      headCoveringAllowed: entry.head_covering_allowed,
+      headCoveringNotes: entry.head_covering_notes,
+      recencyMonths: entry.recency_months,
+      colorSpace: entry.color_space,
+      lastVerified: entry.lastVerified,
     };
   });
 
@@ -354,6 +369,10 @@ for (const [code, entries] of countryMap.entries()) {
       eyeHeightMaxRatio: 0.65,
       glassesAllowed: false,
       notes: 'Fotografía reciente en color de 30×40 mm con fondo blanco liso para expedición y renovación del DNI.',
+      sizeInches: [1.18, 1.57],
+      recencyMonths: 6,
+      printFinish: 'Papel fotográfico brillo o mate',
+      lastVerified: '2026-10-05',
     });
   }
 
@@ -387,6 +406,41 @@ export const POPULAR_COUNTRIES: CountryInfo[] = COUNTRIES_DATA.filter((c) => c.i
 
 export function getCountryByCode(code: string): CountryInfo | undefined {
   return COUNTRIES_DATA.find((c) => c.code.toUpperCase() === code.toUpperCase());
+}
+
+export function toCountrySlug(country: CountryInfo | string): string {
+  const name = typeof country === 'string' ? country : country.name;
+  return name
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)+/g, '');
+}
+
+export function getCountryBySlugOrCode(param: string): CountryInfo | undefined {
+  if (!param) return undefined;
+  const normalized = param.trim().toLowerCase();
+
+  // 1. Direct code match (e.g. "es", "us", "mx")
+  const byCode = COUNTRIES_DATA.find((c) => c.code.toLowerCase() === normalized);
+  if (byCode) return byCode;
+
+  // 2. Slug match (e.g. "espana", "estados-unidos", "mexico")
+  const bySlug = COUNTRIES_DATA.find((c) => toCountrySlug(c) === normalized);
+  if (bySlug) return bySlug;
+
+  // 3. Name match
+  return COUNTRIES_DATA.find((c) => c.name.toLowerCase() === normalized);
+}
+
+export function getAllCountryParams(): { country: string }[] {
+  const params: { country: string }[] = [];
+  for (const c of COUNTRIES_DATA) {
+    params.push({ country: toCountrySlug(c) });
+    params.push({ country: c.code.toLowerCase() });
+  }
+  return params;
 }
 
 export function searchCountries(query: string): CountryInfo[] {

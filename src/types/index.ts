@@ -23,6 +23,19 @@ export interface DocumentSpec {
   sourceUrl?: string;
   printFinish?: string;
   mouthClosed?: boolean;
+  sizeInches?: [number, number];
+  bgRgbMin?: number[];
+  bgRgbMax?: number[];
+  maxTiltDegrees?: number;
+  glassesNotes?: string;
+  smileAllowed?: boolean;
+  teethVisibleAllowed?: boolean;
+  teethNotes?: string;
+  headCoveringAllowed?: boolean;
+  headCoveringNotes?: string;
+  recencyMonths?: number;
+  colorSpace?: string;
+  lastVerified?: string;
 }
 
 export interface CountryInfo {

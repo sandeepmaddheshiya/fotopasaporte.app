@@ -12,6 +12,15 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  async redirects() {
+    return [
+      {
+        source: '/requisitos/:country',
+        destination: '/foto-pasaporte/:country',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
