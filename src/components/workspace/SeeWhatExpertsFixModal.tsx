@@ -101,7 +101,7 @@ export function SeeWhatExpertsFixModal({
         className="relative z-10 w-full max-w-4xl max-h-[90vh] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-slate-200"
       >
         {/* Header */}
-        <div className="px-5 sm:px-7 pt-5 sm:pt-6 pb-3 border-b border-slate-100 flex items-start justify-between gap-4">
+        <div className="px-4 sm:px-7 pt-4 sm:pt-6 pb-3 border-b border-slate-100 flex items-start justify-between gap-3">
           <div>
             <div className="flex items-center gap-2 flex-wrap">
               <span className="inline-flex items-center gap-1 bg-blue-50 text-[#0071E3] border border-blue-200 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
@@ -112,7 +112,7 @@ export function SeeWhatExpertsFixModal({
                 <Check className="w-3.5 h-3.5" /> 100% Garantía de Aceptación Consular
               </span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-extrabold text-[#1D1D1F] tracking-tight mt-1.5">
+            <h2 className="text-lg sm:text-2xl font-extrabold text-[#1D1D1F] tracking-tight mt-1.5 leading-snug">
               Descubre qué corrigen nuestros especialistas
             </h2>
             <p className="text-xs sm:text-sm text-[#6E6E73] mt-0.5">
@@ -123,7 +123,7 @@ export function SeeWhatExpertsFixModal({
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
+            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer shrink-0"
             aria-label="Cerrar modal"
           >
             <X className="w-5 h-5" />
@@ -131,17 +131,17 @@ export function SeeWhatExpertsFixModal({
         </div>
 
         {/* Informative Banner */}
-        <div className="mx-5 sm:mx-7 my-3 bg-blue-50/80 border border-blue-100 rounded-xl p-3 flex items-center gap-3 text-xs text-blue-900 font-medium">
+        <div className="mx-4 sm:mx-7 my-3 bg-blue-50/80 border border-blue-100 rounded-xl p-3 flex items-center gap-3 text-xs text-blue-900 font-medium">
           <div className="w-7 h-7 rounded-lg bg-blue-100 text-[#0071E3] flex items-center justify-center shrink-0">
             <ShieldCheck className="w-4 h-4" />
           </div>
-          <span className="leading-snug">
+          <span className="leading-snug text-[11px] sm:text-xs">
             Un especialista biométrico examina cada punto crítico (fondo, centrado, iluminación, ojos y reflejos) en menos de 15 minutos para asegurar que tu solicitud nunca sea rechazada.
           </span>
         </div>
 
         {/* Scrollable Gallery */}
-        <div className="flex-1 overflow-y-auto px-5 sm:px-7 py-3 space-y-4">
+        <div className="flex-1 overflow-y-auto px-4 sm:px-7 py-3 space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {EXPERT_FIX_ITEMS.map((item) => (
               <div
@@ -187,8 +187,8 @@ export function SeeWhatExpertsFixModal({
         </div>
 
         {/* Footer CTA */}
-        <div className="px-5 sm:px-7 py-3.5 border-t border-slate-100 bg-[#F5F5F7] flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0">
-          <div className="text-xs text-[#6E6E73] text-center sm:text-left">
+        <div className="px-4 sm:px-7 py-3 sm:py-3.5 border-t border-slate-100 bg-[#F5F5F7] flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0">
+          <div className="text-[11px] sm:text-xs text-[#6E6E73] text-center sm:text-left">
             <span className="font-bold text-[#1D1D1F]">Pack Premium</span> · Incluye revisión humana en &lt;15 min + descargas 300 DPI + garantía oficial 100%.
           </div>
 

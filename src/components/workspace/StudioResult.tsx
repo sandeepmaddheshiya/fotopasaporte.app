@@ -307,33 +307,33 @@ export function StudioResult({
     <div className="w-full space-y-6">
       {/* ─── STANDALONE CLEAN HEADER (NO CARD CONTAINER) ─── */}
       <div className="text-center space-y-2 py-2">
-        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#1D1D1F] flex items-center justify-center gap-2 flex-wrap">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight text-[#1D1D1F] flex items-center justify-center gap-2 flex-wrap">
           <span>Tu foto oficial está lista</span>
           <span className="inline-flex items-center gap-1.5 text-[#0071E3]">
-            <span className="text-2xl sm:text-3xl">{country.flag}</span>
+            <span className="text-xl sm:text-2xl md:text-3xl">{country.flag}</span>
             <span>{country.name} · {spec.name}</span>
           </span>
         </h1>
-        <p className="text-xs sm:text-sm font-medium text-[#6E6E73] flex items-center justify-center gap-2 flex-wrap">
+        <div className="text-xs sm:text-sm font-medium text-[#6E6E73] flex items-center justify-center gap-x-2 gap-y-1 flex-wrap">
           <span className="flex items-center gap-1 text-emerald-600 font-semibold">
-            <CheckCircle2 className="w-4 h-4" /> 100% Conforme normativa biométrica
+            <CheckCircle2 className="w-4 h-4 shrink-0" /> 100% Conforme normativa biométrica
           </span>
-          <span>·</span>
+          <span className="hidden sm:inline">·</span>
           <span>🔒 Pago seguro Razorpay</span>
-          <span>·</span>
+          <span className="hidden sm:inline">·</span>
           <span>Garantía de reembolso oficial</span>
-        </p>
+        </div>
       </div>
 
       {/* ─── MAIN TWO-COLUMN STUDIO LAYOUT (FLAT, OPEN, NO NESTED BOXES) ─── */}
-      <div className="flex flex-col lg:flex-row gap-8 items-start">
+      <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start">
         {/* ─── LEFT COLUMN: SINGLE COHESIVE SURFACE ─── */}
-        <div className="flex-1 w-full bg-white rounded-2xl border border-slate-200/90 p-6 sm:p-8 shadow-xs">
+        <div className="flex-1 w-full bg-white rounded-2xl border border-slate-200/90 p-4 sm:p-6 lg:p-8 shadow-xs">
           {/* Top Bar: Official Document Title & Controls */}
           <div className="flex items-center justify-between pb-4 border-b border-slate-100 flex-wrap gap-2">
-            <div className="inline-flex items-center gap-2 bg-[#F5F5F7] px-3.5 py-1.5 rounded-xl text-xs font-bold text-[#1D1D1F]">
-              <span>{country.flag}</span>
-              <span>Foto Individual Oficial ({spec.widthMm}×{spec.heightMm} mm)</span>
+            <div className="inline-flex items-center gap-2 bg-[#F5F5F7] px-3 py-1.5 rounded-xl text-xs font-bold text-[#1D1D1F] max-w-full">
+              <span className="shrink-0">{country.flag}</span>
+              <span className="truncate">Foto Individual<span className="hidden sm:inline"> Oficial</span> ({spec.widthMm}×{spec.heightMm} mm)</span>
             </div>
 
             {/* Guide Toggle & Dimensions */}
@@ -428,30 +428,31 @@ export function StudioResult({
           {/* Section Divider for Compliance Report */}
           <div className="pt-6 border-t border-slate-100">
             {/* Tabs */}
-            <div className="flex border-b border-slate-100 mb-4">
+            <div className="flex border-b border-slate-100 mb-4 overflow-x-auto no-scrollbar gap-2">
               <button
                 type="button"
                 onClick={() => setActiveReportTab('audit')}
-                className={`flex items-center gap-2 pb-3 px-2 text-xs sm:text-sm font-bold border-b-2 transition-all cursor-pointer ${
+                className={`flex items-center gap-1.5 sm:gap-2 pb-3 px-2 text-xs sm:text-sm font-bold border-b-2 transition-all cursor-pointer shrink-0 whitespace-nowrap ${
                   activeReportTab === 'audit'
                     ? 'border-[#0071E3] text-[#0071E3]'
                     : 'border-transparent text-[#6E6E73] hover:text-[#1D1D1F]'
                 }`}
               >
-                <ShieldCheck className="w-4 h-4" />
-                <span>Auditoría de Requisitos (8/8 Superados)</span>
+                <ShieldCheck className="w-4 h-4 shrink-0" />
+                <span className="hidden sm:inline">Auditoría de Requisitos (8/8 Superados)</span>
+                <span className="inline sm:hidden">Auditoría (8/8)</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setActiveReportTab('fixes')}
-                className={`flex items-center gap-2 pb-3 px-2 text-xs sm:text-sm font-bold border-b-2 transition-all cursor-pointer ${
+                className={`flex items-center gap-1.5 sm:gap-2 pb-3 px-2 text-xs sm:text-sm font-bold border-b-2 transition-all cursor-pointer shrink-0 whitespace-nowrap ${
                   activeReportTab === 'fixes'
                     ? 'border-[#0071E3] text-[#0071E3]'
                     : 'border-transparent text-[#6E6E73] hover:text-[#1D1D1F]'
                 }`}
               >
-                <Sparkles className="w-4 h-4" />
+                <Sparkles className="w-4 h-4 shrink-0" />
                 <span>Optimizaciones IA</span>
               </button>
             </div>
@@ -493,12 +494,12 @@ export function StudioResult({
                     desc: 'Resolución nativa calibrada a 300 DPI.',
                   },
                 ].map((item, idx) => (
-                  <div key={idx} className="py-2.5 flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-2.5 text-xs font-semibold text-[#1D1D1F]">
+                  <div key={idx} className="py-2.5 flex items-center justify-between gap-2.5">
+                    <div className="flex items-center gap-2 text-xs font-semibold text-[#1D1D1F] min-w-0 flex-1">
                       <div className="w-4 h-4 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
                         <Check className="w-3 h-3 stroke-[2.5]" />
                       </div>
-                      <span>{item.title}</span>
+                      <span className="break-words leading-tight">{item.title}</span>
                     </div>
                     <span className="text-[11px] font-bold text-emerald-600 flex items-center gap-1 shrink-0">
                       Cumple ✓
@@ -520,10 +521,10 @@ export function StudioResult({
                       'Iluminación y brillo calibrados automáticamente',
                     ]
                 ).map((change, idx) => (
-                  <div key={idx} className="py-2.5 flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-2.5 text-xs font-semibold text-[#1D1D1F]">
+                  <div key={idx} className="py-2.5 flex items-center justify-between gap-2.5">
+                    <div className="flex items-center gap-2 text-xs font-semibold text-[#1D1D1F] min-w-0 flex-1">
                       <Sparkles className="w-3.5 h-3.5 text-[#0071E3] shrink-0" />
-                      <span>{translateChange(change)}</span>
+                      <span className="break-words leading-tight">{translateChange(change)}</span>
                     </div>
                     <span className="text-[11px] font-medium text-slate-500 shrink-0">
                       Optimizado con IA
@@ -614,7 +615,7 @@ export function StudioResult({
 
         {/* ─── RIGHT COLUMN: PRICING PACKS & CHECKOUT (EXACT VISACREADYNOW STRUCTURE) ─── */}
         <div className="w-full lg:w-[400px] shrink-0 lg:sticky lg:top-24">
-          <div className="bg-white rounded-2xl border border-slate-200/90 p-5 sm:p-6 shadow-sm flex flex-col space-y-4">
+          <div className="bg-white rounded-2xl border border-slate-200/90 p-4 sm:p-6 shadow-sm flex flex-col space-y-4">
             {/* Header */}
             <div className="flex items-center gap-2 pb-3 border-b border-slate-100">
               <ShieldCheck
@@ -814,13 +815,13 @@ export function StudioResult({
                       setSelectedPack('premium');
                       setIsExpertsFixModalOpen(true);
                     }}
-                    className="mt-3 bg-white/80 border border-blue-200/90 hover:border-[#0071E3] rounded-xl p-2.5 flex items-center justify-between gap-2.5 cursor-pointer transition-all shadow-2xs group"
+                    className="mt-3 bg-white/80 border border-blue-200/90 hover:border-[#0071E3] rounded-xl p-2.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 cursor-pointer transition-all shadow-2xs group"
                   >
                     <div className="flex flex-col min-w-0">
-                      <span className="text-xs font-bold text-[#1D1D1F] group-hover:text-[#0071E3] transition-colors truncate">
+                      <span className="text-xs font-bold text-[#1D1D1F] group-hover:text-[#0071E3] transition-colors leading-tight">
                         Ver qué corrigen nuestros especialistas
                       </span>
-                      <div className="flex items-center gap-1.5 mt-1 min-w-0">
+                      <div className="flex items-center gap-1.5 mt-1 min-w-0 flex-wrap">
                         <div className="flex items-center -space-x-1.5 shrink-0">
                           <img
                             src="/images/avatars/avatar1.jpg"
@@ -853,7 +854,7 @@ export function StudioResult({
                         </span>
                       </div>
                     </div>
-                    <span className="text-[11px] font-bold text-[#0071E3] shrink-0 group-hover:translate-x-0.5 transition-transform">
+                    <span className="text-[11px] font-bold text-[#0071E3] shrink-0 group-hover:translate-x-0.5 transition-transform self-end sm:self-auto">
                       Ver ejemplos →
                     </span>
                   </div>
@@ -925,46 +926,46 @@ export function StudioResult({
 
       {/* ─── LIGHTBOX: FULL RESOLUTION ZOOM PREVIEW MODAL ─── */}
       {isZoomModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in">
           <div className="absolute inset-0" onClick={() => setIsZoomModalOpen(false)} />
           <div
             onClick={(e) => e.stopPropagation()}
-            className="relative z-10 max-w-2xl max-h-[90vh] bg-white rounded-2xl p-4 sm:p-6 shadow-2xl flex flex-col items-center space-y-4"
+            className="relative z-10 w-full max-w-2xl max-h-[92vh] bg-white rounded-2xl p-4 sm:p-6 shadow-2xl flex flex-col items-center space-y-4 overflow-y-auto"
           >
             <div className="w-full flex items-center justify-between pb-2 border-b border-slate-100">
-              <div>
-                <h3 className="text-sm font-bold text-[#1D1D1F]">
+              <div className="min-w-0 pr-2">
+                <h3 className="text-xs sm:text-sm font-bold text-[#1D1D1F] truncate">
                   Vista Previa Oficial en Alta Resolución (300 DPI)
                 </h3>
-                <p className="text-[11px] text-[#6E6E73]">
+                <p className="text-[10px] sm:text-[11px] text-[#6E6E73] truncate">
                   {spec.name} · {spec.widthMm} × {spec.heightMm} mm
                 </p>
               </div>
               <button
                 type="button"
                 onClick={() => setIsZoomModalOpen(false)}
-                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
+                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer shrink-0"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="relative rounded-none overflow-hidden border border-slate-200 bg-white max-h-[65vh] flex items-center justify-center">
+            <div className="relative rounded-none overflow-hidden border border-slate-200 bg-white max-h-[60vh] flex items-center justify-center w-full">
               <img
                 src={photoUrl}
                 alt="Vista en alta resolución"
-                className="max-h-[65vh] max-w-full object-contain block"
+                className="max-h-[60vh] max-w-full object-contain block mx-auto"
               />
             </div>
 
-            <div className="w-full pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-[#6E6E73]">
-              <span className="flex items-center gap-1.5 text-emerald-600 font-semibold">
-                <Check className="w-4 h-4" /> Calibrado para impresión oficial a 300 DPI
+            <div className="w-full pt-2 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs text-[#6E6E73]">
+              <span className="flex items-center gap-1.5 text-emerald-600 font-semibold text-[11px] sm:text-xs">
+                <Check className="w-4 h-4 shrink-0" /> Calibrado para impresión oficial a 300 DPI
               </span>
               <button
                 type="button"
                 onClick={() => setIsZoomModalOpen(false)}
-                className="px-4 py-1.5 rounded-lg bg-slate-900 text-white font-bold text-xs hover:bg-black transition-colors cursor-pointer"
+                className="w-full sm:w-auto px-4 py-1.5 rounded-lg bg-slate-900 text-white font-bold text-xs hover:bg-black transition-colors cursor-pointer text-center"
               >
                 Cerrar
               </button>

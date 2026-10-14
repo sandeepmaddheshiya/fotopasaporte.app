@@ -72,13 +72,13 @@ export function DocumentSelector({
       </div>
 
       {/* Specification Preview Card */}
-      <div className="rounded-2xl border border-[#D2D2D7]/80 bg-[#F5F5F7] p-4 text-[13px] text-[#1D1D1F]">
-        <div className="flex items-center justify-between border-b border-[#E5E5EA] pb-2.5">
+      <div className="rounded-2xl border border-[#D2D2D7]/80 bg-[#F5F5F7] p-3.5 sm:p-4 text-[13px] text-[#1D1D1F]">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#E5E5EA] pb-2.5">
           <div className="flex items-center gap-1.5 font-medium text-[#1D1D1F]">
-            <Info className="h-4 w-4 text-[#0071E3]" />
+            <Info className="h-4 w-4 text-[#0071E3] shrink-0" />
             <span>Requisitos oficiales detectados</span>
           </div>
-          <span className="rounded-md bg-white px-2 py-0.5 text-[11px] font-medium text-[#6E6E73] shadow-2xs">
+          <span className="rounded-md bg-white px-2 py-0.5 text-[11px] font-medium text-[#6E6E73] shadow-2xs truncate max-w-full">
             {country.name} · {selectedDocSpec.name}
           </span>
         </div>

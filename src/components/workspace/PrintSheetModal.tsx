@@ -113,21 +113,21 @@ export function PrintSheetModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
-      <div className="relative w-full max-w-[680px] rounded-3xl border border-[#D2D2D7] bg-white p-6 shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
+      <div className="relative w-full max-w-[680px] rounded-2xl sm:rounded-3xl border border-[#D2D2D7] bg-white p-4 sm:p-6 shadow-2xl max-h-[92vh] overflow-y-auto">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-[#E5E5EA] pb-4">
-          <div>
-            <h3 className="text-[18px] font-semibold text-[#1D1D1F]">
+        <div className="flex items-center justify-between border-b border-[#E5E5EA] pb-3 sm:pb-4">
+          <div className="min-w-0 pr-2">
+            <h3 className="text-[16px] sm:text-[18px] font-semibold text-[#1D1D1F] truncate">
               Hoja para imprimir A4 (210 × 297 mm)
             </h3>
-            <p className="text-[13px] text-[#6E6E73]">
+            <p className="text-[12px] sm:text-[13px] text-[#6E6E73]">
               Plantilla A4 con {photosCount} fotos de {spec.widthMm} × {spec.heightMm} mm a 300 DPI lista para imprimir
             </p>
           </div>
           <button
             onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-full text-[#6E6E73] hover:bg-[#F5F5F7] hover:text-[#1D1D1F]"
+            className="flex h-8 w-8 items-center justify-center rounded-full text-[#6E6E73] hover:bg-[#F5F5F7] hover:text-[#1D1D1F] shrink-0"
             aria-label="Cerrar ventana"
           >
             <X className="h-5 w-5" />
@@ -173,17 +173,17 @@ export function PrintSheetModal({
         </div>
 
         {/* Action Buttons */}
-        <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+        <div className="flex flex-col-reverse gap-2.5 sm:gap-3 sm:flex-row sm:justify-end">
           <button
             onClick={onClose}
-            className="rounded-full border border-[#D2D2D7] px-5 py-2.5 text-[14px] font-medium text-[#1D1D1F] transition-colors hover:bg-[#F5F5F7]"
+            className="w-full sm:w-auto rounded-full border border-[#D2D2D7] px-5 py-2.5 text-[14px] font-medium text-[#1D1D1F] transition-colors hover:bg-[#F5F5F7] text-center"
           >
             Volver al editor
           </button>
 
           <button
             onClick={handleDirectPrint}
-            className="inline-flex items-center justify-center gap-2 rounded-full border border-[#D2D2D7] bg-white px-5 py-2.5 text-[14px] font-medium text-[#1D1D1F] transition-colors hover:bg-[#F5F5F7]"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-[#D2D2D7] bg-white px-5 py-2.5 text-[14px] font-medium text-[#1D1D1F] transition-colors hover:bg-[#F5F5F7]"
           >
             <Printer className="h-4 w-4" />
             <span>Imprimir</span>
@@ -192,7 +192,7 @@ export function PrintSheetModal({
           <button
             onClick={handleDownloadSheet}
             disabled={isDownloading}
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0071E3] px-6 py-2.5 text-[14px] font-medium text-white shadow-xs transition-colors hover:bg-[#0077ED] disabled:opacity-50"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-[#0071E3] px-6 py-2.5 text-[14px] font-medium text-white shadow-xs transition-colors hover:bg-[#0077ED] disabled:opacity-50"
           >
             <Download className="h-4 w-4" />
             <span>{isDownloading ? 'Generando...' : 'Descargar hoja (JPG)'}</span>

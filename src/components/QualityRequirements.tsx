@@ -47,28 +47,28 @@ export function QualityRequirements() {
     <section className="bg-white py-16 sm:py-24">
       <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-[32px] font-semibold tracking-tight text-[#1D1D1F] sm:text-[42px]">
+          <h2 className="text-[26px] font-semibold tracking-tight text-[#1D1D1F] sm:text-[36px] lg:text-[42px]">
             Cada detalle cuenta.
           </h2>
-          <p className="mt-3 text-[17px] text-[#6E6E73]">
+          <p className="mt-3 text-[15px] sm:text-[17px] text-[#6E6E73]">
             Los consulados y autoridades de pasaportes revisan parámetros estrictos para asegurar la legibilidad biométrica.
           </p>
         </div>
 
         {/* 6 Grid items */}
-        <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 sm:mt-14 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {criteria.map((item, index) => (
             <div
               key={index}
-              className="rounded-2xl border border-[#D2D2D7]/80 bg-[#F5F5F7]/50 p-6 transition-all hover:bg-[#F5F5F7]"
+              className="rounded-2xl border border-[#D2D2D7]/80 bg-[#F5F5F7]/50 p-5 sm:p-6 transition-all hover:bg-[#F5F5F7]"
             >
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-[#0071E3] shadow-xs">
                 {item.icon}
               </div>
-              <h3 className="mt-4 text-[17px] font-semibold text-[#1D1D1F]">
+              <h3 className="mt-4 text-[16px] sm:text-[17px] font-semibold text-[#1D1D1F]">
                 {item.title}
               </h3>
-              <p className="mt-2 text-[14px] leading-relaxed text-[#6E6E73]">
+              <p className="mt-2 text-[13px] sm:text-[14px] leading-relaxed text-[#6E6E73]">
                 {item.description}
               </p>
             </div>
@@ -76,7 +76,7 @@ export function QualityRequirements() {
         </div>
 
         {/* Official Authority Reminder Alert */}
-        <div className="mt-12 rounded-2xl border border-[#D2D2D7] bg-[#F5F5F7] p-6 text-[13px] text-[#6E6E73]">
+        <div className="mt-10 sm:mt-12 rounded-2xl border border-[#D2D2D7] bg-[#F5F5F7] p-4 sm:p-6 text-[12px] sm:text-[13px] text-[#6E6E73]">
           <p>
             <strong>Aviso importante:</strong> FotoPasaporte es una herramienta de asistencia independiente que te ayuda a encuadrar y dimensionar tu foto con arreglo a las especificaciones públicas disponibles. Las autoridades oficiales pueden aplicar normativas complementarias y la resolución final sobre la validez del documento corresponde exclusivamente a la autoridad competente.
           </p>

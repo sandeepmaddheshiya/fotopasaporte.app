@@ -247,16 +247,16 @@ export default async function CountryPage({ params }: CountryPageProps) {
 
           <div className="flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between">
             <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-2 rounded-full border border-[#D2D2D7] bg-white px-3.5 py-1 text-[12px] font-semibold tracking-wider text-[#6E6E73] uppercase shadow-2xs">
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#D2D2D7] bg-white px-3.5 py-1 text-[11px] sm:text-[12px] font-semibold tracking-wider text-[#6E6E73] uppercase shadow-2xs">
                 <span>{country.flag}</span>
                 <span>{country.region} · Especificaciones Verificadas</span>
               </div>
 
-              <h1 className="mt-3 text-[32px] font-semibold tracking-tight text-[#1D1D1F] sm:text-[44px]">
+              <h1 className="mt-3 text-[26px] sm:text-[36px] md:text-[44px] font-semibold tracking-tight text-[#1D1D1F] leading-tight">
                 Foto de Pasaporte y Visado para {country.name}
               </h1>
 
-              <p className="mt-3 text-[16px] leading-relaxed text-[#6E6E73] sm:text-[18px]">
+              <p className="mt-3 text-[15px] sm:text-[18px] leading-relaxed text-[#6E6E73]">
                 Guía oficial y herramienta online para recortar y ajustar tu fotografía con las medidas oficiales de{' '}
                 <strong className="text-[#1D1D1F]">
                   {primaryDoc.widthMm} × {primaryDoc.heightMm} mm
@@ -267,30 +267,28 @@ export default async function CountryPage({ params }: CountryPageProps) {
             </div>
 
             {/* Quick Specs Pill Box */}
-            <div className="flex shrink-0 flex-wrap gap-2.5 rounded-2xl border border-[#D2D2D7] bg-white p-4 text-[13px] shadow-xs">
-              <div className="flex items-center gap-2 px-2">
-                <Ruler className="h-4 w-4 text-[#0071E3]" />
+            <div className="w-full md:w-auto grid grid-cols-3 divide-x divide-[#E5E5EA] rounded-2xl border border-[#D2D2D7] bg-white p-3 sm:p-4 text-[12px] sm:text-[13px] shadow-xs shrink-0">
+              <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-1.5 sm:gap-2 px-2">
+                <Ruler className="h-4 w-4 text-[#0071E3] shrink-0" />
                 <div>
-                  <span className="block text-[11px] text-[#8E8E93]">Medidas</span>
-                  <span className="font-semibold text-[#1D1D1F]">
-                    {primaryDoc.widthMm} × {primaryDoc.heightMm} mm
+                  <span className="block text-[10px] sm:text-[11px] text-[#8E8E93]">Medidas</span>
+                  <span className="font-semibold text-[#1D1D1F] text-[11px] sm:text-[13px] whitespace-nowrap">
+                    {primaryDoc.widthMm}×{primaryDoc.heightMm} mm
                   </span>
                 </div>
               </div>
-              <div className="h-8 w-px bg-[#E5E5EA]" />
-              <div className="flex items-center gap-2 px-2">
-                <FileCheck className="h-4 w-4 text-[#34C759]" />
+              <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-1.5 sm:gap-2 px-2">
+                <FileCheck className="h-4 w-4 text-[#34C759] shrink-0" />
                 <div>
-                  <span className="block text-[11px] text-[#8E8E93]">Densidad</span>
-                  <span className="font-semibold text-[#1D1D1F]">300 DPI</span>
+                  <span className="block text-[10px] sm:text-[11px] text-[#8E8E93]">Densidad</span>
+                  <span className="font-semibold text-[#1D1D1F] text-[11px] sm:text-[13px] whitespace-nowrap">300 DPI</span>
                 </div>
               </div>
-              <div className="h-8 w-px bg-[#E5E5EA]" />
-              <div className="flex items-center gap-2 px-2">
-                <Shield className="h-4 w-4 text-[#0071E3]" />
+              <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-1.5 sm:gap-2 px-2">
+                <Shield className="h-4 w-4 text-[#0071E3] shrink-0" />
                 <div>
-                  <span className="block text-[11px] text-[#8E8E93]">Documentos</span>
-                  <span className="font-semibold text-[#1D1D1F]">{country.documents.length} tipos</span>
+                  <span className="block text-[10px] sm:text-[11px] text-[#8E8E93]">Documentos</span>
+                  <span className="font-semibold text-[#1D1D1F] text-[11px] sm:text-[13px] whitespace-nowrap">{country.documents.length} tipos</span>
                 </div>
               </div>
             </div>

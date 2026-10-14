@@ -18,20 +18,20 @@ export function FinalCTA({ onStartClick }: FinalCTAProps) {
   };
 
   return (
-    <section className="bg-[#F5F5F7] py-20 sm:py-28">
+    <section className="bg-[#F5F5F7] py-14 sm:py-24">
       <div className="mx-auto max-w-[1200px] px-4 text-center sm:px-6">
         <div className="mx-auto max-w-2xl">
-          <h2 className="text-[34px] font-semibold tracking-tight text-[#1D1D1F] sm:text-[46px]">
+          <h2 className="text-[26px] font-semibold tracking-tight text-[#1D1D1F] sm:text-[36px] lg:text-[46px] leading-tight">
             Empieza con tu foto. Nosotros te guiamos.
           </h2>
-          <p className="mt-4 text-[17px] leading-relaxed text-[#6E6E73] sm:text-[19px]">
+          <p className="mt-3 sm:mt-4 text-[15px] leading-relaxed text-[#6E6E73] sm:text-[18px]">
             Selecciona tu documento y prepara tu imagen paso a paso.
           </p>
 
-          <div className="mt-9 flex justify-center">
+          <div className="mt-7 sm:mt-9 flex justify-center">
             <button
               onClick={handleClick}
-              className="group inline-flex items-center gap-2 rounded-full bg-[#0071E3] px-8 py-3.5 text-[16px] font-medium text-white shadow-xs transition-all hover:bg-[#0077ED] active:scale-[0.98]"
+              className="group inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-[#0071E3] px-8 py-3.5 text-[15px] sm:text-[16px] font-medium text-white shadow-xs transition-all hover:bg-[#0077ED] active:scale-[0.98] cursor-pointer"
             >
               <span>Crear mi foto</span>
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />

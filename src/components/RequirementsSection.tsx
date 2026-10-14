@@ -32,10 +32,10 @@ export function RequirementsSection({ onSelectCountryForMaker }: RequirementsSec
       <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
         {/* Section Header */}
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-[32px] font-semibold tracking-tight text-[#1D1D1F] sm:text-[42px]">
+          <h2 className="text-[26px] font-semibold tracking-tight text-[#1D1D1F] sm:text-[36px] lg:text-[42px]">
             Encuentra los requisitos de tu foto
           </h2>
-          <p className="mt-3 text-[17px] text-[#6E6E73]">
+          <p className="mt-3 text-[15px] sm:text-[17px] text-[#6E6E73]">
             Cada documento puede tener sus propias medidas, reglas de encuadre y condiciones de presentación.
           </p>
         </div>

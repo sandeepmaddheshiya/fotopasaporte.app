@@ -35,7 +35,7 @@ export function FAQAccordion() {
     {
       question: '¿Puedo imprimir mi foto?',
       answer:
-        'Puedes descargar el archivo individual o generar la plantilla para papel estándar de 10×15 cm (4×6") con varias copias y marcas de corte listas para cualquier quiosco o impresora.',
+        'Puedes descargar el archivo individual en alta resolución (300 DPI) o generar la plantilla oficial en papel A4 con múltiples copias y marcas de corte listas para cualquier quiosco o impresora doméstica.',
     },
     {
       question: '¿Qué ocurre con la foto que subo?',
@@ -53,10 +53,10 @@ export function FAQAccordion() {
       <div className="mx-auto max-w-[840px] px-4 sm:px-6">
         {/* Section Header */}
         <div className="text-center">
-          <h2 className="text-[32px] font-semibold tracking-tight text-[#1D1D1F] sm:text-[42px]">
+          <h2 className="text-[26px] font-semibold tracking-tight text-[#1D1D1F] sm:text-[36px] lg:text-[42px]">
             Preguntas frecuentes
           </h2>
-          <p className="mt-3 text-[17px] text-[#6E6E73]">
+          <p className="mt-3 text-[15px] sm:text-[17px] text-[#6E6E73]">
             Respuestas claras y directas a las dudas habituales al preparar fotos para trámites oficiales.
           </p>
         </div>
@@ -70,12 +70,12 @@ export function FAQAccordion() {
                 <button
                   type="button"
                   onClick={() => toggleAccordion(index)}
-                  className="flex w-full items-center justify-between text-left transition-colors"
+                  className="flex w-full items-center justify-between text-left transition-colors cursor-pointer"
                   aria-expanded={isOpen}
                   id={`faq-btn-${index}`}
                   aria-controls={`faq-panel-${index}`}
                 >
-                  <span className="text-[17px] font-semibold text-[#1D1D1F] pr-4">
+                  <span className="text-[15px] sm:text-[17px] font-semibold text-[#1D1D1F] pr-3 sm:pr-4">
                     {faq.question}
                   </span>
                   <div
@@ -92,7 +92,7 @@ export function FAQAccordion() {
                     id={`faq-panel-${index}`}
                     role="region"
                     aria-labelledby={`faq-btn-${index}`}
-                    className="mt-3.5 pr-8 text-[15px] leading-relaxed text-[#6E6E73] animate-fade-in"
+                    className="mt-3 pr-2 sm:pr-8 text-[14px] sm:text-[15px] leading-relaxed text-[#6E6E73] animate-fade-in"
                   >
                     <p>{faq.answer}</p>
                   </div>

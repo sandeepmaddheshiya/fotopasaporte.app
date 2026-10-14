@@ -169,32 +169,32 @@ export function PhotoMaker({
         {stage !== 'result' && (
           <>
             <div className="mx-auto max-w-2xl text-center">
-              <h2 className="text-[32px] font-bold tracking-tight text-[#1D1D1F] sm:text-[42px]">
+              <h2 className="text-[26px] font-bold tracking-tight text-[#1D1D1F] sm:text-[36px] lg:text-[42px]">
                 Prepara tu foto oficial
               </h2>
-              <p className="mt-3 text-[16px] text-[#6E6E73]">
+              <p className="mt-2 sm:mt-3 text-[14px] sm:text-[16px] text-[#6E6E73]">
                 Ajuste biométrico automático conforme a la normativa oficial y entrega inmediata en alta resolución (300 DPI).
               </p>
             </div>
 
             {/* Step Navigation Pills */}
-            <div className="mx-auto mt-8 flex max-w-xl items-center justify-between rounded-full border border-[#D2D2D7] bg-white p-1.5 shadow-2xs">
+            <div className="mx-auto mt-6 sm:mt-8 flex max-w-xl items-center justify-between rounded-full border border-[#D2D2D7] bg-white p-1 sm:p-1.5 shadow-2xs">
               {/* Step 1: Document */}
               <button
                 type="button"
                 onClick={() => setStage('select')}
-                className={`flex flex-1 items-center justify-center gap-1.5 rounded-full py-2 text-[13px] font-medium transition-all cursor-pointer ${
+                className={`flex flex-1 items-center justify-center gap-1 sm:gap-1.5 rounded-full px-1.5 sm:px-3 py-1.5 sm:py-2 text-[11px] sm:text-[13px] font-medium transition-all cursor-pointer ${
                   stage === 'select'
                     ? 'bg-[#0071E3] text-white shadow-xs'
                     : 'text-[#6E6E73] hover:text-[#1D1D1F]'
                 }`}
               >
                 <span
-                  className={`flex h-5 w-5 items-center justify-center rounded-full text-[11px] font-semibold ${
+                  className={`flex h-4.5 w-4.5 sm:h-5 sm:w-5 items-center justify-center rounded-full text-[10px] sm:text-[11px] font-semibold shrink-0 ${
                     stage === 'select' ? 'bg-white/20 text-white' : 'bg-[#F5F5F7] text-[#6E6E73]'
                   }`}
                 >
-                  {stage !== 'select' ? <Check className="h-3 w-3" /> : '1'}
+                  {stage !== 'select' ? <Check className="h-2.5 w-2.5 sm:h-3 sm:w-3" /> : '1'}
                 </span>
                 <span>Documento</span>
               </button>
@@ -203,18 +203,18 @@ export function PhotoMaker({
               <button
                 type="button"
                 onClick={() => setStage('upload')}
-                className={`flex flex-1 items-center justify-center gap-1.5 rounded-full py-2 text-[13px] font-medium transition-all cursor-pointer ${
+                className={`flex flex-1 items-center justify-center gap-1 sm:gap-1.5 rounded-full px-1.5 sm:px-3 py-1.5 sm:py-2 text-[11px] sm:text-[13px] font-medium transition-all cursor-pointer ${
                   stage === 'upload'
                     ? 'bg-[#0071E3] text-white shadow-xs'
                     : 'text-[#6E6E73] hover:text-[#1D1D1F]'
                 }`}
               >
                 <span
-                  className={`flex h-5 w-5 items-center justify-center rounded-full text-[11px] font-semibold ${
+                  className={`flex h-4.5 w-4.5 sm:h-5 sm:w-5 items-center justify-center rounded-full text-[10px] sm:text-[11px] font-semibold shrink-0 ${
                     stage === 'upload' ? 'bg-white/20 text-white' : 'bg-[#F5F5F7] text-[#6E6E73]'
                   }`}
                 >
-                  {uploadedImageSrc && stage !== 'upload' ? <Check className="h-3 w-3" /> : '2'}
+                  {uploadedImageSrc && stage !== 'upload' ? <Check className="h-2.5 w-2.5 sm:h-3 sm:w-3" /> : '2'}
                 </span>
                 <span>Tu foto</span>
               </button>
@@ -224,7 +224,7 @@ export function PhotoMaker({
                 type="button"
                 disabled={!uploadedImageSrc}
                 onClick={() => uploadedImageSrc && setStage(fixResult ? 'result' : 'processing')}
-                className={`flex flex-1 items-center justify-center gap-1.5 rounded-full py-2 text-[13px] font-medium transition-all ${
+                className={`flex flex-1 items-center justify-center gap-1 sm:gap-1.5 rounded-full px-1.5 sm:px-3 py-1.5 sm:py-2 text-[11px] sm:text-[13px] font-medium transition-all ${
                   stage === 'processing'
                     ? 'bg-[#0071E3] text-white shadow-xs'
                     : uploadedImageSrc
@@ -233,7 +233,7 @@ export function PhotoMaker({
                 }`}
               >
                 <span
-                  className={`flex h-5 w-5 items-center justify-center rounded-full text-[11px] font-semibold ${
+                  className={`flex h-4.5 w-4.5 sm:h-5 sm:w-5 items-center justify-center rounded-full text-[10px] sm:text-[11px] font-semibold shrink-0 ${
                     stage === 'processing'
                       ? 'bg-white/20 text-white'
                       : 'bg-[#F5F5F7] text-[#6E6E73]'
@@ -241,7 +241,8 @@ export function PhotoMaker({
                 >
                   3
                 </span>
-                <span>Resultado oficial</span>
+                <span className="hidden sm:inline">Resultado oficial</span>
+                <span className="inline sm:hidden">Resultado</span>
               </button>
             </div>
           </>
@@ -249,15 +250,15 @@ export function PhotoMaker({
 
         {/* ═══ STAGES 1 & 2: SELECTION & UPLOAD (CLEAN SINGLE SURFACE) ═══ */}
         {(stage === 'select' || stage === 'upload') && (
-          <div className="mx-auto mt-8 max-w-[960px] rounded-3xl border border-slate-200/90 bg-white p-6 shadow-sm sm:p-10">
+          <div className="mx-auto mt-6 sm:mt-8 max-w-[960px] rounded-2xl sm:rounded-3xl border border-slate-200/90 bg-white p-4 sm:p-8 lg:p-10 shadow-sm">
             {/* STEP 1: Document & Country Selection */}
             {stage === 'select' && (
-              <div className="space-y-8 animate-fade-in">
+              <div className="space-y-6 sm:space-y-8 animate-fade-in">
                 <div className="border-b border-[#E5E5EA] pb-4">
-                  <h3 className="text-[20px] font-semibold text-[#1D1D1F]">
+                  <h3 className="text-[18px] sm:text-[20px] font-semibold text-[#1D1D1F]">
                     Paso 1: Selecciona tu documento y país de destino
                   </h3>
-                  <p className="mt-1 text-[14px] text-[#6E6E73]">
+                  <p className="mt-1 text-[13px] sm:text-[14px] text-[#6E6E73]">
                     Ajustaremos automáticamente las medidas oficiales ({selectedDocSpec.widthMm}×{selectedDocSpec.heightMm} mm), proporciones faciales y fondo reglamentario.
                   </p>
                 </div>
@@ -273,11 +274,11 @@ export function PhotoMaker({
                   onSelectDocSpec={setSelectedDocSpec}
                 />
 
-                <div className="flex justify-end pt-4">
+                <div className="flex justify-end pt-3 sm:pt-4">
                   <button
                     type="button"
                     onClick={() => setStage('upload')}
-                    className="group inline-flex items-center gap-2 rounded-full bg-[#0071E3] px-7 py-3 text-[15px] font-medium text-white shadow-xs transition-all hover:bg-[#0077ED] active:scale-[0.98] cursor-pointer"
+                    className="group inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-[#0071E3] px-7 py-3 text-[14px] sm:text-[15px] font-medium text-white shadow-xs transition-all hover:bg-[#0077ED] active:scale-[0.98] cursor-pointer"
                   >
                     <span>Continuar con mi foto</span>
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />

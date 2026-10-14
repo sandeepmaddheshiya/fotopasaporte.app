@@ -7,7 +7,7 @@ export function PrivacySection() {
   return (
     <section className="bg-[#F5F5F7] py-16 sm:py-24">
       <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
-        <div className="mx-auto max-w-3xl rounded-3xl border border-[#D2D2D7] bg-white p-8 sm:p-12 shadow-sm">
+        <div className="mx-auto max-w-3xl rounded-2xl sm:rounded-3xl border border-[#D2D2D7] bg-white p-5 sm:p-8 md:p-12 shadow-sm">
           {/* Header */}
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F5F5F7] text-[#0071E3]">
@@ -18,11 +18,11 @@ export function PrivacySection() {
             </span>
           </div>
 
-          <h2 className="mt-5 text-[28px] font-semibold tracking-tight text-[#1D1D1F] sm:text-[38px]">
+          <h2 className="mt-4 sm:mt-5 text-[22px] sm:text-[30px] md:text-[38px] font-semibold tracking-tight text-[#1D1D1F] leading-tight">
             Tu foto es personal. Trátala como tal.
           </h2>
 
-          <p className="mt-4 text-[16px] leading-relaxed text-[#6E6E73] sm:text-[18px]">
+          <p className="mt-3 sm:mt-4 text-[14px] sm:text-[16px] leading-relaxed text-[#6E6E73]">
             Queremos que preparar tu fotografía sea sencillo y transparente. Consulta cómo se procesa tu imagen y qué ocurre con tus archivos.
           </p>
 

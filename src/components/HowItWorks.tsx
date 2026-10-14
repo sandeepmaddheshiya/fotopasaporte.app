@@ -23,7 +23,7 @@ export function HowItWorks() {
       number: '03',
       title: 'Descarga el resultado',
       description:
-        'Revisa la imagen final y descarga el archivo individual a 300 DPI o la plantilla de 10×15 cm lista para imprimir.',
+        'Revisa la imagen final y descarga el archivo individual a 300 DPI o la plantilla oficial A4 lista para imprimir.',
       icon: <ArrowDownToLine className="h-5 w-5 text-[#0071E3]" />,
     },
   ];
@@ -33,20 +33,20 @@ export function HowItWorks() {
       <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
         {/* Section Header */}
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-[32px] font-semibold tracking-tight text-[#1D1D1F] sm:text-[42px]">
+          <h2 className="text-[26px] font-semibold tracking-tight text-[#1D1D1F] sm:text-[36px] lg:text-[42px]">
             De tu foto al documento, en pocos pasos.
           </h2>
-          <p className="mt-3 text-[17px] text-[#6E6E73]">
+          <p className="mt-3 text-[15px] sm:text-[17px] text-[#6E6E73]">
             Un flujo de trabajo guiado para obtener una imagen limpia, bien proporcionada y con las medidas oficiales.
           </p>
         </div>
 
         {/* 3 Steps Grid */}
-        <div className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-3">
+        <div className="mt-10 sm:mt-14 grid grid-cols-1 gap-6 md:grid-cols-3">
           {steps.map((step) => (
             <div
               key={step.number}
-              className="relative flex flex-col justify-between rounded-3xl border border-[#D2D2D7] bg-white p-8 shadow-xs transition-shadow hover:shadow-md"
+              className="relative flex flex-col justify-between rounded-2xl sm:rounded-3xl border border-[#D2D2D7] bg-white p-5 sm:p-8 shadow-xs transition-shadow hover:shadow-md"
             >
               <div>
                 <div className="flex items-center justify-between">

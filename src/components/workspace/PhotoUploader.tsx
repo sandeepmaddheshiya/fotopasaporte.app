@@ -99,7 +99,7 @@ export function PhotoUploader({ onImageSelected }: PhotoUploaderProps) {
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         onClick={() => fileInputRef.current?.click()}
-        className={`relative flex min-h-[260px] cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed p-8 text-center transition-all ${
+        className={`relative flex min-h-[220px] sm:min-h-[260px] cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed p-5 sm:p-8 text-center transition-all ${
           isDragging
             ? 'border-[#0071E3] bg-[#0071E3]/5 scale-[1.01]'
             : 'border-[#D2D2D7] bg-[#F5F5F7]/60 hover:border-[#8E8E93] hover:bg-[#F5F5F7]'
@@ -113,14 +113,14 @@ export function PhotoUploader({ onImageSelected }: PhotoUploaderProps) {
           className="hidden"
         />
 
-        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white shadow-sm text-[#0071E3] mb-4">
-          <UploadCloud className="h-7 w-7" />
+        <div className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-2xl bg-white shadow-sm text-[#0071E3] mb-3 sm:mb-4">
+          <UploadCloud className="h-6 w-6 sm:h-7 sm:w-7" />
         </div>
 
-        <p className="text-[17px] font-semibold text-[#1D1D1F]">
+        <p className="text-[16px] sm:text-[17px] font-semibold text-[#1D1D1F]">
           Arrastra tu foto aquí
         </p>
-        <p className="mt-1 text-[14px] text-[#6E6E73]">
+        <p className="mt-1 text-[13px] sm:text-[14px] text-[#6E6E73]">
           o selecciónala desde tu dispositivo
         </p>
 
@@ -130,12 +130,12 @@ export function PhotoUploader({ onImageSelected }: PhotoUploaderProps) {
             e.stopPropagation();
             fileInputRef.current?.click();
           }}
-          className="mt-5 rounded-full bg-[#0071E3] px-6 py-2.5 text-[14px] font-medium text-white shadow-xs transition-colors hover:bg-[#0077ED]"
+          className="mt-4 sm:mt-5 rounded-full bg-[#0071E3] px-6 py-2.5 text-[14px] font-medium text-white shadow-xs transition-colors hover:bg-[#0077ED]"
         >
           {isLoading ? 'Cargando foto...' : 'Elegir foto'}
         </button>
 
-        <p className="mt-3 text-[12px] text-[#8E8E93]">
+        <p className="mt-2.5 sm:mt-3 text-[11px] sm:text-[12px] text-[#8E8E93]">
           Formatos compatibles: JPG, PNG, WEBP (hasta 20 MB)
         </p>
       </div>
@@ -149,23 +149,23 @@ export function PhotoUploader({ onImageSelected }: PhotoUploaderProps) {
       )}
 
       {/* Sample Photo Instant Tester */}
-      <div className="flex flex-col items-center justify-between gap-3 rounded-xl border border-[#E5E5EA] bg-white p-3.5 sm:flex-row">
-        <div className="flex items-center gap-2 text-[13px] text-[#6E6E73]">
-          <Sparkles className="h-4 w-4 text-[#0071E3]" />
+      <div className="flex flex-col items-start sm:items-center justify-between gap-3 rounded-xl border border-[#E5E5EA] bg-white p-3.5 sm:flex-row">
+        <div className="flex items-center gap-2 text-[12px] sm:text-[13px] text-[#6E6E73]">
+          <Sparkles className="h-4 w-4 text-[#0071E3] shrink-0" />
           <span>¿No tienes una foto a mano? Prueba el editor al instante:</span>
         </div>
-        <div className="flex gap-2">
+        <div className="flex w-full sm:w-auto gap-2">
           <button
             type="button"
             onClick={() => loadSample('/images/sample-portrait.jpg')}
-            className="rounded-lg border border-[#D2D2D7] bg-[#F5F5F7] px-3 py-1 text-[12px] font-medium text-[#1D1D1F] transition-colors hover:bg-[#E5E5EA]"
+            className="flex-1 sm:flex-initial rounded-lg border border-[#D2D2D7] bg-[#F5F5F7] px-3 py-1.5 text-[11px] sm:text-[12px] font-medium text-[#1D1D1F] transition-colors hover:bg-[#E5E5EA] text-center"
           >
             Muestra 1 (Retrato A)
           </button>
           <button
             type="button"
             onClick={() => loadSample('/images/sample-portrait-male.jpg')}
-            className="rounded-lg border border-[#D2D2D7] bg-[#F5F5F7] px-3 py-1 text-[12px] font-medium text-[#1D1D1F] transition-colors hover:bg-[#E5E5EA]"
+            className="flex-1 sm:flex-initial rounded-lg border border-[#D2D2D7] bg-[#F5F5F7] px-3 py-1.5 text-[11px] sm:text-[12px] font-medium text-[#1D1D1F] transition-colors hover:bg-[#E5E5EA] text-center"
           >
             Muestra 2 (Retrato B)
           </button>

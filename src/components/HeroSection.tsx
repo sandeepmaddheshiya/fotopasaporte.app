@@ -28,21 +28,21 @@ export function HeroSection({ onStartClick, onSelectSamplePhoto }: HeroSectionPr
             </div>
 
             {/* Headline */}
-            <h1 className="text-[38px] leading-[1.08] font-semibold tracking-tight text-[#1D1D1F] sm:text-[52px] lg:text-[58px]">
+            <h1 className="text-[32px] leading-[1.1] font-semibold tracking-tight text-[#1D1D1F] sm:text-[48px] lg:text-[58px]">
               Tu foto de pasaporte, perfecta a la primera.
             </h1>
 
             {/* Supporting Copy */}
-            <p className="mt-5 text-[17px] leading-relaxed text-[#6E6E73] sm:text-[19px]">
+            <p className="mt-4 sm:mt-5 text-[16px] leading-relaxed text-[#6E6E73] sm:text-[19px]">
               Prepara tu foto para pasaporte o visado en unos sencillos pasos. Ajusta el encuadre, el
               fondo y las dimensiones según los requisitos de tu documento.
             </p>
 
             {/* CTAs */}
-            <div className="mt-8 flex w-full flex-col gap-3.5 sm:w-auto sm:flex-row sm:items-center">
+            <div className="mt-7 sm:mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center">
               <button
                 onClick={onStartClick}
-                className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#0071E3] px-7 py-3.5 text-[16px] font-medium text-white shadow-xs transition-all hover:bg-[#0077ED] active:scale-[0.98]"
+                className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#0071E3] px-7 py-3.5 text-[15px] sm:text-[16px] font-medium text-white shadow-xs transition-all hover:bg-[#0077ED] active:scale-[0.98] w-full sm:w-auto"
               >
                 <span>Crear mi foto</span>
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -50,7 +50,7 @@ export function HeroSection({ onStartClick, onSelectSamplePhoto }: HeroSectionPr
 
               <button
                 onClick={scrollToRequirements}
-                className="inline-flex items-center justify-center rounded-full border border-[#D2D2D7] bg-white px-6 py-3.5 text-[16px] font-medium text-[#1D1D1F] transition-colors hover:bg-[#F5F5F7] active:scale-[0.98]"
+                className="inline-flex items-center justify-center rounded-full border border-[#D2D2D7] bg-white px-6 py-3.5 text-[15px] sm:text-[16px] font-medium text-[#1D1D1F] transition-colors hover:bg-[#F5F5F7] active:scale-[0.98] w-full sm:w-auto"
               >
                 Consultar requisitos
               </button>
@@ -169,17 +169,17 @@ export function HeroSection({ onStartClick, onSelectSamplePhoto }: HeroSectionPr
               </div>
 
               {/* Discreet Editing Toolbar */}
-              <div className="mt-4 flex items-center justify-between rounded-xl border border-[#D2D2D7] bg-white px-3.5 py-2.5 text-[12px] text-[#6E6E73] shadow-xs">
+              <div className="mt-4 flex flex-wrap items-center justify-between gap-2.5 rounded-xl border border-[#D2D2D7] bg-white px-3.5 py-2.5 text-[12px] text-[#6E6E73] shadow-xs">
                 <div className="flex items-center gap-2">
-                  <Sliders className="h-3.5 w-3.5 text-[#0071E3]" />
-                  <span>Encuadre: Automático</span>
+                  <Sliders className="h-3.5 w-3.5 text-[#0071E3] shrink-0" />
+                  <span className="truncate">Encuadre: Automático</span>
                 </div>
 
                 <div className="flex items-center gap-2">
                   {onSelectSamplePhoto && (
                     <button
                       onClick={() => onSelectSamplePhoto('/images/sample-portrait.jpg')}
-                      className="rounded-full bg-[#0071E3]/10 px-3 py-1 font-medium text-[#0071E3] transition-colors hover:bg-[#0071E3] hover:text-white"
+                      className="rounded-full bg-[#0071E3]/10 px-3 py-1 font-medium text-[#0071E3] transition-colors hover:bg-[#0077ED] hover:text-white cursor-pointer text-[11px] sm:text-[12px]"
                     >
                       Probar con esta foto
                     </button>
