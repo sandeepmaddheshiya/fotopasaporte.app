@@ -38,7 +38,7 @@ export default function HomePage() {
   };
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-white w-full max-w-full overflow-x-clip">
       {/* 1. Navigation Header */}
       <Header onStartClick={scrollToMaker} />
 

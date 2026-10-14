@@ -23,7 +23,7 @@ export function Header({ onStartClick }: HeaderProps) {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-[#D2D2D7]/60 bg-white/80 backdrop-blur-md transition-all">
-      <div className="mx-auto flex h-14 max-w-[1200px] items-center justify-between px-4 sm:px-6">
+      <div className="mx-auto flex h-14 w-full max-w-[1200px] items-center justify-between px-4 sm:px-6">
         {/* Brand */}
         <Link
           href="/"
