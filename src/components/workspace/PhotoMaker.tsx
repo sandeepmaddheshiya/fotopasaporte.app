@@ -203,6 +203,7 @@ export function PhotoMaker({
               <PhotoEditor
                 imageSrc={uploadedImageSrc}
                 spec={selectedDocSpec}
+                country={selectedCountry}
                 onResetImage={handleResetImage}
               />
             </div>

@@ -15,27 +15,64 @@ import {
   ArrowLeft,
   CheckCircle2,
   FileCheck,
+  Sparkles,
+  ShieldCheck,
+  Loader2,
+  AlertTriangle,
+  X,
+  Undo2,
 } from 'lucide-react';
-import { DocumentSpec, EditorSettings } from '@/types';
+import { CountryInfo, DocumentSpec, EditorSettings } from '@/types';
 import {
   renderToCanvas,
   drawBiometricGuides,
   exportPhotoBlob,
 } from '@/lib/photo-processing';
 import { PrintSheetModal } from './PrintSheetModal';
+import { BiometricValidationModal } from './BiometricValidationModal';
+import {
+  analyzePhotoWithAI,
+  analyzeAndFixWithAI,
+  AIAnalysisResult,
+  translateChange,
+} from '@/lib/ai-backend';
 import confetti from 'canvas-confetti';
 
 interface PhotoEditorProps {
   imageSrc: string;
   spec: DocumentSpec;
+  country?: CountryInfo;
   onResetImage: () => void;
 }
 
-export function PhotoEditor({ imageSrc, spec, onResetImage }: PhotoEditorProps) {
+export function PhotoEditor({
+  imageSrc,
+  spec,
+  country,
+  onResetImage,
+}: PhotoEditorProps) {
   // Canvas refs
   const interactiveCanvasRef = useRef<HTMLCanvasElement>(null);
   const hiddenRenderCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const imgElementRef = useRef<HTMLImageElement | null>(null);
+
+  // Active image source (supports switching to AI-corrected preview)
+  const [activeImageSrc, setActiveImageSrc] = useState<string>(imageSrc);
+  const [appliedAiChanges, setAppliedAiChanges] = useState<string[] | null>(null);
+
+  // AI Validator & Auto-Fix state
+  const [isAiValidating, setIsAiValidating] = useState(false);
+  const [isAiFixing, setIsAiFixing] = useState(false);
+  const [aiAnalysisResult, setAiAnalysisResult] = useState<AIAnalysisResult | null>(null);
+  const [isValidationModalOpen, setIsValidationModalOpen] = useState(false);
+  const [aiNotice, setAiNotice] = useState<string | null>(null);
+
+  // Reset when source prop changes
+  useEffect(() => {
+    setActiveImageSrc(imageSrc);
+    setAppliedAiChanges(null);
+    setAiAnalysisResult(null);
+  }, [imageSrc]);
 
   // Editor Settings state
   const [settings, setSettings] = useState<EditorSettings>({
@@ -52,7 +89,9 @@ export function PhotoEditor({ imageSrc, spec, onResetImage }: PhotoEditorProps) 
   });
 
   // Target size limit option (e.g. for US Visa 240 KB limit or official rules)
-  const [useTargetLimit, setUseTargetLimit] = useState<boolean>(Boolean(spec.fileSizeKbMax && spec.fileSizeKbMax <= 500));
+  const [useTargetLimit, setUseTargetLimit] = useState<boolean>(
+    Boolean(spec.fileSizeKbMax && spec.fileSizeKbMax <= 500)
+  );
   const [targetKb, setTargetKb] = useState<number>(spec.fileSizeKbMax || 240);
 
   useEffect(() => {
@@ -73,17 +112,6 @@ export function PhotoEditor({ imageSrc, spec, onResetImage }: PhotoEditorProps) 
   const [estimatedSizeKb, setEstimatedSizeKb] = useState<number>(0);
   const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
-
-  // Load image
-  useEffect(() => {
-    const img = new Image();
-    img.crossOrigin = 'anonymous';
-    img.onload = () => {
-      imgElementRef.current = img;
-      setImageLoaded(true);
-    };
-    img.src = imageSrc;
-  }, [imageSrc]);
 
   // Main rendering function
   const renderAll = useCallback(() => {
@@ -118,78 +146,201 @@ export function PhotoEditor({ imageSrc, spec, onResetImage }: PhotoEditorProps) 
       drawBiometricGuides(ctx, containerWidth, displayHeight, spec);
     }
 
-    // 4. Update estimated size
-    const approxKb = Math.round((spec.widthPx * spec.heightPx * 3 * 0.12) / 1024);
-    setEstimatedSizeKb(useTargetLimit ? Math.min(approxKb, targetKb) : approxKb);
-  }, [spec, settings, useTargetLimit, targetKb]);
+    // 4. Update estimated file size asynchronously (debounced)
+    if (renderCanvas.width > 0 && renderCanvas.height > 0) {
+      renderCanvas.toBlob(
+        (blob) => {
+          if (blob) {
+            setEstimatedSizeKb(Math.round(blob.size / 1024));
+          }
+        },
+        settings.outputFormat,
+        settings.quality
+      );
+    }
+  }, [spec, settings]);
 
-  // Re-render whenever settings or image changes
+  // Load active image into element ref and re-render
+  useEffect(() => {
+    setImageLoaded(false);
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      imgElementRef.current = img;
+      setImageLoaded(true);
+      renderAll();
+    };
+    img.src = activeImageSrc;
+  }, [activeImageSrc, renderAll]);
+
+  // Re-render whenever settings, spec, or image changes
   useEffect(() => {
     if (imageLoaded) {
       renderAll();
     }
   }, [imageLoaded, renderAll]);
 
-  // Handle Drag to Pan
+  // Recalculate on window resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (imageLoaded) {
+        renderAll();
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [imageLoaded, renderAll]);
+
+  // ---------------------------------------------------------------------------
+  // AI Backend Handlers
+  // ---------------------------------------------------------------------------
+
+  // 1. Run AI Biometric Validator (/api/v1/analyze)
+  const handleRunAiValidator = async () => {
+    if (aiAnalysisResult && !isAiFixing) {
+      setIsValidationModalOpen(true);
+      return;
+    }
+
+    setIsAiValidating(true);
+    setAiNotice(null);
+    try {
+      const countryCode = country?.code || 'ES';
+      const result = await analyzePhotoWithAI(activeImageSrc, countryCode);
+      setAiAnalysisResult(result);
+      setIsValidationModalOpen(true);
+    } catch (err: unknown) {
+      console.warn('AI Validator fallback:', err);
+      setAiNotice(
+        err instanceof Error
+          ? err.message
+          : 'No se pudo conectar con el motor de validación IA. Puedes continuar usando los controles locales.'
+      );
+    } finally {
+      setIsAiValidating(false);
+    }
+  };
+
+  // 2. Run AI Auto-Fix & Create (/api/v1/analyze-and-fix)
+  const handleRunAiFix = async () => {
+    setIsAiFixing(true);
+    setAiNotice(null);
+    try {
+      const countryCode = country?.code || 'ES';
+      const result = await analyzeAndFixWithAI(activeImageSrc, countryCode);
+
+      if (result.corrected_image_base64) {
+        const newSrc = `data:image/jpeg;base64,${result.corrected_image_base64}`;
+        setActiveImageSrc(newSrc);
+        setAppliedAiChanges(result.changes_applied || ['Ajuste biométrico completado']);
+        setAiAnalysisResult({
+          overall_status: result.overall_status,
+          issues: result.issues || [],
+          passed_checks: result.passed_checks || [],
+          summary: result.summary || {
+            total_issues: result.issues?.length || 0,
+            critical_issues: 0,
+            warnings: 0,
+            passed_checks: result.passed_checks?.length || 0,
+          },
+          country: result.country,
+        });
+
+        // Reset pan & rotation since AI already centered the face
+        setSettings((prev) => ({
+          ...prev,
+          panX: 0,
+          panY: 0,
+          rotation: 0,
+          zoom: 1.0,
+        }));
+
+        confetti({
+          particleCount: 50,
+          spread: 60,
+          origin: { y: 0.6 },
+        });
+      } else {
+        setAiNotice('El motor de IA no detectó un rostro claro para auto-ajustar.');
+      }
+    } catch (err: unknown) {
+      console.warn('AI Fix fallback:', err);
+      setAiNotice(
+        err instanceof Error
+          ? err.message
+          : 'No se pudo aplicar el auto-ajuste con IA. Utiliza los controles manuales del editor.'
+      );
+    } finally {
+      setIsAiFixing(false);
+    }
+  };
+
+  // 3. Revert AI changes back to original photo
+  const handleRevertToOriginal = () => {
+    setActiveImageSrc(imageSrc);
+    setAppliedAiChanges(null);
+    setAiAnalysisResult(null);
+    handleResetAdjustments();
+  };
+
+  // ---------------------------------------------------------------------------
+  // Canvas Pan Interaction Handlers
+  // ---------------------------------------------------------------------------
   const handleMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
     setIsDragging(true);
-    setDragStart({ x: e.clientX - settings.panX, y: e.clientY - settings.panY });
+    setDragStart({ x: e.clientX, y: e.clientY });
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
     if (!isDragging) return;
-    const newPanX = e.clientX - dragStart.x;
-    const newPanY = e.clientY - dragStart.y;
-    // Limit pan to reasonable range
-    const maxPan = spec.widthPx * 0.5;
+    const deltaX = (e.clientX - dragStart.x) * 0.8;
+    const deltaY = (e.clientY - dragStart.y) * 0.8;
+
     setSettings((prev) => ({
       ...prev,
-      panX: Math.max(-maxPan, Math.min(maxPan, newPanX)),
-      panY: Math.max(-maxPan, Math.min(maxPan, newPanY)),
+      panX: prev.panX + deltaX,
+      panY: prev.panY + deltaY,
     }));
+    setDragStart({ x: e.clientX, y: e.clientY });
   };
 
   const handleMouseUp = () => {
     setIsDragging(false);
   };
 
-  // Touch support for mobile pan
   const handleTouchStart = (e: React.TouchEvent<HTMLCanvasElement>) => {
     if (e.touches.length === 1) {
       setIsDragging(true);
-      const touch = e.touches[0];
-      setDragStart({ x: touch.clientX - settings.panX, y: touch.clientY - settings.panY });
+      setDragStart({ x: e.touches[0].clientX, y: e.touches[0].clientY });
     }
   };
 
   const handleTouchMove = (e: React.TouchEvent<HTMLCanvasElement>) => {
     if (!isDragging || e.touches.length !== 1) return;
-    const touch = e.touches[0];
-    const newPanX = touch.clientX - dragStart.x;
-    const newPanY = touch.clientY - dragStart.y;
-    const maxPan = spec.widthPx * 0.5;
+    const deltaX = (e.touches[0].clientX - dragStart.x) * 0.8;
+    const deltaY = (e.touches[0].clientY - dragStart.y) * 0.8;
+
     setSettings((prev) => ({
       ...prev,
-      panX: Math.max(-maxPan, Math.min(maxPan, newPanX)),
-      panY: Math.max(-maxPan, Math.min(maxPan, newPanY)),
+      panX: prev.panX + deltaX,
+      panY: prev.panY + deltaY,
     }));
+    setDragStart({ x: e.touches[0].clientX, y: e.touches[0].clientY });
   };
 
   const handleTouchEnd = () => {
     setIsDragging(false);
   };
 
-  // Wheel zoom
   const handleWheel = (e: React.WheelEvent<HTMLCanvasElement>) => {
     e.preventDefault();
-    const delta = e.deltaY < 0 ? 0.05 : -0.05;
+    const zoomFactor = e.deltaY < 0 ? 0.05 : -0.05;
     setSettings((prev) => ({
       ...prev,
-      zoom: Math.min(2.5, Math.max(0.8, Number((prev.zoom + delta).toFixed(2)))),
+      zoom: Math.min(2.5, Math.max(0.8, Number((prev.zoom + zoomFactor).toFixed(2)))),
     }));
   };
 
-  // Reset adjustments
   const handleResetAdjustments = () => {
     setSettings({
       zoom: 1.0,
@@ -205,38 +356,41 @@ export function PhotoEditor({ imageSrc, spec, onResetImage }: PhotoEditorProps) 
     });
   };
 
-  // Download Single Photo
+  // ---------------------------------------------------------------------------
+  // Export & Download
+  // ---------------------------------------------------------------------------
   const handleDownload = async () => {
     if (!hiddenRenderCanvasRef.current) return;
     setIsExporting(true);
 
     try {
-      const { blob, sizeKb } = await exportPhotoBlob(
-        hiddenRenderCanvasRef.current,
+      const renderCanvas = hiddenRenderCanvasRef.current;
+      const targetMaxKb = useTargetLimit ? targetKb : undefined;
+
+      const exportRes = await exportPhotoBlob(
+        renderCanvas,
         settings.outputFormat,
         settings.quality,
-        useTargetLimit ? targetKb : undefined
+        targetMaxKb
       );
 
-      const extension = settings.outputFormat === 'image/png' ? 'png' : 'jpg';
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `fotopasaporte_${spec.id}_${spec.widthMm}x${spec.heightMm}mm.${extension}`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
+      if (exportRes?.blob) {
+        const url = URL.createObjectURL(exportRes.blob);
+        const link = document.createElement('a');
+        const ext = settings.outputFormat === 'image/png' ? 'png' : 'jpg';
+        const docSlug = spec.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        link.download = `foto-${docSlug}-${spec.widthMm}x${spec.heightMm}mm.${ext}`;
+        link.href = url;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
 
-      // Trigger celebratory confetti
-      try {
         confetti({
-          particleCount: 60,
-          spread: 70,
-          origin: { y: 0.65 },
+          particleCount: 40,
+          spread: 60,
+          origin: { y: 0.7 },
         });
-      } catch {
-        // ignore
       }
     } catch (err) {
       console.error(err);
@@ -248,9 +402,9 @@ export function PhotoEditor({ imageSrc, spec, onResetImage }: PhotoEditorProps) 
 
   return (
     <div className="space-y-6">
-      {/* Top Bar with Document badge & Replace Photo button */}
+      {/* Top Bar with Document badge, AI buttons & Replace Photo */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#E5E5EA] pb-4">
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <button
             type="button"
             onClick={onResetImage}
@@ -260,20 +414,118 @@ export function PhotoEditor({ imageSrc, spec, onResetImage }: PhotoEditorProps) 
             <span>Cambiar foto</span>
           </button>
           <span className="text-[13px] text-[#6E6E73]">
+            {country ? `${country.flag} ${country.name} · ` : ''}
             Medidas: <strong>{spec.widthMm} × {spec.heightMm} mm</strong> ({spec.widthPx} × {spec.heightPx} px a 300 DPI)
           </span>
         </div>
 
-        <button
-          type="button"
-          onClick={handleResetAdjustments}
-          className="inline-flex items-center gap-1 text-[13px] text-[#6E6E73] hover:text-[#1D1D1F]"
-          title="Restablecer controles a los valores iniciales"
-        >
-          <RefreshCw className="h-3.5 w-3.5" />
-          <span>Restablecer ajustes</span>
-        </button>
+        {/* AI Action Buttons */}
+        <div className="flex flex-wrap items-center gap-2">
+          {/* AI Biometric Validator Button */}
+          <button
+            type="button"
+            onClick={handleRunAiValidator}
+            disabled={isAiValidating}
+            className="inline-flex items-center gap-1.5 rounded-full border border-[#0071E3]/30 bg-[#0071E3]/5 px-3.5 py-1.5 text-[13px] font-medium text-[#0071E3] hover:bg-[#0071E3]/10 transition-colors disabled:opacity-50"
+          >
+            {isAiValidating ? (
+              <>
+                <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                <span>Validando...</span>
+              </>
+            ) : (
+              <>
+                <ShieldCheck className="h-3.5 w-3.5" />
+                <span>Validar con IA</span>
+              </>
+            )}
+          </button>
+
+          {/* AI Auto-Fix Button */}
+          <button
+            type="button"
+            onClick={handleRunAiFix}
+            disabled={isAiFixing}
+            className="inline-flex items-center gap-1.5 rounded-full bg-[#0071E3] px-3.5 py-1.5 text-[13px] font-medium text-white shadow-2xs hover:bg-[#0077ED] transition-colors disabled:opacity-50"
+          >
+            {isAiFixing ? (
+              <>
+                <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                <span>Ajustando con IA...</span>
+              </>
+            ) : (
+              <>
+                <Sparkles className="h-3.5 w-3.5" />
+                <span>Auto-ajustar con IA</span>
+              </>
+            )}
+          </button>
+
+          {/* Reset manual controls */}
+          <button
+            type="button"
+            onClick={handleResetAdjustments}
+            className="inline-flex items-center gap-1 rounded-full p-2 text-[#6E6E73] hover:bg-[#F5F5F7] hover:text-[#1D1D1F]"
+            title="Restablecer controles manuales a los valores iniciales"
+          >
+            <RefreshCw className="h-3.5 w-3.5" />
+          </button>
+        </div>
       </div>
+
+      {/* AI Success Banner (when AI changes were applied) */}
+      {appliedAiChanges && appliedAiChanges.length > 0 && (
+        <div className="rounded-2xl border border-[#34C759]/30 bg-[#34C759]/5 p-3.5 text-[13px] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 animate-fade-in">
+          <div className="flex items-start gap-2.5">
+            <CheckCircle2 className="h-4 w-4 text-[#34C759] shrink-0 mt-0.5" />
+            <div>
+              <span className="font-semibold text-[#1D1D1F]">
+                Foto optimizada automáticamente con IA para {country?.name || 'trámites oficiales'}
+              </span>
+              <p className="text-[12px] text-[#6E6E73] mt-0.5">
+                {appliedAiChanges.map(translateChange).join(' · ')}
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 shrink-0">
+            {aiAnalysisResult && (
+              <button
+                type="button"
+                onClick={() => setIsValidationModalOpen(true)}
+                className="text-[12px] font-medium text-[#0071E3] hover:underline"
+              >
+                Ver informe
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={handleRevertToOriginal}
+              className="inline-flex items-center gap-1 text-[12px] text-[#8E8E93] hover:text-[#1D1D1F] transition-colors"
+            >
+              <Undo2 className="h-3 w-3" />
+              <span>Volver a original</span>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* AI Warning / Notice Banner */}
+      {aiNotice && (
+        <div className="rounded-2xl border border-[#FF9500]/30 bg-[#FF9500]/5 p-3 text-[12px] text-[#424245] flex items-center justify-between animate-fade-in">
+          <div className="flex items-center gap-2">
+            <AlertTriangle className="h-4 w-4 text-[#FF9500] shrink-0" />
+            <span>{aiNotice}</span>
+          </div>
+          <button
+            type="button"
+            onClick={() => setAiNotice(null)}
+            className="text-[#8E8E93] hover:text-[#1D1D1F]"
+          >
+            <X className="h-3.5 w-3.5" />
+          </button>
+        </div>
+      )}
 
       {/* Main Workspace: Left Canvas + Right Controls */}
       <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12">
@@ -607,6 +859,20 @@ export function PhotoEditor({ imageSrc, spec, onResetImage }: PhotoEditorProps) 
         singlePhotoCanvas={hiddenRenderCanvasRef.current}
         spec={spec}
       />
+
+      {/* Biometric Validation Modal */}
+      {country && (
+        <BiometricValidationModal
+          isOpen={isValidationModalOpen}
+          onClose={() => setIsValidationModalOpen(false)}
+          analysis={aiAnalysisResult}
+          isLoading={isAiValidating}
+          onApplyAIFix={handleRunAiFix}
+          isFixing={isAiFixing}
+          country={country}
+          spec={spec}
+        />
+      )}
     </div>
   );
 }
