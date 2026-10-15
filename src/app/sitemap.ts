@@ -5,13 +5,19 @@ import { isIndexableCountry } from '@/data/country-seo-data';
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://fotopasaporte.app';
 
-  // 1. Homepage
+  // 1. Homepage & Core Guides
   const routes: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
-      lastModified: '2026-10-14',
+      lastModified: '2026-10-15',
       changeFrequency: 'weekly',
       priority: 1.0,
+    },
+    {
+      url: `${baseUrl}/medidas-foto-pasaporte`,
+      lastModified: '2026-10-15',
+      changeFrequency: 'weekly',
+      priority: 0.9,
     },
   ];
 

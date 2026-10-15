@@ -62,6 +62,12 @@ export function Header({ onStartClick }: HeaderProps) {
           >
             Requisitos
           </button>
+          <Link
+            href="/medidas-foto-pasaporte"
+            className="text-[14px] text-[#6E6E73] transition-colors hover:text-[#1D1D1F]"
+          >
+            Medidas oficiales
+          </Link>
           <button
             onClick={() => scrollToSection('como-funciona')}
             className="text-[14px] text-[#6E6E73] transition-colors hover:text-[#1D1D1F]"
@@ -128,6 +134,13 @@ export function Header({ onStartClick }: HeaderProps) {
             >
               Requisitos
             </button>
+            <Link
+              href="/medidas-foto-pasaporte"
+              onClick={() => setMobileMenuOpen(false)}
+              className="text-left text-[15px] text-[#6E6E73]"
+            >
+              Medidas oficiales
+            </Link>
             <button
               onClick={() => scrollToSection('como-funciona')}
               className="text-left text-[15px] text-[#6E6E73]"

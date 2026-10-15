@@ -98,6 +98,8 @@ const SPANISH_COUNTRY_NAMES: Record<string, string> = {
   UY: 'Uruguay',
   PY: 'Paraguay',
   VE: 'Venezuela',
+  SV: 'El Salvador',
+  NI: 'Nicaragua',
   CZ: 'República Checa',
   RO: 'Rumanía',
   HU: 'Hungría',

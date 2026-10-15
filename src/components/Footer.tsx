@@ -81,6 +81,14 @@ export function Footer() {
                   Cómo funciona
                 </button>
               </li>
+              <li>
+                <Link
+                  href="/medidas-foto-pasaporte"
+                  className="hover:text-[#1D1D1F] transition-colors"
+                >
+                  Medidas de foto de pasaporte
+                </Link>
+              </li>
             </ul>
           </div>
 

@@ -60,6 +60,9 @@ export const INDEXABLE_COUNTRY_CODES = new Set([
   'IE', // Irlanda
   'JP', // Japón
   'CN', // China
+  'SV', // El Salvador
+  'NI', // Nicaragua
+  'PY', // Paraguay
 ]);
 
 export function isIndexableCountry(code: string): boolean {
@@ -547,6 +550,57 @@ const COUNTRY_AUTHORITIES: Record<string, CountryAuthorityInfo> = {
     ],
     officialPortalUrl: 'https://en.nia.gov.cn',
   },
+  SV: {
+    authorityName: 'Dirección General de Migración y Extranjería (DGME) / RNPN',
+    department: 'Ministerio de Justicia y Seguridad Pública (Gobierno de El Salvador)',
+    officialDocName: 'Pasaporte Biométrico Salvadoreño y Documento Único de Identidad (DUI)',
+    regulationsStandard: 'Ley Especial de Migración y de Extranjería & ICAO Doc 9303',
+    typicalProcessingTime: 'Expedición en el mismo día con cita en sucursales DGME',
+    primaryDocumentTypes: ['Pasaporte Biométrico (51×51 mm / 2×2 in o 35×45 mm)', 'DUI / Cédula Salvadoreña (35×45 mm)', 'Visa Consular'],
+    keyDifferencesText:
+      'El Salvador utiliza para el pasaporte consular emitido en Estados Unidos el formato de 51 × 51 mm (2 × 2 pulgadas) o el estándar de 35 × 45 mm para agencias locales y consulados europeos. Para el Documento Único de Identidad (DUI / cédula salvadoreña), la foto debe ser de 35 × 45 mm con fondo blanco liso, orejas y frente totalmente despejadas y sin gafas.',
+    specificPeculiarities: [
+      'Dimensiones para pasaporte: 51×51 mm (2×2 pulgadas) en consulados de EE.UU. o 35×45 mm según sede.',
+      'Medidas para Documento Único de Identidad (DUI / Cédula): 35×45 mm a 300 DPI.',
+      'Fondo rigurosamente blanco liso, sin sombras detrás de los hombros.',
+      'Orejas, frente y cejas descubiertas; sin aretes llamativos ni gafas.',
+    ],
+    officialPortalUrl: 'https://www.migracion.gob.sv',
+  },
+  NI: {
+    authorityName: 'Dirección General de Migración y Extranjería (DGME Nicaragua)',
+    department: 'Ministerio del Interior (Gobierno de Nicaragua)',
+    officialDocName: 'Pasaporte Ordinario Nicaragüense y Cédula de Identidad',
+    regulationsStandard: 'Ley General de Migración y Extranjería (Ley N°. 761) & OACI',
+    typicalProcessingTime: '8 a 15 días hábiles',
+    primaryDocumentTypes: ['Pasaporte Nicaragüense (50×50 mm o 35×45 mm)', 'Cédula Ciudadana', 'Visa Nicaragüense'],
+    keyDifferencesText:
+      'La DGME de Nicaragua y los consulados en el extranjero exigen fotografías a color, recientes, en formato de 50 × 50 mm (2 × 2 pulgadas) o 35 × 45 mm según la sede, con fondo blanco sólido, vestimenta formal de color oscuro y vista frontal recta con expresión neutra.',
+    specificPeculiarities: [
+      'Medidas oficiales: 50×50 mm (2×2 pulgadas) o estándar OACI 35×45 mm a 300 DPI.',
+      'Fondo blanco sólido y uniforme sin sombras ni texturas.',
+      'Vestimenta formal de cuello cerrado y color oscuro para contraste.',
+      'Sin gorras, pañuelos, aretes vistosos ni lentes.',
+    ],
+    officialPortalUrl: 'https://www.migob.gob.ni',
+  },
+  PY: {
+    authorityName: 'Departamento de Identificaciones de la Policía Nacional',
+    department: 'Ministerio del Interior (República del Paraguay)',
+    officialDocName: 'Pasaporte Electrónico Policial y Cédula de Identidad Civil',
+    regulationsStandard: 'Ley N° 222/1993 Orgánica de la Policía Nacional & Estándar OACI',
+    typicalProcessingTime: '15 a 20 días hábiles',
+    primaryDocumentTypes: ['Pasaporte Electrónico (35×45 mm)', 'Cédula de Identidad Civil (35×45 mm)', 'Visa Consular'],
+    keyDifferencesText:
+      'El Departamento de Identificaciones de la Policía Nacional de Paraguay estipula que la foto para pasaporte y cédula de identidad civil debe cumplir el formato de 35 × 45 mm con fondo blanco puro liso, expresión facial neutra, hombros paralelos a la cámara y sin prendas que oculten las facciones.',
+    specificPeculiarities: [
+      'Medidas oficiales de 35×45 mm (tamaño pasaporte y cédula paraguaya).',
+      'Fondo blanco homogéneo sin sombras detrás del sujeto.',
+      'Frente y orejas despejadas, sin gafas oscuras ni de montura gruesa.',
+      'Expresión seria con la boca cerrada y mirada frontal.',
+    ],
+    officialPortalUrl: 'https://www.identificaciones.gov.py',
+  },
 };
 
 // ---------------------------------------------------------------------------
@@ -781,6 +835,72 @@ const COUNTRY_SPECIFIC_REJECTION_REASONS: Record<string, CountryRejectionReason[
       riskLevel: 'Moderado',
     },
   ],
+  SV: [
+    {
+      title: 'Confundir las medidas del DUI (35×45 mm) con las del pasaporte en EE.UU. (51×51 mm)',
+      description:
+        'En los consulados de El Salvador en Estados Unidos se exige el formato 2×2 pulgadas (51×51 mm), mientras que para el DUI y trámites en territorio nacional se utiliza el formato 35×45 mm. Presentar el tamaño incorrecto provoca el rechazo automático.',
+      riskLevel: 'Crítico',
+    },
+    {
+      title: 'Orejas, frente o cejas cubiertas por el cabello',
+      description:
+        'La DGME salvadoreña exige que la frente completa y ambas orejas estén 100% despejadas. Cabello suelto sobre el rostro invalida el registro biométrico.',
+      riskLevel: 'Crítico',
+    },
+    {
+      title: 'Uso de gafas o lentes de sol',
+      description:
+        'No se permiten gafas en la foto del pasaporte salvadoreño ni en el DUI. Debes retirarlas antes de la captura.',
+      riskLevel: 'Alto',
+    },
+    {
+      title: 'Fondo con sombras o tonalidades no homogéneas',
+      description:
+        'El fondo debe ser blanco sólido absoluto. Se descartan fotos tomadas con sombras de la cabeza proyectadas en la pared.',
+      riskLevel: 'Alto',
+    },
+  ],
+  NI: [
+    {
+      title: 'Vestimenta de color blanco o escotada',
+      description:
+        'La DGME de Nicaragua exige expresamente ropa formal de color oscuro con cuello cerrado. Vestir prendas claras que se mezclen con el fondo blanco es motivo directo de inadmisión.',
+      riskLevel: 'Crítico',
+    },
+    {
+      title: 'Tamaño no conforme (50×50 mm vs 35×45 mm)',
+      description:
+        'El pasaporte nicaragüense requiere 50×50 mm (2×2 pulgadas) o 35×45 mm según el consulado emisor. FotoPasaporte calibra automáticamente la plantilla según la sede.',
+      riskLevel: 'Crítico',
+    },
+    {
+      title: 'Aretes vistosos, collares o gafas',
+      description:
+        'No se permiten aretes colgantes, collares grandes, accesorios en el cabello ni lentes de ningún tipo.',
+      riskLevel: 'Alto',
+    },
+  ],
+  PY: [
+    {
+      title: 'Uso de gafas o sombras en los ojos',
+      description:
+        'El Departamento de Identificaciones de la Policía Nacional de Paraguay desestima fotos donde los ojos estén obstruidos por monturas, reflejos de flash o gafas graduadas.',
+      riskLevel: 'Crítico',
+    },
+    {
+      title: 'Fondo grisáceo o con textura de pared',
+      description:
+        'El estándar oficial exige fondo blanco liso y uniforme sin rugosidades ni sombras tras los hombros.',
+      riskLevel: 'Alto',
+    },
+    {
+      title: 'Desviación del tamaño estándar (35×45 mm)',
+      description:
+        'Tanto el pasaporte paraguayo como la cédula civil exigen 35 × 45 mm con rostro ocupando entre el 70% y el 80% de la altura.',
+      riskLevel: 'Alto',
+    },
+  ],
 };
 
 // ---------------------------------------------------------------------------
@@ -797,6 +917,21 @@ const COUNTRY_SPECIFIC_FAQS: Record<string, CountryFAQItem[]> = {
       question: '¿Cuál es la diferencia entre la foto de pasaporte físico y la del formulario DS-160?',
       answer:
         'Las dimensiones y proporciones son idénticas: 2 × 2 pulgadas cuadradas (51 × 51 mm) con rostro entre 25 y 35 mm. La diferencia es el formato: para el pasaporte impreso requieres 2 copias físicas en papel fotográfico, mientras que para el formulario consular DS-160 requieres un archivo JPEG cuadrado de 600×600 px a 300 DPI y con un peso estricto menor o igual a 240 KB.',
+    },
+    {
+      question: '¿Cuál es el tamaño oficial de la foto para pasaporte y visado de Estados Unidos?',
+      answer:
+        'Tanto para el pasaporte americano como para la visa de EE.UU. (visado de no inmigrante DS-160 o de inmigrante), el tamaño estándar es de 2 × 2 pulgadas (51 × 51 mm / 600 × 600 píxeles a 300 DPI). La cabeza debe medir entre el 50% y el 69% de la altura total de la imagen (entre 25 y 35 mm).',
+    },
+    {
+      question: '¿Dónde tomar fotos para pasaporte americano o visa DS-160?',
+      answer:
+        'Puedes tomarte la fotografía en casa con la cámara de tu teléfono móvil frente a una pared blanca y procesarla con FotoPasaporte.app. Nuestra herramienta verifica el cumplimiento de las directrices del U.S. Department of State, ajusta la proporción a 2×2 pulgadas y exporta el archivo digital optimizado por debajo de 240 KB o la plantilla para imprimir dos fotos en papel 10×15 cm, ahorrándote los 15$ a 22$ que cobran en farmacias como Walgreens o CVS.',
+    },
+    {
+      question: '¿Cómo conseguir fotos 2x2 de pasaporte gratis para imprimir?',
+      answer:
+        'Sube tu foto a FotoPasaporte.app, selecciona el perfil «Estados Unidos - Pasaporte (2x2")» y genera la plantilla de impresión de 10 × 15 cm (4×6"). La plantilla incluye dos copias con marcas de corte milimétricas que puedes imprimir por unos pocos centavos en quioscos fotográficos o en cualquier impresora doméstica a escala 100%.',
     },
     {
       question: '¿Cómo garantizo que mi foto para el formulario DS-160 pese menos de 240 KB?',
@@ -853,7 +988,12 @@ const COUNTRY_SPECIFIC_FAQS: Record<string, CountryFAQItem[]> = {
         'El DNI español (DNIe 4.0) utiliza tradicionalmente un tamaño de 3,0 × 4,0 cm (30 × 40 mm), mientras que el Pasaporte Biométrico y los visados Schengen emplean la norma europea de 3,5 × 4,5 cm (35 × 45 mm). Ambos exigen fondo blanco liso y uniforme y papel fotográfico de alta calidad.',
     },
     {
-      question: '¿Acepta la Policía Nacional fotos impresas en casa para el DNI?',
+      question: '¿Cuáles son las medidas exactas de la foto para pasaporte español y foto carnet en España?',
+      answer:
+        'Para el pasaporte español y visados Schengen la medida es de 35 × 45 mm (3,5 × 4,5 cm / 413 × 531 px a 300 DPI). Para el DNI físico tradicional (la comúnmente llamada «foto carnet» en España), la medida reglamentaria es de 30 × 40 mm (3,0 × 4,0 cm / 354 × 472 px).',
+    },
+    {
+      question: '¿Acepta la Policía Nacional fotos impresas en casa para el DNI o Pasaporte?',
       answer:
         'Sí, siempre que estén impresas en papel fotográfico de calidad con una resolución mínima de 300 DPI y respeten las medidas milimétricas exactas (30×40 mm para DNI o 35×45 mm para pasaporte). Nuestra plantilla de 10×15 cm te permite imprimir 6 copias idénticas en cualquier tienda de fotografía por pocos céntimos.',
     },
@@ -880,6 +1020,11 @@ const COUNTRY_SPECIFIC_FAQS: Record<string, CountryFAQItem[]> = {
         'Canadá mantiene su propio estándar histórico y biométrico establecido en el Canadian Passport Order, con dimensiones verticales de 50 × 70 mm (2 × 2 3/4 pulgadas). Los visados canadienses temporales a veces admiten 35×45 mm, pero el pasaporte y la tarjeta de residencia permanente exigen obligatoriamente 50×70 mm.',
     },
     {
+      question: '¿Cuál es el tamaño oficial de foto para la visa canadiense?',
+      answer:
+        'Para la solicitud de visa canadiense (Visitor Visa, Study Permit o Work Permit) ante Immigration, Refugees and Citizenship Canada (IRCC), la fotografía digital debe medir un mínimo de 420 × 540 píxeles a 300 DPI (o 35 × 45 mm si es impresa), con el rostro entre 31 y 36 mm y fondo blanco o claro homogéneo.',
+    },
+    {
       question: '¿Qué requisito tiene el reverso de la foto de pasaporte canadiense?',
       answer:
         'Para solicitudes impresas, el reverso de una de las dos fotos debe llevar impresos o escritos el nombre y dirección del estudio/fotógrafo y la fecha de la toma. Si solicitas el pasaporte regular, el garante (guarantor) también debe firmar el reverso de esa copia.',
@@ -897,6 +1042,21 @@ const COUNTRY_SPECIFIC_FAQS: Record<string, CountryFAQItem[]> = {
   ],
   MX: [
     {
+      question: '¿Cuáles son las medidas oficiales del pasaporte mexicano (SRE)?',
+      answer:
+        'El tamaño oficial para el pasaporte mexicano ante la Secretaría de Relaciones Exteriores (SRE) es de 35 × 45 mm (3,5 × 4,5 cm / 413 × 531 píxeles a 300 DPI), a color con fondo rigurosamente blanco liso, frente y orejas totalmente despejadas.',
+    },
+    {
+      question: '¿Cuáles son los requisitos de la foto para visa mexicana en 2026?',
+      answer:
+        'Para la visa consular mexicana, el Instituto Nacional de Migración (INM) y la SRE exigen una fotografía reciente (máximo 30 días de antigüedad), a color, tamaño 35 × 45 mm (o en algunos consulados en EE.UU. 2 × 2 pulgadas / 51 × 51 mm), fondo blanco sin sombras, sin aretes, sin collares y con la cabeza totalmente descubierta.',
+    },
+    {
+      question: '¿Se necesita pasaporte para viajar a Cancún (México)? / Do you need a passport for Cancun Mexico?',
+      answer:
+        'Sí. Todos los viajeros internacionales (incluidos ciudadanos de Estados Unidos, Canadá y Europa) deben presentar un pasaporte vigente con al menos 6 meses de validez para entrar a Cancún y a cualquier aeropuerto o puerto de México. Los ciudadanos extranjeros no pueden viajar a México con solo una licencia de conducir o acta de nacimiento.',
+    },
+    {
       question: '¿Por qué la SRE de México exige tener las orejas y frente completamente descubiertas?',
       answer:
         'El Reglamento de Pasaportes de la Secretaría de Relaciones Exteriores (SRE) establece que la fisonomía facial debe ser verificable sin obstrucciones. Cabello sobre las orejas o flequillo sobre la frente altera los puntos de referencia biométricos y es causa inmediata de rechazo.',
@@ -911,10 +1071,144 @@ const COUNTRY_SPECIFIC_FAQS: Record<string, CountryFAQItem[]> = {
       answer:
         'La foto debe haber sido tomada dentro de los 30 días anteriores al día de tu cita en la oficina de la SRE.',
     },
+  ],
+  CR: [
     {
-      question: '¿Cuáles son las medidas oficiales del pasaporte mexicano?',
+      question: '¿Cuál es el tamaño oficial de la foto para pasaporte en Costa Rica?',
       answer:
-        'El tamaño oficial es de 35 × 45 mm (tamaño pasaporte mexicano), a color con fondo blanco y rostro ocupando entre el 70% y el 80% de la altura.',
+        'En Costa Rica, el pasaporte biométrico expedido por la Dirección General de Migración y Extranjería (DGME) utiliza el tamaño estándar de 35 × 45 mm (3,5 × 4,5 cm / 413 × 531 px a 300 DPI) o el formato de 50 × 50 mm (2 × 2 pulgadas) para trámites consulares en el extranjero.',
+    },
+    {
+      question: '¿Dónde sacar fotos de pasaporte en San José (Costa Rica)? / Passport photos San Jose',
+      answer:
+        'En San José y en cualquier lugar de Costa Rica puedes preparar tu fotografía desde tu teléfono con FotoPasaporte.app. Nuestra herramienta verifica las dimensiones biométricas de la DGME y genera la hoja para imprimir que puedes llevar a cualquier centro de copiado o papelería en San José para obtener tus fotos impresas al instante por un costo mínimo.',
+    },
+    {
+      question: '¿Qué requisitos exige Migración de Costa Rica para la fotografía?',
+      answer:
+        'Fondo blanco uniforme y homogéneo sin sombras, rostro de frente ocupando entre el 70% y el 80% de la altura, orejas y frente descubiertas, sin gafas de sol ni monturas gruesas, y boca cerrada con expresión neutra.',
+    },
+  ],
+  EC: [
+    {
+      question: '¿Cuál es el tamaño oficial de la foto de pasaporte en Ecuador y medidas del pasaporte ecuatoriano?',
+      answer:
+        'Para el pasaporte biométrico ecuatoriano emitido por la Dirección General de Registro Civil, Identificación y Cedulación, el tamaño reglamentario de la fotografía es de 35 × 45 mm (3,5 × 4,5 cm / 413 × 531 píxeles a 300 DPI). El óvalo facial debe ocupar entre el 70% y el 80% de la altura total.',
+    },
+    {
+      question: '¿Cuál es el tamaño de una foto carnet en Ecuador?',
+      answer:
+        'En Ecuador, la medida tradicional para la «foto carnet» y la cédula de identidad civil es de 35 × 45 mm (3,5 × 4,5 cm), idéntica a la del pasaporte. Debe tomarse de frente, a color, con fondo blanco nítido, sin gafas y con el cabello recogido.',
+    },
+    {
+      question: '¿Cuáles son los requisitos de la foto para visa de Ecuador?',
+      answer:
+        'El Ministerio de Relaciones Exteriores y Movilidad Humana de Ecuador solicita fotografías en formato 35 × 45 mm con fondo blanco liso, frente y orejas totalmente despejadas, sin lentes ni prendas en la cabeza, y peso del archivo digital en formato JPEG no mayor a 1 MB.',
+    },
+  ],
+  SV: [
+    {
+      question: '¿Cuáles son las medidas y requisitos de la foto de pasaporte en El Salvador?',
+      answer:
+        'Para el pasaporte salvadoreño emitido por la Dirección General de Migración y Extranjería (DGME), las medidas oficiales son de 2 × 2 pulgadas (51 × 51 mm / 600 × 600 px a 300 DPI) para consulados en EE.UU., o de 35 × 45 mm en agencias locales y consulados europeos. Fondo blanco sólido obligatorio.',
+    },
+    {
+      question: '¿Cuáles son las medidas de foto tamaño cédula / DUI en El Salvador?',
+      answer:
+        'La fotografía para el Documento Único de Identidad (DUI / cédula salvadoreña) expedido por el Registro Nacional de las Personas Naturales (RNPN) debe medir exactamente 35 × 45 mm (3,5 × 4,5 cm). Debe tener fondo blanco liso, frente y orejas descubiertas y sin anteojos.',
+    },
+    {
+      question: '¿Dónde tomar fotos para pasaporte o DUI salvadoreño?',
+      answer:
+        'Puedes tomarte la fotografía en casa con un smartphone utilizando FotoPasaporte.app. Nuestra herramienta encuadra el rostro a la proporción exacta requerida por la DGME y genera la plantilla lista para imprimir en papel fotográfico.',
+    },
+  ],
+  NI: [
+    {
+      question: '¿Cuál es el tamaño oficial de la foto para pasaporte en Nicaragua?',
+      answer:
+        'El tamaño oficial de la foto para pasaporte en Nicaragua ante la DGME y sedes consulares en el extranjero es de 50 × 50 mm (2 × 2 pulgadas / 600 × 600 px a 300 DPI) o 35 × 45 mm según la oficina de trámite. Fondo rigurosamente blanco.',
+    },
+    {
+      question: '¿Qué requisitos de vestimenta y fondo exige la DGME de Nicaragua?',
+      answer:
+        'Fondo blanco sólido sin sombras. Es obligatorio vestir ropa formal de color oscuro con cuello cerrado (evitar prendas blancas que se fundan con el fondo). La frente y ambas orejas deben estar despejadas, sin accesorios vistosos ni anteojos.',
+    },
+  ],
+  PA: [
+    {
+      question: 'What are the Panama passport photo requirements and sample standards?',
+      answer:
+        'The Autoridad de Pasaportes de Panamá (APAP) requires official photos measuring 35 × 45 mm (3.5 × 4.5 cm / 413 × 531 px at 300 DPI) against a solid plain white background. The face must measure between 32 and 36 mm (70–80% of photo height), shoulders must be covered with dark formal clothing, and glasses or colored contact lenses are not permitted.',
+    },
+    {
+      question: '¿Cuáles son los requisitos de las fotos de pasaporte panameño?',
+      answer:
+        'La fotografía para el pasaporte de Panamá debe medir 35 × 45 mm a 300 DPI con fondo blanco absoluto. No se permiten sonrisas, la vestimenta debe ser formal de color oscuro para garantizar contraste con el fondo, y el cabello debe estar colocado detrás de las orejas.',
+    },
+  ],
+  CN: [
+    {
+      question: '¿Cuáles son las medidas oficiales de la foto para pasaporte chino y visado consular?',
+      answer:
+        'China exige una medida única y propia: 33 × 48 mm (3,3 × 4,8 cm / 390 × 567 px a 300 DPI), con altura de cabeza de 28 a 33 mm y ancho de cabeza de 15 a 22 mm. No se admiten fotos con el tamaño estándar occidental de 35×45 mm ni de 2×2 pulgadas.',
+    },
+    {
+      question: '¿Qué fondo y normas biométricas aplica la Administración Nacional de Inmigración (NIA) de China?',
+      answer:
+        'El fondo debe ser rigurosamente blanco puro sin sombras. Las cejas y orejas deben ser plenamente visibles, la distancia desde la coronilla al borde superior debe situarse entre 3 y 5 mm, y están prohibidos aretes y gafas reflectantes.',
+    },
+  ],
+  FR: [
+    {
+      question: '¿Por qué está prohibido el fondo blanco en la foto del pasaporte francés?',
+      answer:
+        'El Ministerio del Interior de Francia y la ANTS (Décret n° 2005-1726) PROHÍBEN expresamente el fondo blanco puro. La fotografía debe tomarse con fondo gris claro o azul pastel uniforme. El tamaño oficial es de 35 × 45 mm con rostro entre 32 y 36 mm.',
+    },
+    {
+      question: '¿Cuáles son las normas para el pasaporte y visado francés?',
+      answer:
+        'Tamaño 35 × 45 mm, resolución mínima 300 DPI, cabeza descubierta sin adornos en el pelo, expresión neutra con la boca cerrada y ojos perfectamente abiertos mirando de frente.',
+    },
+  ],
+  DE: [
+    {
+      question: '¿Cómo es la foto biométrica para pasaporte alemán (Fotomustertafel)?',
+      answer:
+        'Alemania aplica la plantilla biométrica obligatoria (Fotomustertafel) del Ministerio Federal del Interior (BMI): tamaño 35 × 45 mm, altura de cabeza entre 32 y 36 mm (70–80%), ojos alineados en la franja biométrica superior, fondo gris claro neutro (no blanco puro) y boca completamente cerrada.',
+    },
+    {
+      question: '¿Cuáles son las causas más habituales de rechazo en el pasaporte alemán?',
+      answer:
+        'Usar fondo blanco brillante en lugar de gris claro neutro, sonreír o mostrar dientes, ojos tapados por el flequillo o reflejos en las gafas graduadas.',
+    },
+  ],
+  AR: [
+    {
+      question: '¿Cuál es el tamaño oficial de la foto para el pasaporte argentino?',
+      answer:
+        'El Renaper (Registro Nacional de las Personas) y los consulados argentinos solicitan fotos de 40 × 40 mm (4 × 4 cm) o el formato internacional de 35 × 45 mm (3,5 × 4,5 cm), a color, con fondo blanco liso, rostro de frente ocupando entre el 70% y el 80% del encuadre y sin lentes.',
+    },
+  ],
+  CU: [
+    {
+      question: '¿Cuáles son las medidas y requisitos de las fotos para pasaporte cubano?',
+      answer:
+        'Para el pasaporte cubano y prórrogas en consulados en el extranjero, la Dirección de Identificación, Inmigración y Extranjería (DIIE) exige fotografías de 45 × 45 mm (o 35 × 45 mm según el consulado), fondo blanco impecable, vestimenta formal de cuello cerrado y color oscuro, sin aretes grandes ni gafas.',
+    },
+  ],
+  PY: [
+    {
+      question: '¿Cuáles son las medidas de foto para pasaporte y cédula en Paraguay?',
+      answer:
+        'El Departamento de Identificaciones de la Policía Nacional de Paraguay establece un tamaño oficial de 35 × 45 mm (3,5 × 4,5 cm / 413 × 531 px a 300 DPI) tanto para el pasaporte electrónico como para la cédula de identidad civil. El fondo debe ser blanco sólido, sin sombras, con expresión seria y vestimenta formal.',
+    },
+  ],
+  CL: [
+    {
+      question: '¿Cuál es el tamaño de foto para pasaporte y cédula en Chile?',
+      answer:
+        'En Chile, el Servicio de Registro Civil e Identificación utiliza el formato cuadrado de 45 × 45 mm (4,5 × 4,5 cm / 531 × 531 px a 300 DPI) o el formato OACI de 35 × 45 mm para trámites consulares internacionales y visas. Fondo blanco liso y uniforme sin sombras.',
     },
   ],
 };
