@@ -1,3 +1,4 @@
+import { VisitTracker } from '@/components/VisitTracker';
 import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
 import { Geist, Geist_Mono } from 'next/font/google';
@@ -79,6 +80,7 @@ export default function RootLayout({
   return (
     <html lang="es" className={`${geistSans.variable} ${geistMono.variable} scroll-smooth`}>
       <body className="min-h-screen bg-white text-[#1D1D1F] antialiased selection:bg-[#0071E3]/20">
+        <VisitTracker />
         {children}
         <Script
           id="microsoft-clarity"
