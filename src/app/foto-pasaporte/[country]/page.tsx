@@ -234,6 +234,20 @@ export default async function CountryPage({ params }: CountryPageProps) {
                 </Link>{' '}·{' '}
                 <Link href="/medidas-foto-pasaporte" className="text-[#0071E3] hover:underline">
                   Medidas de foto de pasaporte por país
+                </Link>{' '}·{' '}
+                <Link
+                  href={
+                    primaryDoc.widthMm === 51 && primaryDoc.heightMm === 51
+                      ? '/foto-2x2-pulgadas'
+                      : primaryDoc.widthMm === 50 && primaryDoc.heightMm === 70
+                      ? '/foto-50x70-mm'
+                      : primaryDoc.widthMm === 33 && primaryDoc.heightMm === 48
+                      ? '/foto-33x48-mm'
+                      : '/foto-35x45-mm'
+                  }
+                  className="text-[#0071E3] hover:underline"
+                >
+                  Guía del formato {primaryDoc.widthMm}×{primaryDoc.heightMm} mm
                 </Link>
               </p>
             </div>

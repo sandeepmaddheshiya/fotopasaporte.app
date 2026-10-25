@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Header } from '@/components/Header';
 import { HeroSection } from '@/components/HeroSection';
+import { TrustBar } from '@/components/TrustBar';
 import { PhotoMaker } from '@/components/workspace/PhotoMaker';
 import { RequirementsSection } from '@/components/RequirementsSection';
 import { HowItWorks } from '@/components/HowItWorks';
@@ -48,6 +49,9 @@ export default function HomePage() {
         onStartClick={scrollToMaker}
         onSelectSamplePhoto={handleSelectSamplePhoto}
       />
+
+      {/* 2b. Trust Bar — social proof & transparency */}
+      <TrustBar />
 
       {/* 3. Main Workspace: PhotoMaker */}
       <PhotoMaker

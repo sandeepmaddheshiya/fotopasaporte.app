@@ -18,7 +18,7 @@ export function Footer() {
       <div className="mx-auto max-w-[1200px] px-4 py-12 sm:px-6 sm:py-16">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-8">
           {/* Brand & Description */}
-          <div className="md:col-span-5">
+          <div className="md:col-span-4">
             <Link
               href="/"
               className="inline-flex items-center gap-2.5 transition-opacity hover:opacity-80 cursor-pointer"
@@ -42,7 +42,7 @@ export function Footer() {
             </Link>
 
             <p className="mt-3.5 max-w-sm text-[13px] leading-relaxed text-[#6E6E73]">
-              Herramienta online para ajustar, recortar y preparar fotos de pasaporte y visado conforme a las especificaciones oficiales de cada país.
+              Herramienta online para ajustar, recortar y preparar fotos de pasaporte y visado conforme a las especificaciones oficiales de cada país. Requisitos verificados con fuente oficial y fecha de última comprobación.
             </p>
 
             <p className="mt-4 text-[12px] text-[#8E8E93]">
@@ -50,8 +50,8 @@ export function Footer() {
             </p>
           </div>
 
-          {/* Links Column 1 */}
-          <div className="md:col-span-3">
+          {/* Links Column 1: Tool */}
+          <div className="md:col-span-2">
             <p className="text-[13px] font-semibold text-[#1D1D1F]">Herramienta</p>
             <ul className="mt-3.5 space-y-2.5 text-[13px]">
               <li>
@@ -92,7 +92,34 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Links Column 2 */}
+          {/* Links Column 2: Formats (size pages) */}
+          <div className="md:col-span-2">
+            <p className="text-[13px] font-semibold text-[#1D1D1F]">Formatos</p>
+            <ul className="mt-3.5 space-y-2.5 text-[13px]">
+              <li>
+                <Link href="/foto-35x45-mm" className="hover:text-[#1D1D1F] transition-colors">
+                  Foto 35×45 mm (Europa / LatAm)
+                </Link>
+              </li>
+              <li>
+                <Link href="/foto-2x2-pulgadas" className="hover:text-[#1D1D1F] transition-colors">
+                  Foto 2×2 pulgadas (EE.UU.)
+                </Link>
+              </li>
+              <li>
+                <Link href="/foto-50x70-mm" className="hover:text-[#1D1D1F] transition-colors">
+                  Foto 50×70 mm (Canadá)
+                </Link>
+              </li>
+              <li>
+                <Link href="/foto-33x48-mm" className="hover:text-[#1D1D1F] transition-colors">
+                  Foto 33×48 mm (China)
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Links Column 3: Information */}
           <div className="md:col-span-4">
             <p className="text-[13px] font-semibold text-[#1D1D1F]">Información y Ayuda</p>
             <ul className="mt-3.5 space-y-2.5 text-[13px]">
@@ -104,6 +131,11 @@ export function Footer() {
                 >
                   Preguntas frecuentes
                 </button>
+              </li>
+              <li>
+                <Link href="/como-verificamos-los-requisitos" className="hover:text-[#1D1D1F] transition-colors">
+                  Cómo verificamos los requisitos
+                </Link>
               </li>
               <li>
                 <Link href="/privacidad" className="hover:text-[#1D1D1F] transition-colors">
@@ -124,8 +156,16 @@ export function Footer() {
           </div>
         </div>
 
+        {/* About / Transparency Section (E-E-A-T) */}
+        <div className="mt-10 rounded-2xl border border-[#D2D2D7]/60 bg-white/60 p-5 text-[12px] leading-relaxed text-[#8E8E93]">
+          <p className="font-semibold text-[#6E6E73]">Quiénes somos y cómo trabajamos</p>
+          <p className="mt-2">
+            FotoPasaporte.app es un proyecto independiente creado por un equipo técnico especializado en procesamiento de imagen y estándares biométricos (OACI Doc 9303). Nuestro objetivo es ofrecer una herramienta accesible y transparente para preparar fotos de documentos de identidad. Los requisitos de cada país se verifican periódicamente consultando las fuentes oficiales (portales consulares, legislación vigente) y se publican con fecha de última comprobación. Puedes leer más sobre nuestro proceso en la página <Link href="/como-verificamos-los-requisitos" className="text-[#0071E3] hover:underline">Cómo verificamos los requisitos</Link>.
+          </p>
+        </div>
+
         {/* Mandatory Independent Service Disclaimer */}
-        <div className="mt-12 border-t border-[#D2D2D7]/80 pt-8 text-[12px] leading-relaxed text-[#8E8E93]">
+        <div className="mt-6 border-t border-[#D2D2D7]/80 pt-6 text-[12px] leading-relaxed text-[#8E8E93]">
           <p>
             <strong>Aviso legal:</strong> FotoPasaporte es un servicio independiente. No representa a ningún gobierno, embajada, consulado ni autoridad de inmigración. La aceptación definitiva de cualquier fotografía depende exclusivamente de la autoridad oficial que tramite la solicitud.
           </p>
@@ -134,3 +174,4 @@ export function Footer() {
     </footer>
   );
 }
+
