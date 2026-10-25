@@ -144,9 +144,9 @@ export function RequirementsSection({ onSelectCountryForMaker }: RequirementsSec
 
                   <Link
                     href={`/foto-pasaporte/${toCountrySlug(country)}`}
-                    className="inline-flex w-full items-center justify-center gap-1.5 rounded-xl border border-[#D2D2D7] bg-white py-1.5 text-[12px] font-medium text-[#6E6E73] transition-colors hover:border-[#1D1D1F] hover:text-[#1D1D1F]"
+                    className="inline-flex w-full items-center justify-center gap-1.5 rounded-xl border border-[#D2D2D7] bg-white py-1.5 text-[12px] font-medium text-[#6E6E73] transition-colors hover:border-[#0071E3] hover:text-[#0071E3]"
                   >
-                    <span>Ver requisitos de {country.name}</span>
+                    <span>foto de pasaporte de {country.name}</span>
                   </Link>
                 </div>
               </div>

@@ -13,6 +13,7 @@ import {
   getCountryRejectionReasons,
   getCountryFAQs,
   isIndexableCountry,
+  getRegionalCluster,
 } from '@/data/country-seo-data';
 import { Header } from '@/components/Header';
 import { PhotoMaker } from '@/components/workspace/PhotoMaker';
@@ -35,6 +36,7 @@ import {
   CalendarCheck,
   Eye,
   Sliders,
+  Camera,
 } from 'lucide-react';
 
 interface CountryPageProps {
@@ -167,7 +169,9 @@ export default async function CountryPage({ params }: CountryPageProps) {
           name: faq.question,
           acceptedAnswer: {
             '@type': 'Answer',
-            text: faq.answer,
+            text: faq.link
+              ? `${faq.answer} ${faq.link.prefix ? faq.link.prefix + ' ' : ''}${faq.link.text}.`
+              : faq.answer,
           },
         })),
       },
@@ -233,7 +237,7 @@ export default async function CountryPage({ params }: CountryPageProps) {
                   Cómo verificamos los requisitos
                 </Link>{' '}·{' '}
                 <Link href="/medidas-foto-pasaporte" className="text-[#0071E3] hover:underline">
-                  Medidas de foto de pasaporte por país
+                  medidas de la foto de pasaporte por país
                 </Link>{' '}·{' '}
                 <Link
                   href={
@@ -611,9 +615,30 @@ export default async function CountryPage({ params }: CountryPageProps) {
       {/* 8. Clothing, Contrast & Printing Guide */}
       <section className="bg-[#F5F5F7] py-16 sm:py-24 border-t border-[#E5E5EA]">
         <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
-          <div className="mx-auto max-w-3xl">
+          <div className="mx-auto max-w-3xl space-y-6">
+            {/* Take photo at home guide card (L-27) */}
+            <div className="rounded-3xl border border-[#D2D2D7] bg-white p-6 sm:p-8 shadow-xs">
+              <div className="flex items-center gap-2 text-[12px] font-semibold tracking-wider text-[#0071E3] uppercase">
+                <Camera className="h-4 w-4" />
+                <span>Fotografía con Smartphone</span>
+              </div>
+              <h3 className="mt-2 text-[20px] font-semibold text-[#1D1D1F]">
+                ¿Cómo hacer la foto para el pasaporte de {country.name} en casa?
+              </h3>
+              <p className="mt-2 text-[14px] leading-relaxed text-[#6E6E73]">
+                Puedes hacer la foto con la cámara de tu teléfono móvil frente a una pared lisa y con luz natural difusa. Aprende los trucos de distancia, iluminación y postura en nuestra guía sobre{' '}
+                <Link
+                  href="/como-hacer-foto-pasaporte-en-casa"
+                  className="font-semibold text-[#0071E3] hover:underline"
+                >
+                  cómo tomar la foto en casa
+                </Link>{' '}
+                antes de calibrar el encuadre biométrico en nuestra herramienta.
+              </p>
+            </div>
+
             {/* Printing Guide Card */}
-            <div className="mt-8 rounded-3xl border border-[#D2D2D7] bg-white p-6 sm:p-8 shadow-xs">
+            <div className="rounded-3xl border border-[#D2D2D7] bg-white p-6 sm:p-8 shadow-xs">
               <div className="flex items-center gap-2 text-[12px] font-semibold tracking-wider text-[#0071E3] uppercase">
                 <Printer className="h-4 w-4" />
                 <span>Guía de Impresión en Papel</span>
@@ -670,6 +695,19 @@ export default async function CountryPage({ params }: CountryPageProps) {
                 </summary>
                 <div className="mt-3 text-[14px] leading-relaxed text-[#6E6E73] pr-4">
                   {faq.answer}
+                  {faq.link && (
+                    <>
+                      {' '}
+                      {faq.link.prefix && <span>{faq.link.prefix} </span>}
+                      <Link
+                        href={faq.link.href}
+                        className="font-medium text-[#0071E3] hover:underline inline-flex items-center gap-0.5"
+                      >
+                        {faq.link.text}
+                      </Link>
+                      .
+                    </>
+                  )}
                 </div>
               </details>
             ))}
@@ -677,51 +715,64 @@ export default async function CountryPage({ params }: CountryPageProps) {
         </div>
       </section>
 
-      {/* 10. Related Countries from the same region */}
-      <section className="bg-[#F5F5F7] py-16 sm:py-20 border-t border-[#E5E5EA]">
-        <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
-          <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
-            <div>
-              <h2 className="text-[22px] font-semibold text-[#1D1D1F]">
-                Otros destinos en {country.region} y países frecuentes
-              </h2>
-              <p className="text-[14px] text-[#6E6E73]">
-                Consulta las directrices consulares de otros países con medidas oficiales verificadas
-              </p>
-            </div>
-            <Link
-              href="/#requisitos"
-              className="inline-flex items-center gap-1.5 text-[14px] font-medium text-[#0071E3] hover:underline"
-            >
-              <span>Ver todos los países</span>
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
+      {/* 10. Related Countries / Regional Neighbor Block (L-13 to L-23) */}
+      {(() => {
+        const cluster = getRegionalCluster(country.code);
+        const neighborCountries = cluster.neighborCodes
+          .map((code) => COUNTRIES_DATA.find((c) => c.code === code))
+          .filter((c): c is (typeof COUNTRIES_DATA)[number] => Boolean(c && c.code !== country.code));
+        const existingCodes = new Set([country.code, ...neighborCountries.map((c) => c.code)]);
+        const remainingCountries = COUNTRIES_DATA.filter(
+          (c) => !existingCodes.has(c.code) && (c.region === country.region || c.isPopular)
+        ).slice(0, Math.max(0, 12 - neighborCountries.length));
+        const displayedCountries = [...neighborCountries, ...remainingCountries];
 
-          <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-            {COUNTRIES_DATA.filter((c) => c.code !== country.code && (c.region === country.region || c.isPopular))
-              .slice(0, 12)
-              .map((c) => {
-                const doc = c.documents[0];
-                return (
-                  <Link
-                    key={c.code}
-                    href={`/foto-pasaporte/${toCountrySlug(c)}`}
-                    className="flex flex-col rounded-2xl border border-[#D2D2D7] bg-white p-3.5 transition-all hover:border-[#0071E3] hover:shadow-md"
-                  >
-                    <span className="text-[24px]">{c.flag}</span>
-                    <span className="mt-2 text-[14px] font-semibold text-[#1D1D1F] line-clamp-1">
-                      {c.name}
-                    </span>
-                    <span className="text-[11px] font-mono text-[#6E6E73]">
-                      {doc.widthMm} × {doc.heightMm} mm
-                    </span>
-                  </Link>
-                );
-              })}
-          </div>
-        </div>
-      </section>
+        return (
+          <section className="bg-[#F5F5F7] py-16 sm:py-20 border-t border-[#E5E5EA]">
+            <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
+              <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+                <div>
+                  <h2 className="text-[22px] font-semibold text-[#1D1D1F]">
+                    {cluster.clusterTitle}
+                  </h2>
+                  <p className="text-[14px] text-[#6E6E73]">
+                    {cluster.clusterSubtitle}
+                  </p>
+                </div>
+                <Link
+                  href="/#requisitos"
+                  className="inline-flex items-center gap-1.5 text-[14px] font-medium text-[#0071E3] hover:underline"
+                >
+                  <span>Ver todos los países</span>
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+
+              <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+                {displayedCountries.map((c) => {
+                  const doc = c.documents[0];
+                  return (
+                    <Link
+                      key={c.code}
+                      href={`/foto-pasaporte/${toCountrySlug(c)}`}
+                      className="flex flex-col rounded-2xl border border-[#D2D2D7] bg-white p-3.5 transition-all hover:border-[#0071E3] hover:shadow-md group"
+                      title={`foto de pasaporte de ${c.name}`}
+                    >
+                      <span className="text-[24px]">{c.flag}</span>
+                      <span className="mt-2 text-[14px] font-semibold text-[#1D1D1F] line-clamp-1 group-hover:text-[#0071E3] transition-colors">
+                        foto de pasaporte de {c.name}
+                      </span>
+                      <span className="text-[11px] font-mono text-[#6E6E73]">
+                        {doc.widthMm} × {doc.heightMm} mm
+                      </span>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+        );
+      })()}
 
       {/* 11. Final Call to Action & Footer */}
       <FinalCTA />

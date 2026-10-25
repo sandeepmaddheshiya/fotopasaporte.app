@@ -247,6 +247,39 @@ const PASSPORT_SIZES_TABLE: DimensionRow[] = [
   },
   {
     region: 'América del Sur',
+    country: 'Perú',
+    slug: 'peru',
+    sizeMm: '35 × 45 mm',
+    sizeCm: '3,5 × 4,5 cm',
+    sizeInches: '1,38 × 1,77 in',
+    sizePx: '413 × 531 px',
+    bg: 'Blanco liso',
+    faceRatio: '70% – 80% (32–36 mm)',
+  },
+  {
+    region: 'América del Sur',
+    country: 'Uruguay',
+    slug: 'uruguay',
+    sizeMm: '35 × 45 mm',
+    sizeCm: '3,5 × 4,5 cm',
+    sizeInches: '1,38 × 1,77 in',
+    sizePx: '413 × 531 px',
+    bg: 'Blanco liso',
+    faceRatio: '70% – 80%',
+  },
+  {
+    region: 'América del Sur',
+    country: 'Colombia',
+    slug: 'colombia',
+    sizeMm: '30 × 40 mm / 35 × 45 mm',
+    sizeCm: '3,0 × 4,0 cm',
+    sizeInches: '1,18 × 1,57 in',
+    sizePx: '354 × 472 px',
+    bg: 'Blanco liso',
+    faceRatio: '70% – 80%',
+  },
+  {
+    region: 'América del Sur',
     country: 'Paraguay',
     slug: 'paraguay',
     sizeMm: '35 × 45 mm',
@@ -544,7 +577,7 @@ export default function MedidasPasaportePage() {
               href="/#creador"
               className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#0071E3] hover:underline shrink-0"
             >
-              <span>Abrir recortador biométrico</span>
+              <span>herramienta para ajustar tu foto</span>
               <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </div>
@@ -567,7 +600,12 @@ export default function MedidasPasaportePage() {
                   <tr key={row.country} className="hover:bg-[#F9F9FB] transition-colors">
                     <td className="px-4 py-3.5 font-medium text-[#1D1D1F]">
                       <div className="flex items-center gap-2">
-                        <span>{row.country}</span>
+                        <Link
+                          href={`/foto-pasaporte/${row.slug}`}
+                          className="font-medium text-[#1D1D1F] hover:text-[#0071E3] hover:underline"
+                        >
+                          foto de pasaporte de {row.country}
+                        </Link>
                         <span className="hidden sm:inline text-[11px] text-[#8E8E93]">({row.region})</span>
                       </div>
                     </td>
@@ -628,6 +666,17 @@ export default function MedidasPasaportePage() {
                 </span>
               </li>
             </ul>
+
+            <div className="mt-5 rounded-xl border border-[#D2D2D7]/80 bg-[#F5F5F7] p-3.5 text-[13px] text-[#6E6E73]">
+              <span>¿No sabes si debes llevar fotos físicas a tu cita? Comprueba </span>
+              <Link
+                href="/donde-sacar-foto-pasaporte"
+                className="text-[#0071E3] font-semibold hover:underline"
+              >
+                si te toman la foto en la oficina
+              </Link>
+              <span> o si estás obligado a aportarlas según tu país.</span>
+            </div>
           </div>
 
           {/* Visa vs Passport Difference */}
@@ -729,6 +778,30 @@ export default function MedidasPasaportePage() {
                 Toda fotografía impresa debe tener una densidad mínima de 300 puntos por pulgada sobre papel fotográfico de alta calidad en brillo o mate.
               </p>
             </div>
+          </div>
+
+          {/* L-11 Contextual Link callout */}
+          <div className="mt-8 rounded-2xl border border-[#D2D2D7] bg-[#F5F5F7] p-5 text-[14px] text-[#6E6E73] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <strong className="text-[#1D1D1F]">¿Vas a preparar tu foto tú mismo?</strong>
+              <p className="mt-1">
+                Consulta nuestra guía detallada con el móvil sobre{' '}
+                <Link
+                  href="/como-hacer-foto-pasaporte-en-casa"
+                  className="font-semibold text-[#0071E3] hover:underline"
+                >
+                  cómo tomar la foto en casa
+                </Link>{' '}
+                para asegurar la iluminación y postura adecuadas sin cometer errores biométricos.
+              </p>
+            </div>
+            <Link
+              href="/como-hacer-foto-pasaporte-en-casa"
+              className="inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-white border border-[#D2D2D7] px-4 py-2 font-medium text-[#1D1D1F] hover:bg-[#E5E5EA] transition-colors"
+            >
+              <span>Ver guía paso a paso</span>
+              <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
         </section>
 

@@ -1,14 +1,31 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { Ruler, FileDigit, Image, Palette, Smile, AlertCircle } from 'lucide-react';
 
+interface Criterion {
+  title: string;
+  description: React.ReactNode;
+  icon: React.ReactNode;
+}
+
 export function QualityRequirements() {
-  const criteria = [
+  const criteria: Criterion[] = [
     {
       title: 'Dimensiones de la fotografía',
-      description:
-        'Cada documento exige proporciones específicas: 35×45 mm para España y Europa, 2×2 pulgadas (51×51 mm) para Estados Unidos o 50×70 mm para Canadá.',
+      description: (
+        <>
+          Cada documento exige proporciones específicas: 35×45 mm para España y Europa, 2×2 pulgadas (51×51 mm) para Estados Unidos o 50×70 mm para Canadá; si tienes dudas,{' '}
+          <Link
+            href="/medidas-foto-pasaporte"
+            className="text-[#0071E3] font-medium hover:underline inline-flex items-center gap-0.5"
+          >
+            consulta las medidas de la foto de pasaporte por país
+          </Link>
+          .
+        </>
+      ),
       icon: <Ruler className="h-5 w-5 text-[#0071E3]" />,
     },
     {
@@ -78,7 +95,11 @@ export function QualityRequirements() {
         {/* Official Authority Reminder Alert */}
         <div className="mt-10 sm:mt-12 rounded-2xl border border-[#D2D2D7] bg-[#F5F5F7] p-4 sm:p-6 text-[12px] sm:text-[13px] text-[#6E6E73]">
           <p>
-            <strong>Aviso importante:</strong> FotoPasaporte es una herramienta de asistencia independiente que te ayuda a encuadrar y dimensionar tu foto con arreglo a las especificaciones públicas disponibles. Las autoridades oficiales pueden aplicar normativas complementarias y la resolución final sobre la validez del documento corresponde exclusivamente a la autoridad competente.
+            <strong>Aviso importante:</strong> FotoPasaporte es una herramienta de asistencia independiente que te ayuda a encuadrar y dimensionar tu foto con arreglo a las especificaciones públicas disponibles. Las autoridades oficiales pueden aplicar normativas complementarias y la resolución final sobre la validez del documento corresponde exclusivamente a la autoridad competente. Consulta con transparencia{' '}
+            <Link href="/como-verificamos-los-requisitos" className="text-[#0071E3] font-medium hover:underline">
+              cómo verificamos los requisitos
+            </Link>{' '}
+            en fuentes oficiales de cada país.
           </p>
         </div>
       </div>

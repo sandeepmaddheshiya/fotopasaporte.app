@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { Globe, Sliders, ArrowDownToLine } from 'lucide-react';
 
 export function HowItWorks() {
@@ -71,6 +72,18 @@ export function HowItWorks() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* L-03 Contextual Link callout */}
+        <div className="mt-8 rounded-2xl border border-[#D2D2D7] bg-white p-5 text-center text-[14px] text-[#6E6E73] shadow-2xs">
+          <span>¿Prefieres consejos antes de sacar la cámara? Consulta nuestra guía paso a paso sobre </span>
+          <Link
+            href="/como-hacer-foto-pasaporte-en-casa"
+            className="font-semibold text-[#0071E3] hover:underline"
+          >
+            cómo hacer tu foto de pasaporte en casa
+          </Link>
+          <span> con el móvil, evitando sombras y fondos descalibrados.</span>
         </div>
       </div>
     </section>

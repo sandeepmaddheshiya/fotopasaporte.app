@@ -89,6 +89,22 @@ export function Footer() {
                   Medidas de foto de pasaporte
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/como-hacer-foto-pasaporte-en-casa"
+                  className="hover:text-[#1D1D1F] transition-colors"
+                >
+                  Cómo hacer foto en casa
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/donde-sacar-foto-pasaporte"
+                  className="hover:text-[#1D1D1F] transition-colors"
+                >
+                  Dónde sacar la foto
+                </Link>
+              </li>
             </ul>
           </div>
 

@@ -20,6 +20,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: `${baseUrl}/como-hacer-foto-pasaporte-en-casa`,
+      lastModified: '2026-10-25',
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/donde-sacar-foto-pasaporte`,
+      lastModified: '2026-10-25',
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
       url: `${baseUrl}/como-verificamos-los-requisitos`,
       lastModified: '2026-10-25',
       changeFrequency: 'monthly',

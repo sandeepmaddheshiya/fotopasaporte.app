@@ -15,6 +15,11 @@ export interface CountryAuthorityInfo {
 export interface CountryFAQItem {
   question: string;
   answer: string;
+  link?: {
+    href: string;
+    text: string;
+    prefix?: string;
+  };
 }
 
 export interface CountryRejectionReason {
@@ -990,7 +995,11 @@ const COUNTRY_SPECIFIC_FAQS: Record<string, CountryFAQItem[]> = {
     {
       question: '¿Sirve esta foto para el DNI?',
       answer:
-        'Esta página cubre pasaporte y visado. Para el DNI, consulta las medidas vigentes en la web oficial de la Policía Nacional antes de imprimir.',
+        'Esta página cubre pasaporte y visado (35×45 mm). Para el DNI español la fotografía tradicional es más pequeña (30×40 mm). Conoce al detalle las',
+      link: {
+        href: '/medidas-foto-pasaporte',
+        text: 'diferencias entre foto carnet y foto de pasaporte',
+      },
     },
     {
       question: '¿Acepta la Policía Nacional fotos impresas en casa para el pasaporte?',
@@ -1065,6 +1074,15 @@ const COUNTRY_SPECIFIC_FAQS: Record<string, CountryFAQItem[]> = {
       question: '¿Puedo usar aretes o collares en la foto del pasaporte mexicano?',
       answer:
         'No. La SRE prohíbe aretes (pendientes), piercings, collares y cadenas en el cuello. Debes retirar cualquier accesorio antes de la fotografía.',
+    },
+    {
+      question: '¿Dónde se toma la foto del pasaporte en México y cuándo debo llevar fotos impresas?',
+      answer:
+        'En la gran mayoría de delegaciones de la SRE en México la foto digital se toma directamente en la ventanilla durante la cita. Sin embargo, debes llevar 2 fotos impresas de 35×45 mm en casos de menores de edad o trámites consulares en el extranjero. Consulta nuestra comparativa sobre',
+      link: {
+        href: '/donde-sacar-foto-pasaporte',
+        text: 'dónde se toma la foto del pasaporte en México',
+      },
     },
     {
       question: '¿Qué antigüedad máxima permite la SRE para la fotografía?',
@@ -1343,4 +1361,196 @@ export function getCountryFAQs(country: CountryInfo): CountryFAQItem[] {
       answer: `El organismo responsable es ${auth.authorityName} (${auth.department}), aplicando la normativa ${auth.regulationsStandard}. FotoPasaporte.app es una herramienta independiente que prepara tu archivo conforme a dichas especificaciones públicas.`,
     },
   ];
+}
+
+// ---------------------------------------------------------------------------
+// 4. REGIONAL NEIGHBOR CLUSTERS (Contextual internal linking plan L-13 - L-23)
+// ---------------------------------------------------------------------------
+export interface RegionalClusterInfo {
+  clusterTitle: string;
+  clusterSubtitle: string;
+  neighborCodes: string[];
+}
+
+const REGIONAL_CLUSTERS: Record<string, RegionalClusterInfo> = {
+  // Andes / Región Andina (L-13, L-14, L-15, L-16)
+  CO: {
+    clusterTitle: 'Países vecinos (Andes)',
+    clusterSubtitle: 'Compara las medidas oficiales de pasaporte en la región andina y países vecinos.',
+    neighborCodes: ['EC', 'PE', 'VE', 'PA', 'BR'],
+  },
+  EC: {
+    clusterTitle: 'Países vecinos (Andes)',
+    clusterSubtitle: 'Compara las medidas oficiales de pasaporte con los países limítrofes andinos.',
+    neighborCodes: ['CO', 'PE', 'VE', 'CL', 'AR'],
+  },
+  PE: {
+    clusterTitle: 'Países vecinos (Andes)',
+    clusterSubtitle: 'Requisitos y medidas biométricas en países vecinos de la región andina y el Pacífico.',
+    neighborCodes: ['EC', 'CO', 'CL', 'AR', 'BR'],
+  },
+  VE: {
+    clusterTitle: 'Países vecinos (Andes y Caribe)',
+    clusterSubtitle: 'Requisitos oficiales en países vecinos y destinos de la comunidad venezolana.',
+    neighborCodes: ['CO', 'EC', 'PE', 'ES', 'US'],
+  },
+
+  // Cono Sur (L-17, L-18, L-19, L-20)
+  AR: {
+    clusterTitle: 'Países vecinos (Cono Sur)',
+    clusterSubtitle: 'Medidas oficiales y requisitos en los países limítrofes del Cono Sur.',
+    neighborCodes: ['UY', 'CL', 'PY', 'BR', 'ES'],
+  },
+  CL: {
+    clusterTitle: 'Países vecinos (Cono Sur)',
+    clusterSubtitle: 'Compara especificaciones con países vecinos del Cono Sur y la región andina.',
+    neighborCodes: ['AR', 'PE', 'UY', 'ES', 'US'],
+  },
+  UY: {
+    clusterTitle: 'Países vecinos (Cono Sur)',
+    clusterSubtitle: 'Normativa biométrica en los países limítrofes de la cuenca del Plata.',
+    neighborCodes: ['AR', 'BR', 'CL', 'PY', 'ES'],
+  },
+  PY: {
+    clusterTitle: 'Países vecinos (Cono Sur)',
+    clusterSubtitle: 'Requisitos oficiales en los países limítrofes del Cono Sur.',
+    neighborCodes: ['AR', 'BR', 'UY', 'CL', 'ES'],
+  },
+  BR: {
+    clusterTitle: 'Países vecinos (América del Sur)',
+    clusterSubtitle: 'Medidas oficiales en países vecinos de Sudamérica.',
+    neighborCodes: ['AR', 'UY', 'PY', 'CL', 'PT'],
+  },
+
+  // Centroamérica (L-21, L-22)
+  SV: {
+    clusterTitle: 'Países vecinos (Centroamérica)',
+    clusterSubtitle: 'Directrices oficiales de foto de pasaporte y documento en América Central.',
+    neighborCodes: ['CR', 'PA', 'NI', 'MX', 'US'],
+  },
+  CR: {
+    clusterTitle: 'Países vecinos (Centroamérica)',
+    clusterSubtitle: 'Medidas y normativa en países vecinos de América Central.',
+    neighborCodes: ['PA', 'SV', 'NI', 'CO', 'US'],
+  },
+  PA: {
+    clusterTitle: 'Países vecinos (Centroamérica)',
+    clusterSubtitle: 'Especificaciones oficiales en países limítrofes de América Central y el Caribe.',
+    neighborCodes: ['CR', 'CO', 'SV', 'NI', 'US'],
+  },
+  NI: {
+    clusterTitle: 'Países vecinos (Centroamérica)',
+    clusterSubtitle: 'Requisitos oficiales en los países vecinos de Centroamérica.',
+    neighborCodes: ['CR', 'SV', 'PA', 'MX', 'US'],
+  },
+
+  // Caribe (L-23)
+  CU: {
+    clusterTitle: 'Países vecinos (Caribe)',
+    clusterSubtitle: 'Especificaciones de foto consular y pasaporte en el Caribe y destinos habituales.',
+    neighborCodes: ['DO', 'MX', 'US', 'ES', 'PA'],
+  },
+  DO: {
+    clusterTitle: 'Países vecinos (Caribe)',
+    clusterSubtitle: 'Requisitos consulares en países del Caribe, Estados Unidos y Europa.',
+    neighborCodes: ['CU', 'US', 'ES', 'MX', 'CO'],
+  },
+
+  // Norteamérica
+  MX: {
+    clusterTitle: 'América del Norte y destinos frecuentes',
+    clusterSubtitle: 'Medidas oficiales en Norteamérica y los principales destinos internacionales.',
+    neighborCodes: ['US', 'CA', 'ES', 'CO', 'AR'],
+  },
+  US: {
+    clusterTitle: 'América del Norte y destinos frecuentes',
+    clusterSubtitle: 'Normativa para visas y pasaportes en los principales destinos de viaje.',
+    neighborCodes: ['CA', 'MX', 'GB', 'ES', 'CO'],
+  },
+  CA: {
+    clusterTitle: 'América del Norte y destinos frecuentes',
+    clusterSubtitle: 'Medidas consulares en Norteamérica y Europa.',
+    neighborCodes: ['US', 'GB', 'FR', 'MX', 'ES'],
+  },
+
+  // Europa Occidental
+  ES: {
+    clusterTitle: 'Unión Europea y países vecinos',
+    clusterSubtitle: 'Compara las especificaciones del pasaporte español con los socios europeos.',
+    neighborCodes: ['PT', 'FR', 'IT', 'DE', 'GB', 'US'],
+  },
+  PT: {
+    clusterTitle: 'Península Ibérica y Unión Europea',
+    clusterSubtitle: 'Medidas oficiales en Portugal, España y la Unión Europea.',
+    neighborCodes: ['ES', 'FR', 'IT', 'BR', 'GB'],
+  },
+  FR: {
+    clusterTitle: 'Unión Europea y países vecinos',
+    clusterSubtitle: 'Especificaciones biométricas en Francia y países miembros de la UE.',
+    neighborCodes: ['ES', 'DE', 'IT', 'CH', 'GB'],
+  },
+  DE: {
+    clusterTitle: 'Unión Europea y países vecinos',
+    clusterSubtitle: 'Normativa biométrica en Alemania y países limítrofes.',
+    neighborCodes: ['CH', 'FR', 'NL', 'IT', 'ES'],
+  },
+  IT: {
+    clusterTitle: 'Unión Europea y países vecinos',
+    clusterSubtitle: 'Requisitos de fotografía en Italia y el espacio Schengen.',
+    neighborCodes: ['ES', 'FR', 'DE', 'CH', 'GB'],
+  },
+  CH: {
+    clusterTitle: 'Europa Central y Schengen',
+    clusterSubtitle: 'Medidas en Suiza y los países vecinos del espacio Schengen.',
+    neighborCodes: ['DE', 'FR', 'IT', 'ES'],
+  },
+  NL: {
+    clusterTitle: 'Unión Europea y países vecinos',
+    clusterSubtitle: 'Requisitos oficiales en Países Bajos y la región europea.',
+    neighborCodes: ['DE', 'FR', 'GB', 'ES'],
+  },
+  IE: {
+    clusterTitle: 'Islas Británicas y Unión Europea',
+    clusterSubtitle: 'Especificaciones en Irlanda, Reino Unido y Europa.',
+    neighborCodes: ['GB', 'FR', 'ES', 'US', 'DE'],
+  },
+  GB: {
+    clusterTitle: 'Reino Unido y destinos frecuentes',
+    clusterSubtitle: 'Medidas oficiales en el Reino Unido, Irlanda, Europa y Norteamérica.',
+    neighborCodes: ['IE', 'FR', 'ES', 'US', 'CA'],
+  },
+
+  // Asia / Pacífico
+  CN: {
+    clusterTitle: 'Asia y destinos frecuentes',
+    clusterSubtitle: 'Especificaciones para visas y pasaportes en Asia y destinos principales.',
+    neighborCodes: ['JP', 'IN', 'US', 'GB', 'CA'],
+  },
+  JP: {
+    clusterTitle: 'Asia-Pacífico y destinos frecuentes',
+    clusterSubtitle: 'Medidas oficiales en Japón y principales socios internacionales.',
+    neighborCodes: ['CN', 'US', 'AU', 'GB', 'FR'],
+  },
+  IN: {
+    clusterTitle: 'Asia y destinos frecuentes',
+    clusterSubtitle: 'Medidas de visa y pasaporte en India y destinos internacionales.',
+    neighborCodes: ['US', 'GB', 'CA', 'CN'],
+  },
+  AU: {
+    clusterTitle: 'Oceanía y destinos internacionales',
+    clusterSubtitle: 'Medidas de pasaporte en Australia, Reino Unido y Norteamérica.',
+    neighborCodes: ['GB', 'US', 'CA', 'IE'],
+  },
+};
+
+export function getRegionalCluster(countryCode: string): RegionalClusterInfo {
+  const code = (countryCode || '').toUpperCase();
+  const cluster = REGIONAL_CLUSTERS[code];
+  if (cluster) return cluster;
+
+  return {
+    clusterTitle: 'Países y destinos relacionados',
+    clusterSubtitle: 'Consulta las directrices consulares de otros países con medidas oficiales verificadas.',
+    neighborCodes: ['ES', 'US', 'CO', 'MX', 'AR', 'CL'],
+  };
 }

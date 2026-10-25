@@ -1,11 +1,17 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { ChevronDown } from 'lucide-react';
 
 interface FAQItem {
   question: string;
   answer: string;
+  link?: {
+    href: string;
+    text: string;
+    prefix?: string;
+  };
 }
 
 const HOMEPAGE_FAQS: FAQItem[] = [
@@ -13,6 +19,11 @@ const HOMEPAGE_FAQS: FAQItem[] = [
     question: '¿Dónde sacar o dónde toman fotos para pasaporte?',
     answer:
       'Puedes preparar tu foto en casa con la cámara de tu teléfono móvil usando FotoPasaporte.app, sin desplazarte a un estudio. La herramienta ajusta el encuadre a las medidas del país elegido, calibra el fondo y genera el archivo digital y una hoja de impresión (A4 o 10×15 cm) con varias copias para imprimir en cualquier tienda de fotografía o papelería.',
+    link: {
+      prefix: 'Conoce los costes de estudios, fotomatones y',
+      href: '/donde-sacar-foto-pasaporte',
+      text: 'dónde sacar la foto del pasaporte',
+    },
   },
   {
     question: '¿Es gratis? ¿Cuánto cuesta?',
@@ -72,7 +83,11 @@ const HOMEPAGE_FAQS: FAQItem[] = [
   {
     question: '¿Qué ocurre con la privacidad de la foto que subo?',
     answer:
-      'Para el recorte y la vista previa, tu foto se envía a nuestros servidores, que también ejecutan el análisis automático. No la compartimos con terceros con fines publicitarios. Consulta la política de privacidad para ver qué datos tratamos, durante cuánto tiempo y cómo solicitar su eliminación.',
+      'Para el recorte y la vista previa, tu foto se envía a nuestros servidores, que también ejecutan el análisis automático. No la compartimos con terceros con fines publicitarios. Consulta los plazos de conservación y cómo solicitar su eliminación en nuestra',
+    link: {
+      href: '/privacidad',
+      text: 'política de privacidad',
+    },
   },
 ];
 
@@ -99,7 +114,9 @@ export function FAQAccordion() {
               name: faq.question,
               acceptedAnswer: {
                 '@type': 'Answer',
-                text: faq.answer,
+                text: faq.link
+                  ? `${faq.answer} ${faq.link.prefix ? faq.link.prefix + ' ' : ''}${faq.link.text}.`
+                  : faq.answer,
               },
             })),
           }),
@@ -150,7 +167,21 @@ export function FAQAccordion() {
                   hidden={!isOpen}
                   className="mt-3 pr-2 sm:pr-8 text-[14px] sm:text-[15px] leading-relaxed text-[#6E6E73] animate-fade-in"
                 >
-                  <p>{faq.answer}</p>
+                  <p>
+                    {faq.answer}{' '}
+                    {faq.link && (
+                      <>
+                        {faq.link.prefix && <span>{faq.link.prefix} </span>}
+                        <Link
+                          href={faq.link.href}
+                          className="text-[#0071E3] font-medium hover:underline inline-flex items-center gap-0.5"
+                        >
+                          {faq.link.text}
+                        </Link>
+                        .
+                      </>
+                    )}
+                  </p>
                 </div>
               </div>
             );
