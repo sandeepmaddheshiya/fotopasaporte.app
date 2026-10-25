@@ -6,6 +6,7 @@ import { HeroSection } from '@/components/HeroSection';
 import { PhotoMaker } from '@/components/workspace/PhotoMaker';
 import { RequirementsSection } from '@/components/RequirementsSection';
 import { HowItWorks } from '@/components/HowItWorks';
+import { WhatYouGet } from '@/components/WhatYouGet';
 import { QualityRequirements } from '@/components/QualityRequirements';
 import { PrivacySection } from '@/components/PrivacySection';
 import { FAQAccordion } from '@/components/FAQAccordion';
@@ -61,6 +62,8 @@ export default function HomePage() {
       />
 
       {/* 5. How It Works */}
+      <WhatYouGet />
+
       <HowItWorks />
 
       {/* 6. Quality & Strict Criteria */}

@@ -7,7 +7,6 @@ import './globals.css';
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1,
   themeColor: '#0071E3',
 };
 
@@ -22,9 +21,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'FotoPasaporte.app — Tu foto de pasaporte, lista para usar',
+  title: 'Foto de pasaporte online: recorta tu foto al tamaño de tu país',
   description:
-    'Prepara tu foto para pasaporte, visado y documentos con las medidas y el encuadre exactos. Procesamiento privado en tu navegador, sin registros innecesarios.',
+    'Prepara tu foto de pasaporte en el navegador con las medidas de tu país. Consulta requisitos con fuente oficial y fecha de verificación.',
   keywords: [
     'foto pasaporte',
     'foto para pasaporte',
@@ -52,9 +51,9 @@ export const metadata: Metadata = {
   authors: [{ name: 'FotoPasaporte.app' }],
   metadataBase: new URL('https://fotopasaporte.app'),
   openGraph: {
-    title: 'FotoPasaporte.app — Tu foto de pasaporte, lista para usar',
+    title: 'Foto de pasaporte online: recorta tu foto al tamaño de tu país',
     description:
-      'Prepara tu foto para pasaporte, visado y documentos con las medidas y el encuadre que necesitas.',
+      'Prepara tu foto de pasaporte con las medidas de tu país. Consulta requisitos con fuente oficial y fecha de verificación.',
     url: 'https://fotopasaporte.app',
     siteName: 'FotoPasaporte',
     locale: 'es_ES',
@@ -80,6 +79,32 @@ export default function RootLayout({
   return (
     <html lang="es" className={`${geistSans.variable} ${geistMono.variable} scroll-smooth`}>
       <body className="min-h-screen bg-white text-[#1D1D1F] antialiased selection:bg-[#0071E3]/20">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@graph': [
+                {
+                  '@type': 'Organization',
+                  '@id': 'https://fotopasaporte.app/#organization',
+                  name: 'FotoPasaporte.app',
+                  url: 'https://fotopasaporte.app',
+                  logo: 'https://fotopasaporte.app/images/logo.png',
+                  email: 'soporte@fotopasaporte.app',
+                },
+                {
+                  '@type': 'WebSite',
+                  '@id': 'https://fotopasaporte.app/#website',
+                  url: 'https://fotopasaporte.app',
+                  name: 'FotoPasaporte.app',
+                  inLanguage: 'es',
+                  publisher: { '@id': 'https://fotopasaporte.app/#organization' },
+                },
+              ],
+            }),
+          }}
+        />
         <VisitTracker />
         {children}
         <Script

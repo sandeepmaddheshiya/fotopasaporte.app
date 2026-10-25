@@ -23,7 +23,7 @@ export function HowItWorks() {
       number: '03',
       title: 'Descarga el resultado',
       description:
-        'Revisa la imagen final y descarga el archivo individual a 300 DPI o la plantilla oficial A4 lista para imprimir.',
+        'Revisa la imagen final y descarga el archivo individual a 300 DPI o la hoja de impresión (A4 o 10×15 cm) lista para imprimir.',
       icon: <ArrowDownToLine className="h-5 w-5 text-[#0071E3]" />,
     },
   ];

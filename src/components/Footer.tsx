@@ -106,14 +106,14 @@ export function Footer() {
                 </button>
               </li>
               <li>
-                <a href="#faq" className="hover:text-[#1D1D1F] transition-colors">
+                <Link href="/privacidad" className="hover:text-[#1D1D1F] transition-colors">
                   Política de privacidad
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#faq" className="hover:text-[#1D1D1F] transition-colors">
+                <Link href="/terminos" className="hover:text-[#1D1D1F] transition-colors">
                   Términos de uso
-                </a>
+                </Link>
               </li>
               <li>
                 <a href="mailto:soporte@fotopasaporte.app" className="hover:text-[#1D1D1F] transition-colors">

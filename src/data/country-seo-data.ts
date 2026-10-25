@@ -77,14 +77,14 @@ const COUNTRY_AUTHORITIES: Record<string, CountryAuthorityInfo> = {
   ES: {
     authorityName: 'Cuerpo Nacional de Policía / Dirección General de la Policía',
     department: 'Ministerio del Interior (Gobierno de España)',
-    officialDocName: 'DNIe 4.0 y Pasaporte Biométrico Español',
-    regulationsStandard: 'Real Decreto 896/2003 y Estándar OACI (ICAO Doc 9303)',
-    typicalProcessingTime: 'Expedición en el acto con cita previa',
-    primaryDocumentTypes: ['Pasaporte Ordinario (35×45 mm)', 'DNI / DNIe (30×40 mm)', 'Visado Schengen (35×45 mm)'],
+    officialDocName: 'Pasaporte Biométrico Español',
+    regulationsStandard: 'Estándar OACI (ICAO Doc 9303)',
+    typicalProcessingTime: 'Consulta la web de la Policía Nacional (cita previa)',
+    primaryDocumentTypes: ['Pasaporte Ordinario (35×45 mm)', 'Visado Schengen (35×45 mm)'],
     keyDifferencesText:
-      'En España coexisten dos formatos oficiales distintos: el DNI físico tradicional exige un tamaño de 3,0 × 4,0 cm (30 × 40 mm), mientras que el Pasaporte Biométrico y los visados Schengen emplean la norma europea de 3,5 × 4,5 cm (35 × 45 mm). Ambas modalidades exigen fondo rigurosamente blanco liso y uniforme sin texturas.',
+      'Para el pasaporte español y los visados Schengen, la foto mide 35 × 45 mm (3,5 × 4,5 cm) con fondo blanco liso y uniforme sin texturas. Si necesitas la foto para el DNI, consulta las medidas en la web oficial de la Policía Nacional, ya que esta página solo cubre pasaporte y visado.',
     specificPeculiarities: [
-      'El DNI español mide 30×40 mm, mientras que el pasaporte mide 35×45 mm.',
+      'El pasaporte y el visado Schengen usan una foto de 35×45 mm.',
       'Fondo rigurosamente blanco, liso y monocromático. No se admiten fondos grises ni texturados.',
       'El óvalo facial debe ocupar entre el 70% y el 80% de la altura total de la fotografía.',
       'Gafas totalmente desaconsejadas por la Policía Nacional para evitar reflejos del flash en los lectores biométricos.',
@@ -92,12 +92,12 @@ const COUNTRY_AUTHORITIES: Record<string, CountryAuthorityInfo> = {
     officialPortalUrl: 'https://www.dnielectronico.es',
   },
   US: {
-    authorityName: 'Bureau of Consular Affairs (U.S. Department of State)',
-    department: 'United States Federal Government',
-    officialDocName: 'U.S. Passport Book/Card & Nonimmigrant Visa (DS-160 / DS-260)',
-    regulationsStandard: 'Code of Federal Regulations (22 CFR § 51.26) & ICAO 9303',
+    authorityName: 'Oficina de Asuntos Consulares (Departamento de Estado de EE. UU.)',
+    department: 'Gobierno Federal de Estados Unidos',
+    officialDocName: 'Pasaporte estadounidense (libreta/tarjeta) y visa de no inmigrante (DS-160)',
+    regulationsStandard: 'Código de Regulaciones Federales (22 CFR § 51.26) y OACI Doc 9303',
     typicalProcessingTime: '6 a 8 semanas (ordinario) / 2 a 3 semanas (urgente)',
-    primaryDocumentTypes: ['U.S. Passport Book / Card (2×2 pulgadas)', 'Nonimmigrant Visa DS-160 (600×600 px)', 'Immigrant Visa (2×2 in)'],
+    primaryDocumentTypes: ['Pasaporte estadounidense (2×2 pulgadas)', 'Visa de no inmigrante DS-160 (600×600 px)', 'Visa de inmigrante (2×2 pulgadas)'],
     keyDifferencesText:
       'Estados Unidos utiliza el estándar cuadrado de 2 × 2 pulgadas (51 × 51 mm), con un peso de archivo digital estrictamente delimitado entre 100 KB y 240 KB para el formulario consular DS-160. Desde noviembre de 2016, está terminantemente prohibido llevar gafas en las fotos de pasaporte estadounidense.',
     specificPeculiarities: [
@@ -109,12 +109,12 @@ const COUNTRY_AUTHORITIES: Record<string, CountryAuthorityInfo> = {
     officialPortalUrl: 'https://travel.state.gov',
   },
   GB: {
-    authorityName: 'His Majesty’s Passport Office (HMPO) / UK Visas and Immigration (UKVI)',
+    authorityName: 'Oficina de Pasaportes de Su Majestad (HMPO) / Visados e Inmigración del Reino Unido (UKVI)',
     department: 'Home Office (Reino Unido)',
-    officialDocName: 'British Passport & UK Visa',
-    regulationsStandard: 'UK Passport Photo Regulations & ICAO Doc 9303',
+    officialDocName: 'Pasaporte británico y visado del Reino Unido',
+    regulationsStandard: 'Normas de fotografía de pasaporte del Reino Unido y OACI Doc 9303',
     typicalProcessingTime: '3 a 10 semanas según modalidad',
-    primaryDocumentTypes: ['UK Passport (35×45 mm)', 'UKVI Visa Application', 'BRP / eVisa'],
+    primaryDocumentTypes: ['Pasaporte británico (35×45 mm)', 'Solicitud de visado UKVI (35×45 mm)'],
     keyDifferencesText:
       'A diferencia de la mayoría de países europeos, el Reino Unido PROHÍBE explícitamente el fondo blanco puro. La normativa de HMPO exige un fondo liso de color crema o gris claro para garantizar el contraste con el tono de la piel y el cabello.',
     specificPeculiarities: [
@@ -126,12 +126,12 @@ const COUNTRY_AUTHORITIES: Record<string, CountryAuthorityInfo> = {
     officialPortalUrl: 'https://www.gov.uk/photos-for-passports',
   },
   CA: {
-    authorityName: 'Immigration, Refugees and Citizenship Canada (IRCC) / Passport Program',
-    department: 'Government of Canada',
-    officialDocName: 'Canadian Passport & Electronic Travel Authorization (eTA)',
-    regulationsStandard: 'Canadian Passport Order & ISO/IEC 19794-5',
+    authorityName: 'Inmigración, Refugiados y Ciudadanía de Canadá (IRCC) / Programa de Pasaportes',
+    department: 'Gobierno de Canadá',
+    officialDocName: 'Pasaporte canadiense y Autorización Electrónica de Viaje (eTA)',
+    regulationsStandard: 'Orden del Pasaporte Canadiense e ISO/IEC 19794-5',
     typicalProcessingTime: '10 a 20 días hábiles',
-    primaryDocumentTypes: ['Canadian Passport (50×70 mm)', 'Temporary Resident Visa (35×45 mm)', 'Permanent Resident Card (50×70 mm)'],
+    primaryDocumentTypes: ['Pasaporte canadiense (50×70 mm)', 'Visa de residente temporal (35×45 mm)'],
     keyDifferencesText:
       'El pasaporte canadiense utiliza un formato vertical grande y único de 50 × 70 mm (2 × 2 3/4 pulgadas), sensiblemente superior al estándar europeo. La cara debe medir exactamente entre 31 y 36 mm de largo. En solicitudes físicas, el reverso de una de las fotos debe incluir el sello o datos de identidad del fotógrafo.',
     specificPeculiarities: [
@@ -213,12 +213,12 @@ const COUNTRY_AUTHORITIES: Record<string, CountryAuthorityInfo> = {
   CO: {
     authorityName: 'Ministerio de Relaciones Exteriores (Cancillería de Colombia)',
     department: 'Gobierno de la República de Colombia',
-    officialDocName: 'Pasaporte Colombiano con Zona de Lectura Mecánica / Electrónico',
-    regulationsStandard: 'Resolución de Pasaportes de la Cancillería & OACI Doc 9303',
-    typicalProcessingTime: '24 a 48 horas en Bogotá / 8 días en consulados',
-    primaryDocumentTypes: ['Pasaporte Ordinario / Ejecutivo (35×45 mm)', 'Cédula de Ciudadanía Digital (40×50 mm)', 'Visa Colombiana (35×45 mm)'],
+    officialDocName: 'Pasaporte Colombiano y Visa Colombiana',
+    regulationsStandard: 'Directrices de la Cancillería & OACI Doc 9303',
+    typicalProcessingTime: 'Consulta los plazos en el portal de la Cancillería',
+    primaryDocumentTypes: ['Pasaporte (30×40 mm)', 'Visa Colombiana (30×40 mm)'],
     keyDifferencesText:
-      'Para trámites consulares y visas, Colombia exige fotos en formato 35×45 mm o 40×50 mm para la cédula, siempre a color con fondo blanco puro y rostro despejado sin brillo ni sombras.',
+      'Para el pasaporte y la visa de Colombia, la foto mide 30 × 40 mm, a color, con fondo blanco liso y rostro despejado sin brillo ni sombras.',
     specificPeculiarities: [
       'Fondo blanco puro uniforme.',
       'Rostro centrado de frente con ambos hombros visibles.',
@@ -233,11 +233,11 @@ const COUNTRY_AUTHORITIES: Record<string, CountryAuthorityInfo> = {
     officialDocName: 'Pasaporte Argentino y DNI Tarjeta',
     regulationsStandard: 'Ley Nacional de Identificación & Normativa OACI',
     typicalProcessingTime: '15 días hábiles (regular) / 48 a 96 h (exprés)',
-    primaryDocumentTypes: ['Pasaporte Electrónico (40×40 mm o 35×45 mm)', 'DNI Digital (40×40 mm)', 'Visado Argentino'],
+    primaryDocumentTypes: ['Pasaporte (35×45 mm)', 'Visado (35×45 mm)'],
     keyDifferencesText:
-      'En Argentina, los trámites físicos presenciales de RENAPER suelen utilizar fotos cuadradas de 4 × 4 cm o el estándar internacional de 35 × 45 mm para trámites consulares en el exterior.',
+      'Para el pasaporte y el visado de Argentina, la foto mide 35 × 45 mm (3,5 × 4,5 cm) con fondo blanco liso. Si necesitas la foto para el DNI, consulta las medidas en la web oficial de RENAPER, ya que esta página solo cubre pasaporte y visado.',
     specificPeculiarities: [
-      'Formato 4×4 cm o 35×45 mm según el centro emisor.',
+      'Formato 35×45 mm para pasaporte y visado.',
       'Fondo blanco liso sin sombras.',
       'Busto frontal con cabeza erguida.',
       'Mirada fija a la cámara con expresión neutra.',
@@ -250,11 +250,11 @@ const COUNTRY_AUTHORITIES: Record<string, CountryAuthorityInfo> = {
     officialDocName: 'Pasaporte Chileno Biométrico y Cédula de Identidad',
     regulationsStandard: 'Decreto Supremo de Identificación & OACI',
     typicalProcessingTime: '8 a 15 días hábiles',
-    primaryDocumentTypes: ['Pasaporte Chileno (45×45 mm)', 'Cédula de Identidad (45×45 mm)', 'Visa Chilena Consular'],
+    primaryDocumentTypes: ['Pasaporte (35×45 mm)', 'Visa (35×45 mm)'],
     keyDifferencesText:
-      'Chile emplea frecuentemente el formato cuadrado de 4,5 × 4,5 cm para documentos de identidad física o el estándar OACI de 35 × 45 mm para visas y trámites internacionales.',
+      'Para el pasaporte y la visa de Chile, la foto mide 35 × 45 mm (3,5 × 4,5 cm) con fondo blanco liso. Si necesitas la foto para la cédula de identidad, consulta las medidas en la web del Registro Civil, ya que esta página solo cubre pasaporte y visa.',
     specificPeculiarities: [
-      'Medidas oficiales de 45×45 mm para Cédula y Pasaporte.',
+      'Medidas de 35×45 mm para pasaporte y visa.',
       'Fondo blanco parejo sin sombras.',
       'Rostro despejado, sin flequillos que tapen las cejas.',
       'Sin sonreír y con expresión relajada.',
@@ -279,16 +279,16 @@ const COUNTRY_AUTHORITIES: Record<string, CountryAuthorityInfo> = {
     officialPortalUrl: 'https://www.gob.pe/migraciones',
   },
   IN: {
-    authorityName: 'Passport Seva / Ministry of External Affairs (MEA)',
-    department: 'Government of India',
-    officialDocName: 'Indian Passport & Indian e-Visa',
-    regulationsStandard: 'Passport Rules, 1980 & ICAO 9303',
+    authorityName: 'Passport Seva / Ministerio de Asuntos Exteriores (MEA)',
+    department: 'Gobierno de la India',
+    officialDocName: 'Pasaporte indio y e-Visa de la India',
+    regulationsStandard: 'Reglamento de Pasaportes de 1980 y OACI Doc 9303',
     typicalProcessingTime: '1 a 3 semanas',
-    primaryDocumentTypes: ['Indian Passport (2×2 pulgadas / 51×51 mm)', 'India e-Visa (square JPEG)', 'OCI Card'],
+    primaryDocumentTypes: ['Pasaporte indio (35×45 mm)', 'Visa de la India (51×51 mm)'],
     keyDifferencesText:
-      'Para el pasaporte indio y la e-Visa india se utiliza el formato cuadrado de 2 × 2 pulgadas (51 × 51 mm) o 35 × 35 mm. Para la e-Visa online, la foto debe subirse en formato JPEG cuadrado con fondo blanco puro y peso entre 10 KB y 1 MB.',
+      'Para el pasaporte indio la foto mide 35 × 45 mm, y para la visa de la India se usa el formato cuadrado de 51 × 51 mm (2 × 2 pulgadas). Para la e-Visa en línea, la foto debe subirse en formato JPEG cuadrado. Comprueba el peso y los requisitos exactos en el portal oficial.',
     specificPeculiarities: [
-      'Formato cuadrado 51×51 mm (2×2 pulgadas) o 35×35 mm.',
+      'Pasaporte: 35×45 mm. Visa: formato cuadrado 51×51 mm (2×2 pulgadas).',
       'Fondo blanco sólido y uniforme.',
       'Rostro entre el 60% y el 75% del marco.',
       'Para e-Visa online: imagen cuadrada 1:1, formato JPEG.',
@@ -296,12 +296,12 @@ const COUNTRY_AUTHORITIES: Record<string, CountryAuthorityInfo> = {
     officialPortalUrl: 'https://portal2.passportindia.gov.in',
   },
   AU: {
-    authorityName: 'Australian Passport Office (APO)',
-    department: 'Department of Foreign Affairs and Trade (DFAT)',
-    officialDocName: 'Australian Passport & ETA / eVisitor Visa',
-    regulationsStandard: 'Australian Passports Determination 2015 & ICAO 9303',
+    authorityName: 'Oficina de Pasaportes de Australia (APO)',
+    department: 'Departamento de Asuntos Exteriores y Comercio (DFAT)',
+    officialDocName: 'Pasaporte australiano y visas ETA / eVisitor',
+    regulationsStandard: 'Determinación de Pasaportes de Australia 2015 y OACI Doc 9303',
     typicalProcessingTime: '6 a 10 semanas',
-    primaryDocumentTypes: ['Australian Passport (35×45 mm)', 'Subclass 600 / 651 Visa', 'ImmiCard'],
+    primaryDocumentTypes: ['Pasaporte australiano (35×45 mm)', 'Visa australiana (35×45 mm)'],
     keyDifferencesText:
       'Australia exige fotografías de 35 × 45 mm donde el rostro (desde la barbilla hasta la coronilla) mida obligatoriamente entre 32 mm y 36 mm. El fondo debe ser blanco o gris muy claro uniforme.',
     specificPeculiarities: [
@@ -318,11 +318,11 @@ const COUNTRY_AUTHORITIES: Record<string, CountryAuthorityInfo> = {
     officialDocName: 'Passaporte Brasileiro Biométrico',
     regulationsStandard: 'Instrução Normativa da Polícia Federal & Padrão ICAO',
     typicalProcessingTime: '6 a 10 días hábiles',
-    primaryDocumentTypes: ['Passaporte Brasileiro (50×70 mm o 35×45 mm)', 'Visto Eletrônico e-Visa'],
+    primaryDocumentTypes: ['Pasaporte brasileño (35×45 mm)', 'Visa de Brasil (35×45 mm)'],
     keyDifferencesText:
-      'Para trámites consulares de pasaporte brasileño en el extranjero, la Polícia Federal acepta fotografías en formato de 50 × 70 mm (5 × 7 cm) o el estándar de 35 × 45 mm, con fondo rigurosamente blanco y rostro al 70-80%.',
+      'Para el pasaporte y la visa de Brasil, la foto mide 35 × 45 mm (3,5 × 4,5 cm) con fondo blanco liso. Consulta siempre los requisitos vigentes en el portal de la Polícia Federal.',
     specificPeculiarities: [
-      'Formato 5×7 cm o 35×45 mm según el consulado emisor.',
+      'Formato 35×45 mm para pasaporte y visa.',
       'Fondo blanco liso y uniforme.',
       'Rostro centrado con hombros descubiertos de accesorios voluminosos.',
       'Sin gafas de montura ancha ni tintes.',
@@ -381,21 +381,21 @@ const COUNTRY_AUTHORITIES: Record<string, CountryAuthorityInfo> = {
     officialPortalUrl: 'https://www.rijksoverheid.nl/onderwerpen/paspoort-en-identiteitskaart',
   },
   EC: {
-    authorityName: 'Dirección General de Registro Civil, Identificación y Cedulación',
-    department: 'Ministerio de Telecomunicaciones y Sociedad de la Información (Ecuador)',
-    officialDocName: 'Pasaporte Biométrico Ecuatoriano y Cédula de Identidad',
-    regulationsStandard: 'Ley Orgánica de Gestión de la Identidad y Datos Civiles & OACI',
-    typicalProcessingTime: 'Entrega el mismo día de la cita',
-    primaryDocumentTypes: ['Pasaporte Biométrico (35×45 mm)', 'Cédula de Identidad (35×45 mm)', 'Visa Consular'],
+    authorityName: 'Ministerio de Relaciones Exteriores y Movilidad Humana (Cancillería de Ecuador)',
+    department: 'Gobierno de la República del Ecuador',
+    officialDocName: 'Pasaporte Ecuatoriano y Visa',
+    regulationsStandard: 'Directrices de la Cancillería & OACI Doc 9303',
+    typicalProcessingTime: 'Consulta los plazos en el portal oficial',
+    primaryDocumentTypes: ['Pasaporte (51×51 mm)', 'Visa (51×51 mm)'],
     keyDifferencesText:
-      'Ecuador exige fotografías de 35 × 45 mm en color, con fondo rigurosamente blanco, frente y orejas totalmente descubiertas, sin aretes llamativos ni gafas, garantizando máxima nitidez biométrica.',
+      'Para el pasaporte y la visa de Ecuador, la foto es cuadrada de 51 × 51 mm (2 × 2 pulgadas), a color, con fondo blanco, frente y orejas descubiertas y sin gafas.',
     specificPeculiarities: [
-      'Dimensiones estándar 35×45 mm a 300 DPI.',
+      'Formato cuadrado de 51×51 mm (2×2 pulgadas) a 300 DPI.',
       'Fondo blanco nítido sin sombras detrás de los hombros.',
       'Frente y orejas despejadas; cabello recogido.',
       'Expresión facial neutra sin sonrisa.',
     ],
-    officialPortalUrl: 'https://www.registrocivil.gob.ec',
+    officialPortalUrl: 'https://www.cancilleria.gob.ec/',
   },
   DO: {
     authorityName: 'Dirección General de Pasaportes (DGP)',
@@ -420,11 +420,11 @@ const COUNTRY_AUTHORITIES: Record<string, CountryAuthorityInfo> = {
     officialDocName: 'Pasaporte Oficial de la República de Cuba',
     regulationsStandard: 'Ley de Migración & Normas Consulares Cubanas',
     typicalProcessingTime: '2 a 8 semanas según país de tramitación',
-    primaryDocumentTypes: ['Pasaporte Cubano (45×45 mm o 35×45 mm)', 'Prórroga de Pasaporte', 'Carné de Identidad'],
+    primaryDocumentTypes: ['Pasaporte cubano (45×45 mm)', 'Visa (35×45 mm)'],
     keyDifferencesText:
       'Para trámites consulares de pasaporte cubano en embajadas y consulados en el extranjero, se exige formato a color con fondo blanco puro, ropa oscura de cuello cerrado y rostro totalmente descubierto sin lentes.',
     specificPeculiarities: [
-      'Formato cuadrado 45×45 mm o 35×45 mm según el consulado emisor.',
+      'Pasaporte: formato cuadrado 45×45 mm. Visa: 35×45 mm.',
       'Fondo blanco uniforme sin sombras en la pared.',
       'Vestimenta formal de color oscuro para garantizar contraste.',
       'Sin gafas, aretes ni cabello tapando el óvalo facial.',
@@ -471,11 +471,11 @@ const COUNTRY_AUTHORITIES: Record<string, CountryAuthorityInfo> = {
     officialDocName: 'Pasaporte Biométrico Costarricense y Cédula de Residencia (DIMEX)',
     regulationsStandard: 'Reglamento General a la Ley de Migración & OACI',
     typicalProcessingTime: '8 a 15 días hábiles (oficinas de Correos o Banco)',
-    primaryDocumentTypes: ['Pasaporte Biométrico (35×45 mm o 50×50 mm)', 'DIMEX', 'Visa Costarricense'],
+    primaryDocumentTypes: ['Pasaporte biométrico (35×45 mm)', 'Visa costarricense (35×45 mm)'],
     keyDifferencesText:
-      'Costa Rica emplea el formato 35 × 45 mm o 50 × 50 mm para trámites consulares en el exterior. Fondo blanco liso, rostro descubierto al 70%, sin gafas y sin prendas que cubran la cabeza.',
+      'Para el pasaporte y la visa de Costa Rica, la foto mide 35 × 45 mm. Fondo blanco liso, rostro descubierto, sin gafas y sin prendas que cubran la cabeza.',
     specificPeculiarities: [
-      'Formato 35×45 mm o 50×50 mm según trámite.',
+      'Formato 35×45 mm para pasaporte y visa.',
       'Fondo blanco uniforme y homogéneo.',
       'Mirada frontal directa con ojos descubiertos.',
       'Sin accesorios reflectantes ni maquillaje excesivo.',
@@ -488,11 +488,11 @@ const COUNTRY_AUTHORITIES: Record<string, CountryAuthorityInfo> = {
     officialDocName: 'Pasaporte Electrónico Panameño con Chip Biométrico',
     regulationsStandard: 'Ley Orgánica de la Autoridad de Pasaportes & OACI Doc 9303',
     typicalProcessingTime: '24 horas hábiles (sede central)',
-    primaryDocumentTypes: ['Pasaporte Panameño (35×45 mm)', 'Cédula de Identidad Personal', 'Visa Panameña'],
+    primaryDocumentTypes: ['Pasaporte panameño (35×45 mm)', 'Visa panameña (51×51 mm)'],
     keyDifferencesText:
-      'Panamá exige fotografías de 35 × 45 mm con fondo blanco absoluto, sin sombras, con ropa formal de contraste, cabello peinado detrás de las orejas y sin lentes ni accesorios llamativos.',
+      'Para el pasaporte panameño la foto mide 35 × 45 mm y para la visa 51 × 51 mm, con fondo blanco sin sombras, cabello peinado detrás de las orejas y sin lentes ni accesorios llamativos.',
     specificPeculiarities: [
-      'Medidas estándar 35×45 mm a 300 DPI.',
+      'Pasaporte: 35×45 mm. Visa: 51×51 mm.',
       'Fondo blanco sin ningún tipo de sombra o degradado.',
       'Hombros cubiertos con vestimenta de color oscuro.',
       'Sin sonreír ni mostrar dientes.',
@@ -500,12 +500,12 @@ const COUNTRY_AUTHORITIES: Record<string, CountryAuthorityInfo> = {
     officialPortalUrl: 'https://www.pasaporte.gob.pa',
   },
   IE: {
-    authorityName: 'Passport Service (Department of Foreign Affairs)',
-    department: 'Government of Ireland',
-    officialDocName: 'Irish Passport Book & Passport Card (Online Application)',
-    regulationsStandard: 'Passports Act 2008 & ICAO Doc 9303',
+    authorityName: 'Servicio de Pasaportes (Departamento de Asuntos Exteriores)',
+    department: 'Gobierno de Irlanda',
+    officialDocName: 'Pasaporte irlandés (libreta y tarjeta, solicitud en línea)',
+    regulationsStandard: 'Ley de Pasaportes 2008 y OACI Doc 9303',
     typicalProcessingTime: '10 a 20 días laborables vía Passport Online',
-    primaryDocumentTypes: ['Irish Passport (35×45 mm)', 'Passport Card (35×45 mm)', 'Irish Visa'],
+    primaryDocumentTypes: ['Pasaporte irlandés (35×45 mm)', 'Visado (35×45 mm)'],
     keyDifferencesText:
       'Irlanda cuenta con el sistema «Passport Online», que valida digitalmente la fotografía. El fondo debe ser gris claro o crema uniforme (nunca blanco puro ni oscuro), y la cabeza debe medir entre 32 y 36 mm.',
     specificPeculiarities: [
@@ -520,7 +520,7 @@ const COUNTRY_AUTHORITIES: Record<string, CountryAuthorityInfo> = {
     authorityName: 'Ministerio de Asuntos Exteriores de Japón (MOFA)',
     department: 'Gobierno de Japón',
     officialDocName: 'Pasaporte Japonés Biométrico (Tabiken)',
-    regulationsStandard: 'Passport Act of Japan & ICAO Doc 9303',
+    regulationsStandard: 'Ley de Pasaportes de Japón y OACI Doc 9303',
     typicalProcessingTime: '6 a 8 días hábiles',
     primaryDocumentTypes: ['Pasaporte Japonés (35×45 mm)', 'Visado para Japón', 'Certificado de Elegibilidad'],
     keyDifferencesText:
@@ -537,7 +537,7 @@ const COUNTRY_AUTHORITIES: Record<string, CountryAuthorityInfo> = {
     authorityName: 'Administración Nacional de Inmigración (NIA) / MPS',
     department: 'República Popular China',
     officialDocName: 'Pasaporte Chino Biométrico y Visado Consular Chino',
-    regulationsStandard: 'Passport Law of the PRC & Estándar Nacional Chino',
+    regulationsStandard: 'Ley de Pasaportes de la RPC y Estándar Nacional Chino',
     typicalProcessingTime: '7 a 15 días laborables',
     primaryDocumentTypes: ['Pasaporte Chino (33×48 mm)', 'Visado Consular Chino (33×48 mm)', 'Residencia'],
     keyDifferencesText:
@@ -556,12 +556,12 @@ const COUNTRY_AUTHORITIES: Record<string, CountryAuthorityInfo> = {
     officialDocName: 'Pasaporte Biométrico Salvadoreño y Documento Único de Identidad (DUI)',
     regulationsStandard: 'Ley Especial de Migración y de Extranjería & ICAO Doc 9303',
     typicalProcessingTime: 'Expedición en el mismo día con cita en sucursales DGME',
-    primaryDocumentTypes: ['Pasaporte Biométrico (51×51 mm / 2×2 in o 35×45 mm)', 'DUI / Cédula Salvadoreña (35×45 mm)', 'Visa Consular'],
+    primaryDocumentTypes: ['Pasaporte biométrico (51×51 mm)', 'Visa (51×51 mm)'],
     keyDifferencesText:
-      'El Salvador utiliza para el pasaporte consular emitido en Estados Unidos el formato de 51 × 51 mm (2 × 2 pulgadas) o el estándar de 35 × 45 mm para agencias locales y consulados europeos. Para el Documento Único de Identidad (DUI / cédula salvadoreña), la foto debe ser de 35 × 45 mm con fondo blanco liso, orejas y frente totalmente despejadas y sin gafas.',
+      'Para el pasaporte y la visa de El Salvador, la foto es cuadrada de 51 × 51 mm (2 × 2 pulgadas), con fondo blanco liso, orejas y frente totalmente despejadas y sin gafas. Si necesitas la foto para el DUI, consulta las medidas en el portal oficial, ya que esta página solo cubre pasaporte y visa.',
     specificPeculiarities: [
-      'Dimensiones para pasaporte: 51×51 mm (2×2 pulgadas) en consulados de EE.UU. o 35×45 mm según sede.',
-      'Medidas para Documento Único de Identidad (DUI / Cédula): 35×45 mm a 300 DPI.',
+      'Pasaporte y visa: formato cuadrado de 51×51 mm (2×2 pulgadas).',
+      'Resolución recomendada de 300 DPI.',
       'Fondo rigurosamente blanco liso, sin sombras detrás de los hombros.',
       'Orejas, frente y cejas descubiertas; sin aretes llamativos ni gafas.',
     ],
@@ -723,9 +723,9 @@ const COUNTRY_SPECIFIC_REJECTION_REASONS: Record<string, CountryRejectionReason[
   ],
   ES: [
     {
-      title: 'Confundir las medidas del DNI (30×40 mm) con el Pasaporte (35×45 mm)',
+      title: 'Usar un tamaño distinto de 35×45 mm',
       description:
-        'El Documento Nacional de Identidad (DNI) español requiere 30 × 40 mm, mientras que el Pasaporte exige 35 × 45 mm. Llevar una foto de pasaporte al trámite de renovación del DNI puede provocar su rechazo por parte del funcionario.',
+        'El pasaporte y el visado Schengen exigen una foto de 35 × 45 mm. Una foto de otro tamaño, como la de otro documento, puede ser rechazada. Para el DNI, consulta las medidas en la web oficial de la Policía Nacional.',
       riskLevel: 'Crítico',
     },
     {
@@ -837,9 +837,9 @@ const COUNTRY_SPECIFIC_REJECTION_REASONS: Record<string, CountryRejectionReason[
   ],
   SV: [
     {
-      title: 'Confundir las medidas del DUI (35×45 mm) con las del pasaporte en EE.UU. (51×51 mm)',
+      title: 'Usar un tamaño distinto de 51×51 mm',
       description:
-        'En los consulados de El Salvador en Estados Unidos se exige el formato 2×2 pulgadas (51×51 mm), mientras que para el DUI y trámites en territorio nacional se utiliza el formato 35×45 mm. Presentar el tamaño incorrecto provoca el rechazo automático.',
+        'El pasaporte y la visa de El Salvador usan el formato cuadrado 2×2 pulgadas (51×51 mm). Presentar otro tamaño, como el de otro documento, puede provocar el rechazo. Para el DUI, consulta las medidas en el portal oficial.',
       riskLevel: 'Crítico',
     },
     {
@@ -926,12 +926,12 @@ const COUNTRY_SPECIFIC_FAQS: Record<string, CountryFAQItem[]> = {
     {
       question: '¿Dónde tomar fotos para pasaporte americano o visa DS-160?',
       answer:
-        'Puedes tomarte la fotografía en casa con la cámara de tu teléfono móvil frente a una pared blanca y procesarla con FotoPasaporte.app. Nuestra herramienta verifica el cumplimiento de las directrices del U.S. Department of State, ajusta la proporción a 2×2 pulgadas y exporta el archivo digital optimizado por debajo de 240 KB o la plantilla para imprimir dos fotos en papel 10×15 cm, ahorrándote los 15$ a 22$ que cobran en farmacias como Walgreens o CVS.',
+        'Puedes tomarte la fotografía en casa con la cámara de tu teléfono móvil frente a una pared blanca y procesarla con FotoPasaporte.app. La herramienta ajusta la proporción a 2×2 pulgadas y exporta el archivo digital optimizado por debajo de 240 KB o una hoja de impresión (A4 o 10×15 cm) con dos fotos. Revisa siempre las directrices del Departamento de Estado en travel.state.gov.',
     },
     {
-      question: '¿Cómo conseguir fotos 2x2 de pasaporte gratis para imprimir?',
+      question: '¿Cómo preparo fotos 2x2 de pasaporte para imprimir?',
       answer:
-        'Sube tu foto a FotoPasaporte.app, selecciona el perfil «Estados Unidos - Pasaporte (2x2")» y genera la plantilla de impresión de 10 × 15 cm (4×6"). La plantilla incluye dos copias con marcas de corte milimétricas que puedes imprimir por unos pocos centavos en quioscos fotográficos o en cualquier impresora doméstica a escala 100%.',
+        'Sube tu foto a FotoPasaporte.app, selecciona el perfil «Estados Unidos - Pasaporte (2x2")» y genera la hoja de impresión (A4 o 10 × 15 cm). Incluye copias con marcas de corte que puedes imprimir en un quiosco fotográfico o en una impresora doméstica a escala 100%. La descarga final sin marca de agua es de pago.',
     },
     {
       question: '¿Cómo garantizo que mi foto para el formulario DS-160 pese menos de 240 KB?',
@@ -946,7 +946,7 @@ const COUNTRY_SPECIFIC_FAQS: Record<string, CountryFAQItem[]> = {
     {
       question: '¿Cómo imprimo mi foto de pasaporte de EE.UU. al tamaño exacto de 2×2 pulgadas?',
       answer:
-        'Genera la hoja de impresión de 10 × 15 cm (4×6") desde nuestro editor. Contiene dos fotos cuadradas exactas de 2×2 pulgadas con marcas de corte. Llévala a cualquier quiosco fotográfico o imprímela en casa seleccionando «Tamaño real / Escala 100%».',
+        'Genera la hoja de impresión (A4 o 10 × 15 cm) desde nuestro editor. Contiene dos fotos cuadradas de 2×2 pulgadas con marcas de corte. Llévala a un quiosco fotográfico o imprímela en casa seleccionando «Tamaño real / Escala 100%».',
     },
     {
       question: '¿Qué fondo es aceptado por el U.S. Department of State?',
@@ -958,10 +958,10 @@ const COUNTRY_SPECIFIC_FAQS: Record<string, CountryFAQItem[]> = {
     {
       question: '¿Por qué el Reino Unido (HMPO) prohíbe el fondo blanco?',
       answer:
-        'A diferencia de la mayoría de países, His Majesty’s Passport Office (HMPO) exige un fondo de color crema o gris claro uniforme. La razón técnica es que el fondo blanco brillante resta contraste al contorno de personas de tez clara o cabello rubio/cano en los escáneres automáticos británicos.',
+        'A diferencia de la mayoría de países, la Oficina de Pasaportes de Su Majestad (HMPO) exige un fondo de color crema o gris claro uniforme. La razón técnica es que el fondo blanco brillante resta contraste al contorno de personas de tez clara o cabello rubio/cano en los escáneres automáticos británicos.',
     },
     {
-      question: '¿Qué es el código digital de foto para el pasaporte británico (HMPO photo code)?',
+      question: '¿Qué es el código digital de foto para el pasaporte británico?',
       answer:
         'Es un código que generan algunos fotógrafos físicos autorizados en el Reino Unido. Sin embargo, no es obligatorio: la web oficial gov.uk permite expresamente subir un archivo digital JPEG/JPG directamente desde tu dispositivo siempre que cumpla las medidas mínimas de 600 × 750 píxeles y fondo claro uniforme.',
     },
@@ -983,19 +983,19 @@ const COUNTRY_SPECIFIC_FAQS: Record<string, CountryFAQItem[]> = {
   ],
   ES: [
     {
-      question: '¿Cuál es la diferencia entre la foto del DNI y la del Pasaporte en España?',
+      question: '¿Cuáles son las medidas exactas de la foto para el pasaporte español?',
       answer:
-        'El DNI español (DNIe 4.0) utiliza tradicionalmente un tamaño de 3,0 × 4,0 cm (30 × 40 mm), mientras que el Pasaporte Biométrico y los visados Schengen emplean la norma europea de 3,5 × 4,5 cm (35 × 45 mm). Ambos exigen fondo blanco liso y uniforme y papel fotográfico de alta calidad.',
+        'Para el pasaporte español y los visados Schengen la medida es de 35 × 45 mm (3,5 × 4,5 cm / 413 × 531 px a 300 DPI), con fondo blanco liso y uniforme.',
     },
     {
-      question: '¿Cuáles son las medidas exactas de la foto para pasaporte español y foto carnet en España?',
+      question: '¿Sirve esta foto para el DNI?',
       answer:
-        'Para el pasaporte español y visados Schengen la medida es de 35 × 45 mm (3,5 × 4,5 cm / 413 × 531 px a 300 DPI). Para el DNI físico tradicional (la comúnmente llamada «foto carnet» en España), la medida reglamentaria es de 30 × 40 mm (3,0 × 4,0 cm / 354 × 472 px).',
+        'Esta página cubre pasaporte y visado. Para el DNI, consulta las medidas vigentes en la web oficial de la Policía Nacional antes de imprimir.',
     },
     {
-      question: '¿Acepta la Policía Nacional fotos impresas en casa para el DNI o Pasaporte?',
+      question: '¿Acepta la Policía Nacional fotos impresas en casa para el pasaporte?',
       answer:
-        'Sí, siempre que estén impresas en papel fotográfico de calidad con una resolución mínima de 300 DPI y respeten las medidas milimétricas exactas (30×40 mm para DNI o 35×45 mm para pasaporte). Nuestra plantilla de 10×15 cm te permite imprimir 6 copias idénticas en cualquier tienda de fotografía por pocos céntimos.',
+        'Normalmente sí, siempre que estén impresas en papel fotográfico de calidad y respeten las medidas de 35×45 mm. Consulta los requisitos de presentación en la web de la Policía Nacional. Nuestra hoja de impresión (A4 o 10×15 cm) te permite imprimir varias copias idénticas en cualquier tienda de fotografía.',
     },
     {
       question: '¿Puedo llevar la foto en un pendrive o en el móvil a la comisaría?',
@@ -1003,12 +1003,12 @@ const COUNTRY_SPECIFIC_FAQS: Record<string, CountryFAQItem[]> = {
         'No. Para la expedición presencial en los equipos del Cuerpo Nacional de Policía debes aportar una fotografía física reciente en papel. No se aceptan archivos en memoria USB ni fotos mostradas en la pantalla del teléfono.',
     },
     {
-      question: '¿Puedo usar gafas en la foto del DNI español?',
+      question: '¿Puedo usar gafas en la foto del pasaporte español?',
       answer:
-        'Aunque la normativa permite gafas si los cristales son 100% transparentes, la Policía Nacional desaconseja expresamente llevarlas para evitar que los reflejos del flash arruinen la lectura biométrica, obligándote a repetir el trámite.',
+        'La Policía Nacional desaconseja llevar gafas para evitar reflejos del flash que dificulten la lectura biométrica. Lo más seguro es quitártelas.',
     },
     {
-      question: '¿Qué ropa se recomienda vestir para renovar el DNI o Pasaporte?',
+      question: '¿Qué ropa se recomienda vestir para la foto del pasaporte?',
       answer:
         'Se recomienda vestir prendas oscuras o de colores vivos con cuello cerrado. Evita terminantemente camisas o camisetas blancas, ya que se funden con el fondo blanco exigido y desdibujan los hombros.',
     },
@@ -1017,12 +1017,12 @@ const COUNTRY_SPECIFIC_FAQS: Record<string, CountryFAQItem[]> = {
     {
       question: '¿Por qué la foto del pasaporte canadiense mide 50×70 mm en lugar de 35×45 mm?',
       answer:
-        'Canadá mantiene su propio estándar histórico y biométrico establecido en el Canadian Passport Order, con dimensiones verticales de 50 × 70 mm (2 × 2 3/4 pulgadas). Los visados canadienses temporales a veces admiten 35×45 mm, pero el pasaporte y la tarjeta de residencia permanente exigen obligatoriamente 50×70 mm.',
+        'Canadá mantiene su propio estándar histórico y biométrico, con dimensiones verticales de 50 × 70 mm (2 × 2 3/4 pulgadas) para el pasaporte. Los visados canadienses temporales usan 35×45 mm.',
     },
     {
       question: '¿Cuál es el tamaño oficial de foto para la visa canadiense?',
       answer:
-        'Para la solicitud de visa canadiense (Visitor Visa, Study Permit o Work Permit) ante Immigration, Refugees and Citizenship Canada (IRCC), la fotografía digital debe medir un mínimo de 420 × 540 píxeles a 300 DPI (o 35 × 45 mm si es impresa), con el rostro entre 31 y 36 mm y fondo blanco o claro homogéneo.',
+        'Para la solicitud de visa canadiense (visa de visitante, permiso de estudio o de trabajo) ante Inmigración, Refugiados y Ciudadanía de Canadá (IRCC), la foto mide 35 × 45 mm si es impresa, con fondo blanco o claro homogéneo. Consulta en el portal oficial los requisitos de la foto digital.',
     },
     {
       question: '¿Qué requisito tiene el reverso de la foto de pasaporte canadiense?',
@@ -1052,7 +1052,7 @@ const COUNTRY_SPECIFIC_FAQS: Record<string, CountryFAQItem[]> = {
         'Para la visa consular mexicana, el Instituto Nacional de Migración (INM) y la SRE exigen una fotografía reciente (máximo 30 días de antigüedad), a color, tamaño 35 × 45 mm (o en algunos consulados en EE.UU. 2 × 2 pulgadas / 51 × 51 mm), fondo blanco sin sombras, sin aretes, sin collares y con la cabeza totalmente descubierta.',
     },
     {
-      question: '¿Se necesita pasaporte para viajar a Cancún (México)? / Do you need a passport for Cancun Mexico?',
+      question: '¿Se necesita pasaporte para viajar a Cancún (México)?',
       answer:
         'Sí. Todos los viajeros internacionales (incluidos ciudadanos de Estados Unidos, Canadá y Europa) deben presentar un pasaporte vigente con al menos 6 meses de validez para entrar a Cancún y a cualquier aeropuerto o puerto de México. Los ciudadanos extranjeros no pueden viajar a México con solo una licencia de conducir o acta de nacimiento.',
     },
@@ -1076,10 +1076,10 @@ const COUNTRY_SPECIFIC_FAQS: Record<string, CountryFAQItem[]> = {
     {
       question: '¿Cuál es el tamaño oficial de la foto para pasaporte en Costa Rica?',
       answer:
-        'En Costa Rica, el pasaporte biométrico expedido por la Dirección General de Migración y Extranjería (DGME) utiliza el tamaño estándar de 35 × 45 mm (3,5 × 4,5 cm / 413 × 531 px a 300 DPI) o el formato de 50 × 50 mm (2 × 2 pulgadas) para trámites consulares en el extranjero.',
+        'En Costa Rica, el pasaporte biométrico y la visa usan el tamaño de 35 × 45 mm (3,5 × 4,5 cm / 413 × 531 px a 300 DPI). Confirma siempre los requisitos en el portal de Migración.',
     },
     {
-      question: '¿Dónde sacar fotos de pasaporte en San José (Costa Rica)? / Passport photos San Jose',
+      question: '¿Dónde sacar fotos de pasaporte en San José (Costa Rica)?',
       answer:
         'En San José y en cualquier lugar de Costa Rica puedes preparar tu fotografía desde tu teléfono con FotoPasaporte.app. Nuestra herramienta verifica las dimensiones biométricas de la DGME y genera la hoja para imprimir que puedes llevar a cualquier centro de copiado o papelería en San José para obtener tus fotos impresas al instante por un costo mínimo.',
     },
@@ -1091,31 +1091,26 @@ const COUNTRY_SPECIFIC_FAQS: Record<string, CountryFAQItem[]> = {
   ],
   EC: [
     {
-      question: '¿Cuál es el tamaño oficial de la foto de pasaporte en Ecuador y medidas del pasaporte ecuatoriano?',
+      question: '¿Cuál es el tamaño oficial de la foto de pasaporte de Ecuador?',
       answer:
-        'Para el pasaporte biométrico ecuatoriano emitido por la Dirección General de Registro Civil, Identificación y Cedulación, el tamaño reglamentario de la fotografía es de 35 × 45 mm (3,5 × 4,5 cm / 413 × 531 píxeles a 300 DPI). El óvalo facial debe ocupar entre el 70% y el 80% de la altura total.',
-    },
-    {
-      question: '¿Cuál es el tamaño de una foto carnet en Ecuador?',
-      answer:
-        'En Ecuador, la medida tradicional para la «foto carnet» y la cédula de identidad civil es de 35 × 45 mm (3,5 × 4,5 cm), idéntica a la del pasaporte. Debe tomarse de frente, a color, con fondo blanco nítido, sin gafas y con el cabello recogido.',
+        'Según los datos oficiales que manejamos, la foto del pasaporte ecuatoriano es cuadrada de 51 × 51 mm (2 × 2 pulgadas / 600 × 600 px a 300 DPI), con fondo blanco. Confirma siempre en el portal de la Cancillería antes de presentar el trámite.',
     },
     {
       question: '¿Cuáles son los requisitos de la foto para visa de Ecuador?',
       answer:
-        'El Ministerio de Relaciones Exteriores y Movilidad Humana de Ecuador solicita fotografías en formato 35 × 45 mm con fondo blanco liso, frente y orejas totalmente despejadas, sin lentes ni prendas en la cabeza, y peso del archivo digital en formato JPEG no mayor a 1 MB.',
+        'Para la visa se usa el mismo formato cuadrado de 51 × 51 mm con fondo blanco liso, frente y orejas despejadas y sin gafas. Revisa la página oficial de visas de la Cancillería para requisitos adicionales.',
     },
   ],
   SV: [
     {
       question: '¿Cuáles son las medidas y requisitos de la foto de pasaporte en El Salvador?',
       answer:
-        'Para el pasaporte salvadoreño emitido por la Dirección General de Migración y Extranjería (DGME), las medidas oficiales son de 2 × 2 pulgadas (51 × 51 mm / 600 × 600 px a 300 DPI) para consulados en EE.UU., o de 35 × 45 mm en agencias locales y consulados europeos. Fondo blanco sólido obligatorio.',
+        'Para el pasaporte y la visa de El Salvador, la foto es cuadrada de 2 × 2 pulgadas (51 × 51 mm / 600 × 600 px a 300 DPI), con fondo blanco sólido. Confirma siempre los requisitos en el portal oficial.',
     },
     {
-      question: '¿Cuáles son las medidas de foto tamaño cédula / DUI en El Salvador?',
+      question: '¿Sirve esta foto para el DUI?',
       answer:
-        'La fotografía para el Documento Único de Identidad (DUI / cédula salvadoreña) expedido por el Registro Nacional de las Personas Naturales (RNPN) debe medir exactamente 35 × 45 mm (3,5 × 4,5 cm). Debe tener fondo blanco liso, frente y orejas descubiertas y sin anteojos.',
+        'Esta página cubre pasaporte y visa. Para el Documento Único de Identidad (DUI), consulta las medidas vigentes en el portal oficial antes de imprimir.',
     },
     {
       question: '¿Dónde tomar fotos para pasaporte o DUI salvadoreño?',
@@ -1137,9 +1132,9 @@ const COUNTRY_SPECIFIC_FAQS: Record<string, CountryFAQItem[]> = {
   ],
   PA: [
     {
-      question: 'What are the Panama passport photo requirements and sample standards?',
+      question: '¿Cuáles son las medidas de la foto de pasaporte de Panamá?',
       answer:
-        'The Autoridad de Pasaportes de Panamá (APAP) requires official photos measuring 35 × 45 mm (3.5 × 4.5 cm / 413 × 531 px at 300 DPI) against a solid plain white background. The face must measure between 32 and 36 mm (70–80% of photo height), shoulders must be covered with dark formal clothing, and glasses or colored contact lenses are not permitted.',
+        'Para el pasaporte panameño, la foto mide 35 × 45 mm (3,5 × 4,5 cm / 413 × 531 px a 300 DPI) con fondo blanco liso. Para la visa se usa el formato cuadrado de 51 × 51 mm. Confirma siempre los requisitos en el portal de la autoridad.',
     },
     {
       question: '¿Cuáles son los requisitos de las fotos de pasaporte panameño?',
@@ -1187,14 +1182,14 @@ const COUNTRY_SPECIFIC_FAQS: Record<string, CountryFAQItem[]> = {
     {
       question: '¿Cuál es el tamaño oficial de la foto para el pasaporte argentino?',
       answer:
-        'El Renaper (Registro Nacional de las Personas) y los consulados argentinos solicitan fotos de 40 × 40 mm (4 × 4 cm) o el formato internacional de 35 × 45 mm (3,5 × 4,5 cm), a color, con fondo blanco liso, rostro de frente ocupando entre el 70% y el 80% del encuadre y sin lentes.',
+        'Para el pasaporte y el visado de Argentina, la foto mide 35 × 45 mm (3,5 × 4,5 cm), a color, con fondo blanco liso y sin lentes. Para el DNI, consulta las medidas en la web oficial de RENAPER.',
     },
   ],
   CU: [
     {
       question: '¿Cuáles son las medidas y requisitos de las fotos para pasaporte cubano?',
       answer:
-        'Para el pasaporte cubano y prórrogas en consulados en el extranjero, la Dirección de Identificación, Inmigración y Extranjería (DIIE) exige fotografías de 45 × 45 mm (o 35 × 45 mm según el consulado), fondo blanco impecable, vestimenta formal de cuello cerrado y color oscuro, sin aretes grandes ni gafas.',
+        'Para el pasaporte cubano, la foto mide 45 × 45 mm, y para la visa 35 × 45 mm, con fondo blanco liso, vestimenta formal de cuello cerrado y color oscuro, sin aretes grandes ni gafas. Confirma los requisitos con la autoridad.',
     },
   ],
   PY: [
@@ -1206,9 +1201,9 @@ const COUNTRY_SPECIFIC_FAQS: Record<string, CountryFAQItem[]> = {
   ],
   CL: [
     {
-      question: '¿Cuál es el tamaño de foto para pasaporte y cédula en Chile?',
+      question: '¿Cuál es el tamaño de foto para pasaporte y visa en Chile?',
       answer:
-        'En Chile, el Servicio de Registro Civil e Identificación utiliza el formato cuadrado de 45 × 45 mm (4,5 × 4,5 cm / 531 × 531 px a 300 DPI) o el formato OACI de 35 × 45 mm para trámites consulares internacionales y visas. Fondo blanco liso y uniforme sin sombras.',
+        'Para el pasaporte y la visa de Chile, la foto mide 35 × 45 mm (3,5 × 4,5 cm / 413 × 531 px a 300 DPI), con fondo blanco liso y uniforme sin sombras. Para la cédula, consulta las medidas en el Registro Civil.',
     },
   ],
 };
@@ -1341,7 +1336,7 @@ export function getCountryFAQs(country: CountryInfo): CountryFAQItem[] {
     },
     {
       question: `¿Cómo imprimo la foto para que mantenga las medidas exactas de ${country.name}?`,
-      answer: `Utiliza la opción «Preparar hoja para imprimir» de nuestra herramienta: generará una plantilla de 10 × 15 cm (4×6") con varias copias a 300 DPI y marcas de corte milimétricas. En la impresora de tu casa o en un quiosco de fotos, selecciona siempre «Escala 100%» o «Tamaño real» (sin ajustar a página).`,
+      answer: `Utiliza la opción «Preparar hoja para imprimir» de nuestra herramienta: generará una hoja de impresión (A4 o 10 × 15 cm) con varias copias a 300 DPI y marcas de corte. En la impresora de tu casa o en un quiosco de fotos, selecciona siempre «Escala 100%» o «Tamaño real» (sin ajustar a página).`,
     },
     {
       question: `¿Qué entidad oficial tramita el pasaporte de ${country.name}?`,

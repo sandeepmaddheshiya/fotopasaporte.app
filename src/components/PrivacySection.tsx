@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { Lock, Cpu, EyeOff, ShieldCheck, ArrowRight } from 'lucide-react';
 
 export function PrivacySection() {
@@ -31,20 +32,20 @@ export function PrivacySection() {
             <div>
               <div className="flex items-center gap-2 text-[#1D1D1F] font-semibold text-[15px]">
                 <Cpu className="h-4 w-4 text-[#0071E3]" />
-                <span>100% en tu navegador</span>
+                <span>Qué ocurre con tu foto</span>
               </div>
               <p className="mt-2 text-[13px] leading-relaxed text-[#6E6E73]">
-                El recorte, escalado y exportación de tu imagen se ejecutan en el motor de tu propio dispositivo.
+                Para el recorte, el análisis automático y la vista previa, tu imagen se envía a nuestros servidores. El ajuste manual del encuadre se hace en tu dispositivo.
               </p>
             </div>
 
             <div>
               <div className="flex items-center gap-2 text-[#1D1D1F] font-semibold text-[15px]">
                 <EyeOff className="h-4 w-4 text-[#0071E3]" />
-                <span>Sin subidas al servidor</span>
+                <span>Sin uso publicitario</span>
               </div>
               <p className="mt-2 text-[13px] leading-relaxed text-[#6E6E73]">
-                Tus archivos nunca se envían a bases de datos ni se almacenan en servidores externos.
+                No usamos tus fotos con fines publicitarios ni las compartimos con terceros. Consulta la política de privacidad para ver los plazos y cómo solicitar su eliminación.
               </p>
             </div>
 
@@ -54,7 +55,7 @@ export function PrivacySection() {
                 <span>Sin cuentas forzadas</span>
               </div>
               <p className="mt-2 text-[13px] leading-relaxed text-[#6E6E73]">
-                Sin suscripciones ocultas ni necesidad de introducir datos bancarios para preparar tu foto.
+                Puedes subir tu foto y ver la vista previa sin registrarte. Solo pagas si quieres descargar el resultado final.
               </p>
             </div>
           </div>
@@ -63,13 +64,13 @@ export function PrivacySection() {
             <span className="text-[13px] text-[#8E8E93]">
               Compromiso de privacidad conforme al RGPD de la Unión Europea.
             </span>
-            <a
-              href="#faq"
+            <Link
+              href="/privacidad"
               className="inline-flex items-center gap-1.5 text-[14px] font-medium text-[#0071E3] hover:underline"
             >
               <span>Conoce nuestra política de privacidad</span>
               <ArrowRight className="h-4 w-4" />
-            </a>
+            </Link>
           </div>
         </div>
       </div>

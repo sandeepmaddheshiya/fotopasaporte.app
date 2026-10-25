@@ -15,22 +15,22 @@ export function FAQAccordion() {
     {
       question: '¿Dónde sacar o dónde toman fotos para pasaporte?',
       answer:
-        'Puedes tomar tu foto de pasaporte directamente en casa con la cámara de tu teléfono móvil utilizando FotoPasaporte.app. No necesitas desplazarte a un estudio fotográfico ni pagar tarifas elevadas en cabinas o farmacias. Nuestra herramienta ajusta el encuadre biométrico, elimina sombras, calibra el fondo reglamentario y genera tanto el archivo digital como la plantilla de impresión de 10×15 cm con múltiples fotos listas para imprimir por céntimos en cualquier tienda de fotografía o papelería.',
+        'Puedes preparar tu foto en casa con la cámara de tu teléfono móvil usando FotoPasaporte.app, sin desplazarte a un estudio. La herramienta ajusta el encuadre a las medidas del país elegido, calibra el fondo y genera el archivo digital y una hoja de impresión (A4 o 10×15 cm) con varias copias para imprimir en cualquier tienda de fotografía o papelería.',
     },
     {
-      question: '¿Cuál es el precio de una foto tamaño pasaporte?',
+      question: '¿Es gratis? ¿Cuánto cuesta?',
       answer:
-        'En estudios profesionales tradicionales o cabinas fotográficas (fotomatones), un paquete de 4 a 6 fotos de pasaporte suele costar entre 8 € y 15 € en España y Europa, o entre 15 $ y 22 $ en Estados Unidos (como Walgreens o CVS). Con FotoPasaporte.app puedes preparar y validar tu foto para pasaporte o visa online gratis, y descargar una plantilla de alta resolución a 300 DPI que puedes imprimir en cualquier quiosco por menos de 0,35 €.',
+        'Puedes subir tu foto y ver una vista previa con marca de agua sin pagar. Para descargar la foto final sin marca de agua en alta resolución (300 DPI) y la hoja de impresión hay que adquirir un pack: Estándar por 7,99 € o Premium con revisión humana por 13,99 €. Los precios se muestran antes de pagar.',
     },
     {
-      question: '¿Cómo convertir una foto a tamaño pasaporte online gratis?',
+      question: '¿Cómo convertir una foto a tamaño pasaporte online?',
       answer:
-        'Para convertir cualquier imagen o selfie a tamaño pasaporte oficial: 1) Sube tu fotografía en nuestro creador superior; 2) Selecciona el país y tipo de documento (por ejemplo, España 35×45 mm, EE.UU. 2×2 pulgadas o México 35×45 mm); 3) La herramienta calibra automáticamente el óvalo facial según la normativa OACI y sustituye el fondo por el blanco o gris reglamentario; 4) Descarga tu foto individual o la plantilla de impresión lista para recortar.',
+        'Para convertir una imagen o selfie a tamaño pasaporte: 1) Sube tu fotografía en el creador; 2) Selecciona el país y el tipo de documento (por ejemplo, España 35×45 mm, EE.UU. 2×2 pulgadas); 3) La herramienta ajusta el encuadre según las medidas de ese país y sustituye el fondo por el color indicado; 4) Descarga tu foto individual o la hoja de impresión lista para recortar.',
     },
     {
-      question: '¿Cómo validar una foto de pasaporte online y qué requisitos debe cumplir?',
+      question: '¿Cómo se comprueba que mi foto cumple los requisitos?',
       answer:
-        'FotoPasaporte.app incluye un validador biométrico online que analiza los criterios oficiales de la OACI (Doc 9303): proporción de la cabeza (entre el 70% y el 80% de la altura total), ojos centrados horizontalmente y alineados, expresión facial neutra sin sonreír ni mostrar dientes, iluminación homogénea sin sombras profundas, nitidez a 300 DPI y fondo liso uniforme.',
+        'FotoPasaporte.app analiza tu foto con criterios basados en la norma OACI (Doc 9303): proporción de la cabeza, ojos centrados, expresión neutra, iluminación homogénea, nitidez y fondo liso. Es una ayuda previa: la aceptación final la decide siempre la autoridad que tramita tu documento, y no podemos garantizarla.',
     },
     {
       question: '¿Qué es un ejemplo de foto tipo pasaporte correcta?',
@@ -40,7 +40,7 @@ export function FAQAccordion() {
     {
       question: '¿Puedo preparar una foto para un visado o visa internacional?',
       answer:
-        'Sí. La herramienta cuenta con perfiles específicos para visados de todo el mundo: visa de turismo o negocios de EE.UU. (DS-160 / 2×2"), visado Schengen para la Unión Europea (35×45 mm), visa para Canadá, China (33×48 mm), India, Reino Unido y Latinoamérica.',
+        'Sí. Hay perfiles de visado para varios países, entre ellos EE.UU. (DS-160 / 2×2"), Schengen (35×45 mm), China (33×48 mm), Canadá, India y Reino Unido. Comprueba siempre las medidas de tu país en su página y en la fuente oficial.',
     },
     {
       question: '¿Puedo utilizar una foto hecha con el teléfono móvil?',
@@ -50,12 +50,12 @@ export function FAQAccordion() {
     {
       question: '¿Cómo imprimo mi foto para que mantenga el tamaño milimétrico exacto?',
       answer:
-        'Descarga la plantilla de impresión de 10 × 15 cm (4×6") generada por FotoPasaporte.app. Al imprimirla en casa o en un quiosco de fotos comercial, selecciona siempre la opción «Tamaño real / Escala 100%» (nunca «Ajustar a página» ni «Llenar página»), lo que garantiza que las fotos mantengan sus medidas milimétricas exactas (35×45 mm o 51×51 mm).',
+        'Descarga la hoja de impresión (A4 o 10 × 15 cm) generada por FotoPasaporte.app. Al imprimirla en casa o en un quiosco de fotos, selecciona siempre «Tamaño real / Escala 100%» (nunca «Ajustar a página» ni «Llenar página») para que las fotos conserven sus medidas exactas.',
     },
     {
       question: '¿Qué ocurre con la privacidad de la foto que subo?',
       answer:
-        'El procesamiento y recorte se realiza de forma totalmente privada directamente en la memoria de tu navegador web mediante tecnologías seguras en el cliente. Tu fotografía nunca se almacena en bases de datos externas ni se comparte con terceros.',
+        'Para el recorte y la vista previa, tu foto se envía a nuestros servidores, que también ejecutan el análisis automático. No la compartimos con terceros con fines publicitarios. Consulta la política de privacidad para ver qué datos tratamos, durante cuánto tiempo y cómo solicitar su eliminación.',
     },
   ];
 
@@ -102,16 +102,15 @@ export function FAQAccordion() {
                   </div>
                 </button>
 
-                {isOpen && (
-                  <div
-                    id={`faq-panel-${index}`}
-                    role="region"
-                    aria-labelledby={`faq-btn-${index}`}
-                    className="mt-3 pr-2 sm:pr-8 text-[14px] sm:text-[15px] leading-relaxed text-[#6E6E73] animate-fade-in"
-                  >
-                    <p>{faq.answer}</p>
-                  </div>
-                )}
+                <div
+                  id={`faq-panel-${index}`}
+                  role="region"
+                  aria-labelledby={`faq-btn-${index}`}
+                  hidden={!isOpen}
+                  className="mt-3 pr-2 sm:pr-8 text-[14px] sm:text-[15px] leading-relaxed text-[#6E6E73] animate-fade-in"
+                >
+                  <p>{faq.answer}</p>
+                </div>
               </div>
             );
           })}

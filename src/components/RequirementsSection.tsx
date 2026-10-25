@@ -16,6 +16,12 @@ export function RequirementsSection({ onSelectCountryForMaker }: RequirementsSec
 
   const regions = ['Todos', 'Europa', 'América', 'Asia / Oceanía'];
 
+  const spanishSpeaking = ['ES', 'MX', 'CO', 'AR', 'PE', 'CL', 'EC', 'VE', 'UY', 'CR', 'PA', 'DO', 'SV', 'CU', 'PY', 'NI', 'GT', 'HN', 'BO'];
+  const priority = (code: string) => {
+    const i = spanishSpeaking.indexOf(code.toUpperCase());
+    return i === -1 ? spanishSpeaking.length : i;
+  };
+
   const filteredCountries = COUNTRIES_DATA.filter((country) => {
     const matchesSearch =
       country.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -25,7 +31,7 @@ export function RequirementsSection({ onSelectCountryForMaker }: RequirementsSec
     const matchesRegion = activeRegion === 'Todos' || country.region === activeRegion;
 
     return matchesSearch && matchesRegion;
-  });
+  }).sort((a, b) => priority(a.code) - priority(b.code));
 
   return (
     <section id="requisitos" className="scroll-mt-16 bg-white py-16 sm:py-24">

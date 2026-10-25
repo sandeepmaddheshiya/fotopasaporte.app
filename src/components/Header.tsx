@@ -50,36 +50,36 @@ export function Header({ onStartClick }: HeaderProps) {
 
         {/* Desktop Navigation */}
         <nav className="hidden items-center gap-7 md:flex" aria-label="Navegación principal">
-          <button
-            onClick={() => scrollToSection('creador')}
+          <Link
+            href="/#creador"
             className="text-[14px] text-[#6E6E73] transition-colors hover:text-[#1D1D1F]"
           >
             Crear foto
-          </button>
-          <button
-            onClick={() => scrollToSection('requisitos')}
+          </Link>
+          <Link
+            href="/#requisitos"
             className="text-[14px] text-[#6E6E73] transition-colors hover:text-[#1D1D1F]"
           >
             Requisitos
-          </button>
+          </Link>
           <Link
             href="/medidas-foto-pasaporte"
             className="text-[14px] text-[#6E6E73] transition-colors hover:text-[#1D1D1F]"
           >
             Medidas oficiales
           </Link>
-          <button
-            onClick={() => scrollToSection('como-funciona')}
+          <Link
+            href="/#como-funciona"
             className="text-[14px] text-[#6E6E73] transition-colors hover:text-[#1D1D1F]"
           >
             Cómo funciona
-          </button>
-          <button
-            onClick={() => scrollToSection('faq')}
+          </Link>
+          <Link
+            href="/#faq"
             className="text-[14px] text-[#6E6E73] transition-colors hover:text-[#1D1D1F]"
           >
             Preguntas frecuentes
-          </button>
+          </Link>
         </nav>
 
         {/* Right CTA */}
@@ -122,18 +122,20 @@ export function Header({ onStartClick }: HeaderProps) {
       {mobileMenuOpen && (
         <div className="border-b border-[#D2D2D7] bg-white px-6 py-5 md:hidden">
           <nav className="flex flex-col space-y-4">
-            <button
-              onClick={() => scrollToSection('creador')}
+            <Link
+              href="/#creador"
+              onClick={() => setMobileMenuOpen(false)}
               className="text-left text-[15px] font-medium text-[#1D1D1F]"
             >
               Crear foto
-            </button>
-            <button
-              onClick={() => scrollToSection('requisitos')}
+            </Link>
+            <Link
+              href="/#requisitos"
+              onClick={() => setMobileMenuOpen(false)}
               className="text-left text-[15px] text-[#6E6E73]"
             >
               Requisitos
-            </button>
+            </Link>
             <Link
               href="/medidas-foto-pasaporte"
               onClick={() => setMobileMenuOpen(false)}
@@ -141,18 +143,20 @@ export function Header({ onStartClick }: HeaderProps) {
             >
               Medidas oficiales
             </Link>
-            <button
-              onClick={() => scrollToSection('como-funciona')}
+            <Link
+              href="/#como-funciona"
+              onClick={() => setMobileMenuOpen(false)}
               className="text-left text-[15px] text-[#6E6E73]"
             >
               Cómo funciona
-            </button>
-            <button
-              onClick={() => scrollToSection('faq')}
+            </Link>
+            <Link
+              href="/#faq"
+              onClick={() => setMobileMenuOpen(false)}
               className="text-left text-[15px] text-[#6E6E73]"
             >
               Preguntas frecuentes
-            </button>
+            </Link>
             <div className="pt-2">
               <button
                 onClick={() => {

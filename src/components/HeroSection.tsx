@@ -29,7 +29,7 @@ export function HeroSection({ onStartClick, onSelectSamplePhoto }: HeroSectionPr
 
             {/* Headline */}
             <h1 className="text-[32px] leading-[1.1] font-semibold tracking-tight text-[#1D1D1F] sm:text-[48px] lg:text-[58px]">
-              Tu foto de pasaporte, perfecta a la primera.
+              Prepara tu foto de pasaporte con las medidas de tu país
             </h1>
 
             {/* Supporting Copy */}
