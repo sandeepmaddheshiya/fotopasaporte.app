@@ -29,50 +29,15 @@ export interface CountryRejectionReason {
 }
 
 // ---------------------------------------------------------------------------
-// 1. TIER 1 & TIER 2 VERIFIED DESTINATIONS (Anti-Spam Scaled Content Shield)
-// Only these 28 curated destinations with deeply researched, bespoke editorial
-// content are submitted to search engine sitemaps and marked for indexing.
-// All long-tail territories or micronations remain 100% functional in the app
-// for users, but are protected with "noindex, follow" to prevent Google's
-// "Scaled Content Abuse / Spam Content Expansion" algorithmic penalties.
+// 1. COUNTRY INDEXABILITY
+// All sovereign countries and territories in the database provide genuine biometric
+// utility with specific dimensions, face oval proportions, background rules,
+// interactive browser-based cropping, rejection reasons, and schema metadata.
+// Full indexation is enabled so search engines can index each destination.
 // ---------------------------------------------------------------------------
-export const INDEXABLE_COUNTRY_CODES = new Set([
-  'ES', // España
-  'US', // Estados Unidos
-  'GB', // Reino Unido
-  'CA', // Canadá
-  'MX', // México
-  'DE', // Alemania
-  'FR', // Francia
-  'IT', // Italia
-  'CO', // Colombia
-  'AR', // Argentina
-  'CL', // Chile
-  'PE', // Perú
-  'BR', // Brasil
-  'IN', // India
-  'AU', // Australia
-  'PT', // Portugal
-  'CH', // Suiza
-  'NL', // Países Bajos
-  'EC', // Ecuador
-  'DO', // República Dominicana
-  'CU', // Cuba
-  'VE', // Venezuela
-  'UY', // Uruguay
-  'CR', // Costa Rica
-  'PA', // Panamá
-  'IE', // Irlanda
-  'JP', // Japón
-  'CN', // China
-  'SV', // El Salvador
-  'NI', // Nicaragua
-  'PY', // Paraguay
-]);
-
 export function isIndexableCountry(code: string): boolean {
   if (!code) return false;
-  return INDEXABLE_COUNTRY_CODES.has(code.toUpperCase());
+  return code.trim().length === 2;
 }
 
 // ---------------------------------------------------------------------------

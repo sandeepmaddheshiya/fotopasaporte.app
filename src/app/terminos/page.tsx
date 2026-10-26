@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: 'Términos de uso | FotoPasaporte.app',
   description:
     'Condiciones de uso de FotoPasaporte.app: qué ofrece el servicio, precios, limitaciones y por qué no garantizamos la aceptación de tu foto.',
-  alternates: { canonical: '/terminos' },
+  alternates: { canonical: 'https://fotopasaporte.app/terminos' },
 };
 
 export default function TerminosPage() {

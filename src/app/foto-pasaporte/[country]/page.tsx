@@ -46,12 +46,10 @@ interface CountryPageProps {
 }
 
 // ---------------------------------------------------------------------------
-// Static params: only pre-generate and index verified Tier 1/2 destinations
-// to prevent Google Scaled Content Abuse / Spam Content Expansion flags.
+// Static params: pre-generate all verified country destinations
 // ---------------------------------------------------------------------------
 export async function generateStaticParams() {
-  const indexable = COUNTRIES_DATA.filter((c) => isIndexableCountry(c.code));
-  return indexable.map((c) => ({
+  return COUNTRIES_DATA.map((c) => ({
     country: toCountrySlug(c),
   }));
 }
@@ -68,7 +66,6 @@ export async function generateMetadata({ params }: CountryPageProps): Promise<Me
 
   const primaryDoc = country.documents[0];
   const auth = getCountryAuthorityInfo(country);
-  const indexable = isIndexableCountry(country.code);
   const title = `Foto de pasaporte ${country.name}: medidas y requisitos`;
   const description = `Medidas, fondo y formato de la foto de pasaporte de ${country.name} (${primaryDoc.widthMm} × ${primaryDoc.heightMm} mm) según la fuente oficial, con fecha de verificación. Prepara tu foto en el navegador.`;
 
@@ -95,10 +92,10 @@ export async function generateMetadata({ params }: CountryPageProps): Promise<Me
       canonical: `https://fotopasaporte.app/foto-pasaporte/${toCountrySlug(country)}`,
     },
     robots: {
-      index: indexable,
+      index: true,
       follow: true,
       googleBot: {
-        index: indexable,
+        index: true,
         follow: true,
         'max-video-preview': -1,
         'max-image-preview': 'large',

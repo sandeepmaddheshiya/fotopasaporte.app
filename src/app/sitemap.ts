@@ -9,43 +9,43 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const routes: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
-      lastModified: '2026-10-25',
+      lastModified: '2026-10-26',
       changeFrequency: 'weekly',
       priority: 1.0,
     },
     {
       url: `${baseUrl}/medidas-foto-pasaporte`,
-      lastModified: '2026-10-25',
+      lastModified: '2026-10-26',
       changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
       url: `${baseUrl}/como-hacer-foto-pasaporte-en-casa`,
-      lastModified: '2026-10-25',
+      lastModified: '2026-10-26',
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
       url: `${baseUrl}/donde-sacar-foto-pasaporte`,
-      lastModified: '2026-10-25',
+      lastModified: '2026-10-26',
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
       url: `${baseUrl}/como-verificamos-los-requisitos`,
-      lastModified: '2026-10-25',
+      lastModified: '2026-10-26',
       changeFrequency: 'monthly',
       priority: 0.6,
     },
     {
       url: `${baseUrl}/privacidad`,
-      lastModified: '2026-10-25',
+      lastModified: '2026-10-26',
       changeFrequency: 'monthly',
       priority: 0.4,
     },
     {
       url: `${baseUrl}/terminos`,
-      lastModified: '2026-10-25',
+      lastModified: '2026-10-26',
       changeFrequency: 'monthly',
       priority: 0.4,
     },
@@ -56,21 +56,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
   for (const slug of sizeSlugs) {
     routes.push({
       url: `${baseUrl}/foto-${slug}`,
-      lastModified: '2026-10-25',
+      lastModified: '2026-10-26',
       changeFrequency: 'monthly',
       priority: 0.8,
     });
   }
 
-  // 3. Canonical Country Pages - Curated high-authority destinations only
-  // (Prevents mass programmatic thin content penalties from search engines)
+  // 3. Canonical Country Pages (All verified sovereign destinations)
   for (const country of COUNTRIES_DATA) {
-    if (!isIndexableCountry(country.code)) continue;
-
     const slug = toCountrySlug(country);
     routes.push({
       url: `${baseUrl}/foto-pasaporte/${slug}`,
-      lastModified: '2026-10-25',
+      lastModified: '2026-10-26',
       changeFrequency: country.isPopular ? 'weekly' : 'monthly',
       priority: country.isPopular ? 0.9 : 0.7,
     });

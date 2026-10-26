@@ -63,11 +63,9 @@ export function PhotoMaker({
     if (stage !== 'processing' || !uploadedImageSrc) return;
 
     let isMounted = true;
-    let stepTimer: NodeJS.Timeout;
-
     // Simulate animated step progression
     let currentStep = 0;
-    stepTimer = setInterval(() => {
+    const stepTimer = setInterval(() => {
       currentStep += 1;
       if (currentStep <= 4 && isMounted) {
         setProcessingStepIndex(currentStep);

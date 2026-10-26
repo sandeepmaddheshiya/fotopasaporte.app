@@ -50,6 +50,9 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'FotoPasaporte.app' }],
   metadataBase: new URL('https://fotopasaporte.app'),
+  alternates: {
+    canonical: 'https://fotopasaporte.app',
+  },
   openGraph: {
     title: 'Foto de pasaporte online: recorta tu foto al tamaño de tu país',
     description:

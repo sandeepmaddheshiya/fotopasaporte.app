@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: 'Cómo verificamos los requisitos de la foto | FotoPasaporte.app',
   description:
     'Cómo recogemos y revisamos las medidas y requisitos de la foto de pasaporte de cada país, y qué significa la fecha de verificación.',
-  alternates: { canonical: '/como-verificamos-los-requisitos' },
+  alternates: { canonical: 'https://fotopasaporte.app/como-verificamos-los-requisitos' },
 };
 
 export default function ComoVerificamosPage() {

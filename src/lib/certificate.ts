@@ -117,7 +117,7 @@ export function generatePdfCertificate(data: CertificateData): jsPDF {
   doc.text('APROBADO — Listo para trámite oficial sin rechazos', 72, 97);
 
   // Photo Preview embed if provided
-  let startAuditY = 112;
+  const startAuditY = 112;
   if (data.photoBase64) {
     try {
       const imgData = data.photoBase64.startsWith('data:')

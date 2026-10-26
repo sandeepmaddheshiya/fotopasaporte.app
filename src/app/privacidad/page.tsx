@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: 'Política de privacidad | FotoPasaporte.app',
   description:
     'Qué datos trata FotoPasaporte.app, qué ocurre con la foto que subes, con quién se comparte y cómo contactarnos para solicitar su eliminación.',
-  alternates: { canonical: '/privacidad' },
+  alternates: { canonical: 'https://fotopasaporte.app/privacidad' },
 };
 
 export default function PrivacidadPage() {
