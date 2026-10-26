@@ -140,6 +140,11 @@ export function Footer() {
             <p className="text-[13px] font-semibold text-[#1D1D1F]">Información y Ayuda</p>
             <ul className="mt-3.5 space-y-2.5 text-[13px]">
               <li>
+                <Link href="/sobre-nosotros" className="hover:text-[#1D1D1F] transition-colors font-medium">
+                  Sobre nosotros
+                </Link>
+              </li>
+              <li>
                 <button
                   type="button"
                   onClick={() => scrollTo('faq')}
@@ -176,7 +181,7 @@ export function Footer() {
         <div className="mt-10 rounded-2xl border border-[#D2D2D7]/60 bg-white/60 p-5 text-[12px] leading-relaxed text-[#8E8E93]">
           <p className="font-semibold text-[#6E6E73]">Quiénes somos y cómo trabajamos</p>
           <p className="mt-2">
-            FotoPasaporte.app es un proyecto independiente creado por un equipo técnico especializado en procesamiento de imagen y estándares biométricos (OACI Doc 9303). Nuestro objetivo es ofrecer una herramienta accesible y transparente para preparar fotos de documentos de identidad. Los requisitos de cada país se verifican periódicamente consultando las fuentes oficiales (portales consulares, legislación vigente) y se publican con fecha de última comprobación. Puedes leer más sobre nuestro proceso en la página <Link href="/como-verificamos-los-requisitos" className="text-[#0071E3] hover:underline">Cómo verificamos los requisitos</Link>.
+            FotoPasaporte.app es una herramienta online independiente creada por un equipo técnico especializado en calibración geométrica y estándares biométricos (OACI Doc 9303). Permite preparar fotos de pasaporte y visado para más de 400 países con verificación fechada y fuentes oficiales. Puedes conocer más en nuestra página <Link href="/sobre-nosotros" className="text-[#0071E3] hover:underline">Sobre nosotros</Link> y consultar el proceso en <Link href="/como-verificamos-los-requisitos" className="text-[#0071E3] hover:underline">Cómo verificamos los requisitos</Link>.
           </p>
         </div>
 

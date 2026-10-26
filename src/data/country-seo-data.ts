@@ -1297,35 +1297,43 @@ export function getCountryFAQs(country: CountryInfo): CountryFAQItem[] {
 
   const primaryDoc = country.documents[0];
   const auth = getCountryAuthorityInfo(country);
+  const secondaryDoc = country.documents.length > 1 ? country.documents[1] : null;
 
-  return [
+  const faqs: CountryFAQItem[] = [
     {
       question: `¿Cuáles son las medidas oficiales exactas para la foto de pasaporte de ${country.name}?`,
-      answer: `Para ${country.name}, el tamaño oficial del pasaporte es de ${primaryDoc.widthMm} × ${primaryDoc.heightMm} mm (${primaryDoc.widthPx} × ${primaryDoc.heightPx} píxeles a 300 DPI). La altura del rostro debe ocupar entre el ${Math.round(primaryDoc.faceHeightMinRatio * 100)}% y el ${Math.round(primaryDoc.faceHeightMaxRatio * 100)}% de la imagen, con los ojos situados en el tercio superior.`,
+      answer: `Para ${country.name}, el tamaño oficial del pasaporte es de ${primaryDoc.widthMm} × ${primaryDoc.heightMm} mm (${(primaryDoc.widthMm / 10).toFixed(1).replace('.', ',')} × ${(primaryDoc.heightMm / 10).toFixed(1).replace('.', ',')} cm / ${primaryDoc.widthPx} × ${primaryDoc.heightPx} píxeles a 300 DPI). La altura del rostro (barbilla a coronilla) debe ocupar entre el ${Math.round(primaryDoc.faceHeightMinRatio * 100)}% y el ${Math.round(primaryDoc.faceHeightMaxRatio * 100)}% de la imagen.`,
     },
     {
-      question: `¿Qué color de fondo se exige en la fotografía para ${country.name}?`,
-      answer: `El fondo oficial requerido es: ${primaryDoc.backgroundColor}. ${primaryDoc.bgNotes} Asegúrate de que no haya sombras proyectadas detrás de la cabeza ni objetos o estampados en la pared.`,
+      question: `¿Qué color de fondo exige la normativa de ${country.name}?`,
+      answer: `El fondo reglamentario es: ${primaryDoc.backgroundColor}. ${primaryDoc.bgNotes} No se admiten sombras proyectadas sobre la pared ni degradados que alteren el contraste biométrico.`,
     },
     {
-      question: `¿Puedo usar gafas en mi foto para ${country.name}?`,
+      question: `¿Se permiten gafas en la fotografía para el pasaporte de ${country.name}?`,
       answer: primaryDoc.glassesAllowed
-        ? `Se permite el uso de gafas siempre que los cristales sean totalmente transparentes, no tengan tintes oscuros ni produzcan reflejos de luz y la montura no tape ninguna parte de los ojos.`
-        : `No. En ${country.name} no se permite el uso de gafas en las fotografías para pasaporte o visado oficial. Las autoridades recomiendan retirarlas siempre para evitar el rechazo automático del expediente.`,
+        ? `Se permite el uso de gafas graduadas únicamente con cristales totalmente transparentes, sin tintes oscuros ni reflejos del flash, y con montura fina que no oculte los ojos ni las cejas.`
+        : `No. La normativa para ${country.name} no permite el uso de gafas en la foto del pasaporte. Las autoridades recomiendan retirarlas siempre para evitar el rechazo automático del expediente consular.`,
     },
     {
-      question: `¿Puedo tomarme la foto con mi teléfono móvil en casa?`,
-      answer: `Sí, siempre que la tomes a la luz del día, frente a una pared lisa y sin sombras, a una distancia de 1,5 a 2 metros con la cámara a la altura de los ojos. Luego puedes subirla a nuestro creador online para recortarla y ajustarla automáticamente a los ${primaryDoc.widthMm} × ${primaryDoc.heightMm} mm exactos de ${country.name}.`,
+      question: `¿Se puede sonreír o mostrar los dientes en la foto de pasaporte de ${country.name}?`,
+      answer: primaryDoc.smileAllowed
+        ? `Se admite una leve sonrisa natural siempre que la boca permanezca cerrada y no se muestren los dientes, manteniendo la mirada directa a la lente.`
+        : `No. La normativa biométrica de ${country.name} exige una expresión facial estrictamente neutra, con la boca cerrada, sin mostrar dientes ni sonreír y con ambos ojos completamente abiertos.`,
     },
     {
-      question: `¿Cómo imprimo la foto para que mantenga las medidas exactas de ${country.name}?`,
-      answer: `Utiliza la opción «Preparar hoja para imprimir» de nuestra herramienta: generará una hoja de impresión (A4 o 10 × 15 cm) con varias copias a 300 DPI y marcas de corte. En la impresora de tu casa o en un quiosco de fotos, selecciona siempre «Escala 100%» o «Tamaño real» (sin ajustar a página).`,
-    },
-    {
-      question: `¿Qué entidad oficial tramita el pasaporte de ${country.name}?`,
-      answer: `El organismo responsable es ${auth.authorityName} (${auth.department}), aplicando la normativa ${auth.regulationsStandard}. FotoPasaporte.app es una herramienta independiente que prepara tu archivo conforme a dichas especificaciones públicas.`,
+      question: `¿Qué organismo oficial emite el pasaporte de ${country.name} y cuál es su normativa?`,
+      answer: `El organismo responsable es ${auth.authorityName} (${auth.department}), aplicando la directriz ${auth.regulationsStandard}.${primaryDoc.lastVerified ? ` Requisitos técnicos verificados el ${primaryDoc.lastVerified}.` : ''} FotoPasaporte.app es una herramienta técnica independiente que calibra tu foto conforme a estas especificaciones oficiales.`,
     },
   ];
+
+  if (secondaryDoc) {
+    faqs.push({
+      question: `¿Qué diferencia de medida hay entre la foto de pasaporte y de ${secondaryDoc.name} en ${country.name}?`,
+      answer: `En ${country.name}, el pasaporte exige ${primaryDoc.widthMm} × ${primaryDoc.heightMm} mm, mientras que para ${secondaryDoc.name} el formato es de ${secondaryDoc.widthMm} × ${secondaryDoc.heightMm} mm (${secondaryDoc.widthPx} × ${secondaryDoc.heightPx} px). Nuestra herramienta permite seleccionar ambos perfiles directamente en el selector de documentos.`,
+    });
+  }
+
+  return faqs;
 }
 
 // ---------------------------------------------------------------------------

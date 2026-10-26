@@ -94,12 +94,6 @@ const HOMEPAGE_FAQS: FAQItem[] = [
 export { HOMEPAGE_FAQS };
 
 export function FAQAccordion() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
-
-  const toggleAccordion = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
-
   return (
     <section id="faq" className="scroll-mt-16 bg-white py-16 sm:py-24">
       {/* FAQPage JSON-LD for Google Rich Results */}
@@ -134,58 +128,50 @@ export function FAQAccordion() {
           </p>
         </div>
 
-        {/* Accordion list */}
+        {/* Accordion list — semantic HTML5 details/summary (100% crawlable SSR) */}
         <div className="mt-12 divide-y divide-[#E5E5EA] border-y border-[#E5E5EA]">
-          {HOMEPAGE_FAQS.map((faq, index) => {
-            const isOpen = openIndex === index;
-            return (
-              <div key={index} className="py-5">
-                <button
-                  type="button"
-                  onClick={() => toggleAccordion(index)}
-                  className="flex w-full items-center justify-between text-left transition-colors cursor-pointer"
-                  aria-expanded={isOpen}
-                  id={`faq-btn-${index}`}
-                  aria-controls={`faq-panel-${index}`}
-                >
-                  <span className="text-[15px] sm:text-[17px] font-semibold text-[#1D1D1F] pr-3 sm:pr-4">
-                    {faq.question}
-                  </span>
-                  <div
-                    className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#F5F5F7] text-[#6E6E73] transition-transform duration-200 ${
-                      isOpen ? 'rotate-180 bg-[#0071E3]/10 text-[#0071E3]' : ''
-                    }`}
-                  >
-                    <ChevronDown className="h-4 w-4" />
-                  </div>
-                </button>
-
-                <div
-                  id={`faq-panel-${index}`}
-                  role="region"
-                  aria-labelledby={`faq-btn-${index}`}
-                  hidden={!isOpen}
-                  className="mt-3 pr-2 sm:pr-8 text-[14px] sm:text-[15px] leading-relaxed text-[#6E6E73] animate-fade-in"
-                >
-                  <p>
-                    {faq.answer}{' '}
-                    {faq.link && (
-                      <>
-                        {faq.link.prefix && <span>{faq.link.prefix} </span>}
-                        <Link
-                          href={faq.link.href}
-                          className="text-[#0071E3] font-medium hover:underline inline-flex items-center gap-0.5"
-                        >
-                          {faq.link.text}
-                        </Link>
-                        .
-                      </>
-                    )}
-                  </p>
+          {HOMEPAGE_FAQS.map((faq, index) => (
+            <details
+              key={index}
+              className="group py-5 [&_summary::-webkit-details-marker]:hidden"
+              open={index === 0}
+            >
+              <summary
+                className="flex w-full items-center justify-between text-left transition-colors cursor-pointer select-none"
+                id={`faq-btn-${index}`}
+              >
+                <span className="text-[15px] sm:text-[17px] font-semibold text-[#1D1D1F] group-hover:text-[#0071E3] transition-colors pr-3 sm:pr-4">
+                  {faq.question}
+                </span>
+                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#F5F5F7] text-[#6E6E73] transition-transform duration-200 group-open:rotate-180 group-open:bg-[#0071E3]/10 group-open:text-[#0071E3]">
+                  <ChevronDown className="h-4 w-4" />
                 </div>
+              </summary>
+
+              <div
+                id={`faq-panel-${index}`}
+                role="region"
+                aria-labelledby={`faq-btn-${index}`}
+                className="mt-3 pr-2 sm:pr-8 text-[14px] sm:text-[15px] leading-relaxed text-[#6E6E73]"
+              >
+                <p>
+                  {faq.answer}{' '}
+                  {faq.link && (
+                    <>
+                      {faq.link.prefix && <span>{faq.link.prefix} </span>}
+                      <Link
+                        href={faq.link.href}
+                        className="text-[#0071E3] font-medium hover:underline inline-flex items-center gap-0.5"
+                      >
+                        {faq.link.text}
+                      </Link>
+                      .
+                    </>
+                  )}
+                </p>
               </div>
-            );
-          })}
+            </details>
+          ))}
         </div>
       </div>
     </section>

@@ -23,7 +23,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'Foto de pasaporte online: recorta tu foto al tamaño de tu país',
   description:
-    'Prepara tu foto de pasaporte en el navegador con las medidas de tu país. Consulta requisitos con fuente oficial y fecha de verificación.',
+    'FotoPasaporte.app es la herramienta online independiente para recortar y preparar fotos de pasaporte y visado con las medidas oficiales de más de 400 países (300 DPI) y verificación técnica.',
   keywords: [
     'foto pasaporte',
     'foto para pasaporte',
@@ -56,9 +56,9 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Foto de pasaporte online: recorta tu foto al tamaño de tu país',
     description:
-      'Prepara tu foto de pasaporte con las medidas de tu país. Consulta requisitos con fuente oficial y fecha de verificación.',
+      'FotoPasaporte.app es la herramienta online independiente para recortar y preparar fotos de pasaporte y visado con las medidas oficiales de más de 400 países (300 DPI) y verificación técnica.',
     url: 'https://fotopasaporte.app',
-    siteName: 'FotoPasaporte',
+    siteName: 'FotoPasaporte.app',
     locale: 'es_ES',
     type: 'website',
   },
@@ -95,6 +95,14 @@ export default function RootLayout({
                   url: 'https://fotopasaporte.app',
                   logo: 'https://fotopasaporte.app/images/logo.png',
                   email: 'soporte@fotopasaporte.app',
+                  description:
+                    'Herramienta online independiente para recortar, calibrar y preparar fotografías de pasaporte, visado y documentos de identidad conforme a los requisitos biométricos de más de 400 países y normativas OACI Doc 9303.',
+                  knowsAbout: [
+                    'Fotografía para pasaporte',
+                    'Medidas biométricas OACI Doc 9303',
+                    'Fotografía para visados',
+                    'Calibración de fotos para documentos oficiales',
+                  ],
                 },
                 {
                   '@type': 'WebSite',

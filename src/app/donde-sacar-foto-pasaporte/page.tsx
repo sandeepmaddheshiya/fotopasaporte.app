@@ -161,6 +161,16 @@ export default function DondeSacarFotoPasaportePage() {
               Dónde sacar la foto del pasaporte: comparativa y opciones por país
             </h1>
 
+            {/* Answer-First Box (AG-03 / AG-14 / N-02) */}
+            <div className="mt-5 rounded-2xl border-2 border-[#0071E3]/30 bg-[#0071E3]/5 p-4 sm:p-5">
+              <p className="text-[12px] font-semibold text-[#0071E3] uppercase tracking-wider">
+                Respuesta directa · Dónde sacar la foto y si la toman en la oficina
+              </p>
+              <p className="mt-1.5 text-[15px] sm:text-[17px] font-medium leading-relaxed text-[#1D1D1F]">
+                Puedes conseguir tu foto en casa con el móvil mediante <strong>FotoPasaporte.app</strong> (opción rápida y económica), en un estudio fotográfico (8 € a 18 €) o en un fotomatón (5 € a 10 €). <strong>¿Te la toman en la oficina?</strong> Depende de tu país: en <strong>España</strong> (35×45 mm) y en <strong>Estados Unidos</strong> (2×2") estás obligado a llevar tus fotos impresas; en <strong>México</strong> (SRE) y <strong>Colombia</strong> (Cancillería) la oficina captura la fotografía biométrica digitalmente en la cita.
+              </p>
+            </div>
+
             <p className="mt-4 text-[16px] sm:text-[18px] leading-relaxed text-[#6E6E73]">
               Antes de acudir a tu cita de pasaporte o visado, es fundamental saber <strong>dónde sacar la foto del pasaporte</strong> y, sobre todo, si la oficina oficial exige que lleves fotografías impresas o si te la toman allí mismo in situ.
             </p>

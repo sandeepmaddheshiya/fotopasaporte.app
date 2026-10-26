@@ -124,40 +124,49 @@ export default async function CountryPage({ params }: CountryPageProps) {
   const rejectionReasons = getCountryRejectionReasons(country);
   const faqs = getCountryFAQs(country);
 
-  // Schema.org JSON-LD structured data for Google Rich Results
+  // Schema.org JSON-LD structured data for Google Rich Results (AG-07)
+  const canonicalUrl = `https://fotopasaporte.app/foto-pasaporte/${canonicalSlug}`;
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
         '@type': 'WebPage',
-        '@id': `https://fotopasaporte.app/foto-pasaporte/${toCountrySlug(country)}`,
+        '@id': canonicalUrl,
+        url: canonicalUrl,
         name: `Foto de pasaporte de ${country.name}: medidas, fondo y requisitos`,
-        description: `Prepara tu fotografía para pasaporte o visado de ${country.name} con las medidas oficiales de ${primaryDoc.widthMm}x${primaryDoc.heightMm} mm.`,
+        description: `Prepara tu fotografía para pasaporte o visado de ${country.name} con las medidas oficiales de ${primaryDoc.widthMm} × ${primaryDoc.heightMm} mm.`,
         inLanguage: 'es',
-        ...(primaryDoc.lastVerified ? { dateModified: primaryDoc.lastVerified } : {}),
-        breadcrumb: {
-          '@type': 'BreadcrumbList',
-          itemListElement: [
-            {
-              '@type': 'ListItem',
-              position: 1,
-              name: 'Inicio',
-              item: 'https://fotopasaporte.app',
-            },
-            {
-              '@type': 'ListItem',
-              position: 2,
-              name: 'Requisitos por País',
-              item: 'https://fotopasaporte.app/#requisitos',
-            },
-            {
-              '@type': 'ListItem',
-              position: 3,
-              name: country.name,
-              item: `https://fotopasaporte.app/foto-pasaporte/${toCountrySlug(country)}`,
-            },
-          ],
+        isPartOf: {
+          '@id': 'https://fotopasaporte.app/#website',
         },
+        breadcrumb: {
+          '@id': `${canonicalUrl}#breadcrumb`,
+        },
+        ...(primaryDoc.lastVerified ? { dateModified: primaryDoc.lastVerified } : {}),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${canonicalUrl}#breadcrumb`,
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Inicio',
+            item: 'https://fotopasaporte.app',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Requisitos por País',
+            item: 'https://fotopasaporte.app/#requisitos',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: country.name,
+            item: canonicalUrl,
+          },
+        ],
       },
       {
         '@type': 'FAQPage',
@@ -232,6 +241,9 @@ export default async function CountryPage({ params }: CountryPageProps) {
                 )}
                 <Link href="/como-verificamos-los-requisitos" className="text-[#0071E3] hover:underline">
                   Cómo verificamos los requisitos
+                </Link>{' '}·{' '}
+                <Link href="/sobre-nosotros" className="text-[#0071E3] hover:underline">
+                  Sobre FotoPasaporte.app
                 </Link>{' '}·{' '}
                 <Link href="/medidas-foto-pasaporte" className="text-[#0071E3] hover:underline">
                   medidas de la foto de pasaporte por país
@@ -522,30 +534,46 @@ export default async function CountryPage({ params }: CountryPageProps) {
                   </div>
                 </div>
 
-                {/* Official Source & Verification Footer */}
-                {(doc.notes || doc.sourceUrl) && (
-                  <div className="mt-6 rounded-2xl border border-[#D2D2D7]/80 bg-[#F5F5F7] p-4 text-[12px] text-[#6E6E73]">
-                    {doc.notes && <p className="mb-2 leading-relaxed">{doc.notes}</p>}
-                    <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[#E5E5EA] pt-2">
-                      {doc.sourceUrl && (
-                        <a
-                          href={doc.sourceUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 font-medium text-[#0071E3] hover:underline"
-                        >
-                          <span>Consultar directriz en el portal oficial de {country.name}</span>
-                          <ExternalLink className="h-3 w-3" />
-                        </a>
-                      )}
-                      {doc.lastVerified && (
-                        <span className="text-[#8E8E93]">
-                          Última verificación de normativa: {doc.lastVerified}
-                        </span>
-                      )}
+                {/* Official Source & Verification Footer (AG-02) */}
+                <div className="mt-6 rounded-2xl border border-[#0071E3]/20 bg-[#0071E3]/5 p-4 text-[13px] text-[#1D1D1F]">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <div className="flex items-center gap-2">
+                      <Shield className="h-4 w-4 text-[#0071E3] shrink-0" />
+                      <span>
+                        <strong>Fuente oficial:</strong> {auth.authorityName} ({auth.department})
+                      </span>
                     </div>
+                    {doc.lastVerified && (
+                      <span className="inline-flex items-center gap-1 text-[12px] font-medium text-[#6E6E73]">
+                        <CalendarCheck className="h-3.5 w-3.5 text-[#0071E3]" />
+                        <span>
+                          Verificado el{' '}
+                          <time dateTime={doc.lastVerified} className="font-semibold text-[#1D1D1F]">
+                            {doc.lastVerified}
+                          </time>
+                        </span>
+                      </span>
+                    )}
                   </div>
-                )}
+                  {doc.notes && (
+                    <p className="mt-2 text-[12px] text-[#6E6E73] leading-relaxed border-t border-[#0071E3]/15 pt-2">
+                      {doc.notes}
+                    </p>
+                  )}
+                  {doc.sourceUrl && (
+                    <div className="mt-2.5 pt-2 border-t border-[#0071E3]/15">
+                      <a
+                        href={doc.sourceUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 font-medium text-[#0071E3] hover:underline text-[12px]"
+                      >
+                        <span>Consultar directriz y normativa oficial en el portal de {country.name}</span>
+                        <ExternalLink className="h-3 w-3" />
+                      </a>
+                    </div>
+                  )}
+                </div>
               </div>
             ))}
           </div>

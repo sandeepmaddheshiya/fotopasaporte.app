@@ -10,6 +10,7 @@ import {
   FileText,
   Sparkles,
   ArrowRight,
+  ExternalLink,
 } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -60,12 +61,16 @@ interface DimensionRow {
   region: string;
   country: string;
   slug: string;
+  docName: string;
   sizeMm: string;
   sizeCm: string;
   sizeInches: string;
   sizePx: string;
   bg: string;
   faceRatio: string;
+  sourceName: string;
+  sourceUrl: string;
+  verifiedDate: string;
 }
 
 const PASSPORT_SIZES_TABLE: DimensionRow[] = [
@@ -73,221 +78,301 @@ const PASSPORT_SIZES_TABLE: DimensionRow[] = [
     region: 'Estándar Europeo / ICAO',
     country: 'España',
     slug: 'espana',
+    docName: 'Pasaporte ordinario',
     sizeMm: '35 × 45 mm',
     sizeCm: '3,5 × 4,5 cm',
     sizeInches: '1,38 × 1,77 in',
     sizePx: '413 × 531 px',
     bg: 'Blanco puro',
     faceRatio: '70% – 80% (32–36 mm)',
+    sourceName: 'Dirección General de la Policía (Ministerio del Interior)',
+    sourceUrl: 'https://www.policia.es/',
+    verifiedDate: '2026-10-05',
   },
   {
     region: 'América del Norte',
     country: 'Estados Unidos',
     slug: 'estados-unidos',
+    docName: 'U.S. Passport',
     sizeMm: '51 × 51 mm',
     sizeCm: '5,1 × 5,1 cm',
     sizeInches: '2 × 2 in',
     sizePx: '600 × 600 px',
     bg: 'Blanco / Blanco roto',
     faceRatio: '50% – 69% (25–35 mm)',
+    sourceName: 'U.S. Department of State (Bureau of Consular Affairs)',
+    sourceUrl: 'https://travel.state.gov/content/travel/en/passports/how-apply/photo-requirements.html',
+    verifiedDate: '2026-09-22',
   },
   {
     region: 'América Latina',
     country: 'México',
     slug: 'mexico',
+    docName: 'Pasaporte mexicano',
     sizeMm: '35 × 45 mm',
     sizeCm: '3,5 × 4,5 cm',
     sizeInches: '1,38 × 1,77 in',
     sizePx: '413 × 531 px',
     bg: 'Blanco liso',
     faceRatio: '70% – 80%',
+    sourceName: 'Secretaría de Relaciones Exteriores (SRE)',
+    sourceUrl: 'https://www.gob.mx/sre/acciones-y-programas/pasaportes',
+    verifiedDate: '2026-08-28',
   },
   {
     region: 'América del Norte',
     country: 'Canadá',
     slug: 'canada',
+    docName: 'Canadian Passport',
     sizeMm: '50 × 70 mm',
     sizeCm: '5,0 × 7,0 cm',
     sizeInches: '2 × 2,75 in',
     sizePx: '591 × 827 px',
     bg: 'Blanco / Claro',
     faceRatio: '31 – 36 mm',
+    sourceName: 'Immigration, Refugees and Citizenship Canada (IRCC)',
+    sourceUrl: 'https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-passports/photos.html',
+    verifiedDate: '2026-09-16',
   },
   {
     region: 'Reino Unido',
     country: 'Reino Unido',
     slug: 'reino-unido',
+    docName: 'British Passport',
     sizeMm: '35 × 45 mm',
     sizeCm: '3,5 × 4,5 cm',
     sizeInches: '1,38 × 1,77 in',
     sizePx: '413 × 531 px',
     bg: 'Crema / Gris claro',
     faceRatio: '29 – 34 mm',
+    sourceName: 'His Majesty’s Passport Office (HMPO)',
+    sourceUrl: 'https://www.gov.uk/photos-for-passports',
+    verifiedDate: '2026-10-05',
   },
   {
     region: 'Unión Europea',
     country: 'Alemania',
     slug: 'alemania',
+    docName: 'Reisepass',
     sizeMm: '35 × 45 mm',
     sizeCm: '3,5 × 4,5 cm',
     sizeInches: '1,38 × 1,77 in',
     sizePx: '413 × 531 px',
     bg: 'Gris claro neutro',
     faceRatio: '32 – 36 mm (Fotomuster)',
+    sourceName: 'Bundesministerium des Innern (BMI)',
+    sourceUrl: 'https://www.bmi.bund.de/SharedDocs/downloads/EN/publikationen/2025/BMI25021-photo-examples-en.pdf?__blob=publicationFile&v=5',
+    verifiedDate: '2026-10-05',
   },
   {
     region: 'Unión Europea',
     country: 'Francia',
     slug: 'francia',
+    docName: 'Passeport biométrique',
     sizeMm: '35 × 45 mm',
     sizeCm: '3,5 × 4,5 cm',
     sizeInches: '1,38 × 1,77 in',
     sizePx: '413 × 531 px',
     bg: 'Gris claro / Azul pastel',
     faceRatio: '32 – 36 mm',
+    sourceName: 'Ministère de l’Intérieur (France-Visas)',
+    sourceUrl: 'https://france-visas.gouv.fr/documents/d/france-visas/iso_iec_fv_visa_photograph_requirements_en',
+    verifiedDate: '2026-10-05',
   },
   {
     region: 'Asia',
     country: 'China',
     slug: 'china',
+    docName: 'Pasaporte chino / Visado',
     sizeMm: '33 × 48 mm',
     sizeCm: '3,3 × 4,8 cm',
     sizeInches: '1,3 × 1,89 in',
     sizePx: '390 × 567 px',
     bg: 'Blanco puro',
     faceRatio: '28 – 33 mm',
+    sourceName: 'National Immigration Administration (NIA)',
+    sourceUrl: 'https://bio.visaforchina.cn/KUL3_EN/upload/20231123/4b89d0c364d44f778f85d6fd76d93475.pdf',
+    verifiedDate: '2026-10-05',
   },
   {
     region: 'América Central',
     country: 'Costa Rica',
     slug: 'costa-rica',
+    docName: 'Pasaporte biométrico',
     sizeMm: '35 × 45 mm',
     sizeCm: '3,5 × 4,5 cm',
     sizeInches: '1,38 × 1,77 in',
     sizePx: '413 × 531 px',
     bg: 'Blanco uniforme',
     faceRatio: '70% – 80%',
+    sourceName: 'Dirección General de Migración y Extranjería',
+    sourceUrl: 'https://costaricanembassy.uk/adults-biometric-passport/',
+    verifiedDate: '2026-10-06',
   },
   {
     region: 'América del Sur',
     country: 'Ecuador',
     slug: 'ecuador',
+    docName: 'Pasaporte biométrico',
     sizeMm: '35 × 45 mm',
     sizeCm: '3,5 × 4,5 cm',
     sizeInches: '1,38 × 1,77 in',
     sizePx: '413 × 531 px',
     bg: 'Blanco liso',
     faceRatio: '70% – 80%',
+    sourceName: 'Ministerio de Relaciones Exteriores y Movilidad Humana',
+    sourceUrl: 'https://www.cancilleria.gob.ec/',
+    verifiedDate: '2026-10-06',
   },
   {
     region: 'América Central',
     country: 'El Salvador',
     slug: 'el-salvador',
+    docName: 'Pasaporte salvadoreño',
     sizeMm: '51 × 51 mm / 35 × 45 mm',
     sizeCm: '5,1 × 5,1 cm',
     sizeInches: '2 × 2 in',
     sizePx: '600 × 600 px',
     bg: 'Blanco puro',
     faceRatio: '50% – 69%',
+    sourceName: 'Dirección General de Migración y Extranjería (DGME)',
+    sourceUrl: 'https://www.migracion.gob.sv/pasaportes-preguntas/',
+    verifiedDate: '2026-10-06',
   },
   {
     region: 'América Central',
     country: 'Nicaragua',
     slug: 'nicaragua',
+    docName: 'Pasaporte ordinario',
     sizeMm: '50 × 50 mm / 35 × 45 mm',
     sizeCm: '5,0 × 5,0 cm',
     sizeInches: '2 × 2 in',
     sizePx: '600 × 600 px',
     bg: 'Blanco sólido',
     faceRatio: '60% – 75%',
+    sourceName: 'Dirección General de Migración y Extranjería (DGME Nicaragua)',
+    sourceUrl: 'https://www.reloadinternet.com/nicaraguan-passport-photo/',
+    verifiedDate: '2026-10-06',
   },
   {
     region: 'América Central',
     country: 'Panamá',
     slug: 'panama',
+    docName: 'Pasaporte panameño',
     sizeMm: '35 × 45 mm',
     sizeCm: '3,5 × 4,5 cm',
     sizeInches: '1,38 × 1,77 in',
     sizePx: '413 × 531 px',
     bg: 'Blanco nítido',
     faceRatio: '32 – 36 mm',
+    sourceName: 'Autoridad de Pasaportes de Panamá (APAP)',
+    sourceUrl: 'https://www.panamaconsulate.gr/gr/en/content/passport-info',
+    verifiedDate: '2026-10-07',
   },
   {
     region: 'América del Sur',
     country: 'Argentina',
     slug: 'argentina',
+    docName: 'Pasaporte argentino',
     sizeMm: '40 × 40 mm / 35 × 45 mm',
     sizeCm: '4,0 × 4,0 cm',
     sizeInches: '1,57 × 1,57 in',
     sizePx: '472 × 472 px',
     bg: 'Blanco liso',
     faceRatio: '70% – 80%',
+    sourceName: 'Registro Nacional de las Personas (RENAPER)',
+    sourceUrl: 'https://cancilleria.gob.ar/',
+    verifiedDate: '2026-10-05',
   },
   {
     region: 'Caribe',
     country: 'Cuba',
     slug: 'cuba',
+    docName: 'Pasaporte cubano',
     sizeMm: '45 × 45 mm / 35 × 45 mm',
     sizeCm: '4,5 × 4,5 cm',
     sizeInches: '1,77 × 1,77 in',
     sizePx: '531 × 531 px',
     bg: 'Blanco puro',
     faceRatio: '70% – 80%',
+    sourceName: 'Dirección de Identificación, Inmigración y Extranjería (DIIE)',
+    sourceUrl: 'https://misiones.cubaminrex.cu/en/usa/consular-services',
+    verifiedDate: '2026-10-06',
   },
   {
     region: 'América del Sur',
     country: 'Chile',
     slug: 'chile',
+    docName: 'Pasaporte chileno',
     sizeMm: '45 × 45 mm',
     sizeCm: '4,5 × 4,5 cm',
     sizeInches: '1,77 × 1,77 in',
     sizePx: '531 × 531 px',
     bg: 'Blanco parejo',
     faceRatio: '70% – 80%',
+    sourceName: 'Servicio de Registro Civil e Identificación',
+    sourceUrl: 'https://www.consulado.gob.cl/autorizacion-previa-o-visa',
+    verifiedDate: '2026-10-06',
   },
   {
     region: 'América del Sur',
     country: 'Perú',
     slug: 'peru',
+    docName: 'Pasaporte electrónico',
     sizeMm: '35 × 45 mm',
     sizeCm: '3,5 × 4,5 cm',
     sizeInches: '1,38 × 1,77 in',
     sizePx: '413 × 531 px',
     bg: 'Blanco liso',
     faceRatio: '70% – 80% (32–36 mm)',
+    sourceName: 'Superintendencia Nacional de Migraciones (MIGRACIONES Perú)',
+    sourceUrl: 'https://www.gob.pe/174-obtener-pasaporte-electronico-para-mayores-de-edad',
+    verifiedDate: '2026-10-07',
   },
   {
     region: 'América del Sur',
     country: 'Uruguay',
     slug: 'uruguay',
+    docName: 'Pasaporte uruguayo',
     sizeMm: '35 × 45 mm',
     sizeCm: '3,5 × 4,5 cm',
     sizeInches: '1,38 × 1,77 in',
     sizePx: '413 × 531 px',
     bg: 'Blanco liso',
     faceRatio: '70% – 80%',
+    sourceName: 'Ministerio del Interior de Uruguay / Dirección Nacional de Identificación Civil',
+    sourceUrl: 'https://www.icao.int/Security/FALP/PKD/Pages/ICAO-9303.aspx',
+    verifiedDate: '2026-07-20',
   },
   {
     region: 'América del Sur',
     country: 'Colombia',
     slug: 'colombia',
+    docName: 'Pasaporte ordinario',
     sizeMm: '30 × 40 mm / 35 × 45 mm',
     sizeCm: '3,0 × 4,0 cm',
     sizeInches: '1,18 × 1,57 in',
     sizePx: '354 × 472 px',
     bg: 'Blanco liso',
     faceRatio: '70% – 80%',
+    sourceName: 'Ministerio de Relaciones Exteriores (Cancillería de Colombia)',
+    sourceUrl: 'https://www.cancilleria.gov.co/atencion-y-servicio-al-ciudadano/tramites-y-servicios/pasaportes',
+    verifiedDate: '2026-10-05',
   },
   {
     region: 'América del Sur',
     country: 'Paraguay',
     slug: 'paraguay',
+    docName: 'Pasaporte consular',
     sizeMm: '35 × 45 mm',
     sizeCm: '3,5 × 4,5 cm',
     sizeInches: '1,38 × 1,77 in',
     sizePx: '413 × 531 px',
     bg: 'Blanco sólido',
     faceRatio: '70% – 80%',
+    sourceName: 'Departamento de Identificaciones (Policía Nacional de Paraguay)',
+    sourceUrl: 'https://www.mre.gov.py/',
+    verifiedDate: '2026-10-07',
   },
 ];
 
@@ -319,80 +404,74 @@ const FAQS = [
 ];
 
 export default function MedidasPasaportePage() {
-  const jsonLdArticle = {
+  const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: 'Medidas de Foto de Pasaporte y Tamaño Oficial (cm, mm, px): Guía Completa 2026',
-    description:
-      'Guía oficial y técnica sobre las dimensiones de la foto de pasaporte en cm, mm y píxeles, medidas de la libreta física de pasaporte (12,5 × 8,8 cm) y diferencias con foto carnet, cédula y visas.',
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': 'https://fotopasaporte.app/medidas-foto-pasaporte',
-    },
-    author: {
-      '@type': 'Organization',
-      name: 'FotoPasaporte.app',
-      url: 'https://fotopasaporte.app',
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: 'FotoPasaporte.app',
-      url: 'https://fotopasaporte.app',
-      logo: {
-        '@type': 'ImageObject',
-        url: 'https://fotopasaporte.app/images/logo.png',
-      },
-    },
-    datePublished: '2026-10-14',
-    dateModified: '2026-10-15',
-  };
-
-  const jsonLdFaq = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: FAQS.map((faq) => ({
-      '@type': 'Question',
-      name: faq.q,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: faq.a,
-      },
-    })),
-  };
-
-  const jsonLdBreadcrumb = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
+    '@graph': [
       {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Inicio',
-        item: 'https://fotopasaporte.app',
+        '@type': 'Article',
+        '@id': 'https://fotopasaporte.app/medidas-foto-pasaporte#article',
+        headline: 'Medidas de Foto de Pasaporte y Tamaño Oficial (cm, mm, px): Guía Completa 2026',
+        description:
+          'Guía oficial y técnica sobre las dimensiones de la foto de pasaporte en cm, mm y píxeles, medidas de la libreta física de pasaporte (12,5 × 8,8 cm) y diferencias con foto carnet, cédula y visas.',
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': 'https://fotopasaporte.app/medidas-foto-pasaporte',
+        },
+        author: {
+          '@type': 'Organization',
+          name: 'FotoPasaporte.app',
+          url: 'https://fotopasaporte.app',
+        },
+        publisher: {
+          '@type': 'Organization',
+          name: 'FotoPasaporte.app',
+          url: 'https://fotopasaporte.app',
+          logo: {
+            '@type': 'ImageObject',
+            url: 'https://fotopasaporte.app/images/logo.png',
+          },
+        },
+        datePublished: '2026-10-14',
+        dateModified: '2026-10-26',
       },
       {
-        '@type': 'ListItem',
-        position: 2,
-        name: 'Medidas de Foto de Pasaporte',
-        item: 'https://fotopasaporte.app/medidas-foto-pasaporte',
+        '@type': 'BreadcrumbList',
+        '@id': 'https://fotopasaporte.app/medidas-foto-pasaporte#breadcrumb',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Inicio',
+            item: 'https://fotopasaporte.app',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Medidas de Foto de Pasaporte',
+            item: 'https://fotopasaporte.app/medidas-foto-pasaporte',
+          },
+        ],
+      },
+      {
+        '@type': 'FAQPage',
+        mainEntity: FAQS.map((faq) => ({
+          '@type': 'Question',
+          name: faq.q,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: faq.a,
+          },
+        })),
       },
     ],
   };
 
   return (
     <div className="min-h-screen bg-white text-[#1D1D1F]">
-      {/* Structured Data */}
+      {/* Structured Data (AG-07) */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdArticle) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdFaq) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdBreadcrumb) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
       <Header />
@@ -420,6 +499,16 @@ export default function MedidasPasaportePage() {
           <h1 className="mt-4 text-[30px] font-bold tracking-tight text-[#1D1D1F] sm:text-[44px] sm:leading-[1.15]">
             Medidas de Foto de Pasaporte y Tamaño Oficial: Guía Completa en cm, mm y px
           </h1>
+
+          {/* Answer-First Box (AG-03): Cuánto mide una foto de pasaporte */}
+          <div className="mt-5 rounded-2xl border-2 border-[#0071E3]/30 bg-[#0071E3]/5 p-4 sm:p-5">
+            <p className="text-[12px] font-semibold text-[#0071E3] uppercase tracking-wider">
+              Respuesta directa · Cuánto mide una foto de pasaporte
+            </p>
+            <p className="mt-1.5 text-[15px] sm:text-[17px] font-medium leading-relaxed text-[#1D1D1F]">
+              Una foto de pasaporte oficial mide habitualmente <strong>35 × 45 mm</strong> (3,5 × 4,5 cm / 413 × 531 px a 300 DPI) según la norma OACI en España, la Unión Europea y la mayoría de países hispanohablantes, o <strong>51 × 51 mm</strong> (2 × 2 pulgadas / 600 × 600 px a 300 DPI) para Estados Unidos y visados consulares norteamericanos.
+            </p>
+          </div>
 
           <p className="mt-4 max-w-3xl text-[16px] sm:text-[19px] leading-relaxed text-[#6E6E73]">
             Conoce con precisión milimétrica las dimensiones oficiales exigidas para fotografías de pasaporte, visas y documentos de identidad en todo el mundo. Compara medidas en <strong>centímetros (cm)</strong>, <strong>milímetros (mm)</strong>, <strong>pulgadas</strong> y <strong>píxeles</strong>, y descubre las diferencias clave con la foto carnet, la cédula y la libreta física de pasaporte.
@@ -532,6 +621,16 @@ export default function MedidasPasaportePage() {
               ¿Cuánto mide un pasaporte físico en cm? (Dimensiones de la libreta oficial)
             </h2>
 
+            {/* Answer-First Box (AG-03): Cuánto mide un pasaporte físico */}
+            <div className="mt-4 rounded-xl border border-[#D2D2D7] bg-white p-4">
+              <p className="text-[12px] font-semibold text-[#0071E3] uppercase tracking-wider">
+                Respuesta directa · Cuánto mide un pasaporte físico
+              </p>
+              <p className="mt-1 text-[15px] sm:text-[16px] font-medium leading-relaxed text-[#1D1D1F]">
+                La libreta física de un pasaporte oficial cerrado mide exactamente <strong>12,5 × 8,8 cm</strong> (125 × 88 mm), correspondiente al estándar internacional ISO/IEC 7810 e ICAO Doc 9303 (formato ID-3 / tamaño B7), con esquinas redondeadas de 3,18 mm de radio y normalmente entre 32 y 48 páginas.
+              </p>
+            </div>
+
             <p className="mt-3 text-[15px] sm:text-[17px] leading-relaxed text-[#6E6E73]">
               Es común que los usuarios busquen <em>«cuánto mide un pasaporte en cm»</em> o <em>«tamaño pasaporte»</em> refiriéndose no a la foto, sino a la <strong>libreta física</strong> de viaje.
             </p>
@@ -562,7 +661,53 @@ export default function MedidasPasaportePage() {
           </div>
         </section>
 
-        {/* Global Comparison Table */}
+        {/* Conversion Section (AG-03): ¿Cómo se pasa de mm a píxeles? */}
+        <section className="mt-16 rounded-3xl bg-[#F5F5F7] p-6 sm:p-10 border border-[#E5E5EA]">
+          <div className="max-w-3xl">
+            <h2 className="text-[24px] sm:text-[32px] font-bold tracking-tight text-[#1D1D1F]">
+              ¿Cómo se pasa de milímetros (mm) a píxeles (px) a 300 DPI?
+            </h2>
+
+            {/* Answer-First Box (AG-03) */}
+            <div className="mt-4 rounded-xl border border-[#D2D2D7] bg-white p-4 sm:p-5">
+              <p className="text-[12px] font-semibold text-[#0071E3] uppercase tracking-wider">
+                Respuesta directa · Fórmula de conversión de mm a píxeles
+              </p>
+              <p className="mt-1 text-[15px] sm:text-[16px] font-medium leading-relaxed text-[#1D1D1F]">
+                Para convertir milímetros a píxeles a resolución de impresión fotográfica (300 DPI), divide los milímetros entre 25,4 (milímetros por pulgada) y multiplica por 300: <code>Píxeles = (milímetros / 25,4) × 300</code>. Aplicando la fórmula oficial: 35 mm = <strong>413 px</strong>, 45 mm = <strong>531 px</strong>, 50 mm = <strong>591 px</strong>, 70 mm = <strong>827 px</strong>, y 51 mm (2 pulgadas) = <strong>600 px</strong> exactos.
+              </p>
+            </div>
+
+            <p className="mt-4 text-[14px] sm:text-[15px] leading-relaxed text-[#6E6E73]">
+              Los laboratorios fotográficos y consulados exigen una densidad mínima de <strong>300 puntos por pulgada (DPI)</strong> para que la impresión no pierda definición ni aparezca pixelada ante los lectores ópticos biométricos.
+            </p>
+
+            <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4 text-center">
+              <div className="rounded-xl bg-white p-3.5 border border-[#E5E5EA]">
+                <p className="text-[11px] font-semibold text-[#6E6E73] uppercase">35 × 45 mm</p>
+                <p className="mt-1 font-mono text-[16px] font-bold text-[#0071E3]">413 × 531 px</p>
+                <p className="text-[11px] text-[#8E8E93]">Europa / LatAm</p>
+              </div>
+              <div className="rounded-xl bg-white p-3.5 border border-[#E5E5EA]">
+                <p className="text-[11px] font-semibold text-[#6E6E73] uppercase">51 × 51 mm (2×2")</p>
+                <p className="mt-1 font-mono text-[16px] font-bold text-[#0071E3]">600 × 600 px</p>
+                <p className="text-[11px] text-[#8E8E93]">EE.UU. / DS-160</p>
+              </div>
+              <div className="rounded-xl bg-white p-3.5 border border-[#E5E5EA]">
+                <p className="text-[11px] font-semibold text-[#6E6E73] uppercase">50 × 70 mm</p>
+                <p className="mt-1 font-mono text-[16px] font-bold text-[#0071E3]">591 × 827 px</p>
+                <p className="text-[11px] text-[#8E8E93]">Canadá</p>
+              </div>
+              <div className="rounded-xl bg-white p-3.5 border border-[#E5E5EA]">
+                <p className="text-[11px] font-semibold text-[#6E6E73] uppercase">33 × 48 mm</p>
+                <p className="mt-1 font-mono text-[16px] font-bold text-[#0071E3]">390 × 567 px</p>
+                <p className="text-[11px] text-[#8E8E93]">China</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Global Comparison Table (AG-02 & AG-04) */}
         <section className="mt-16">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
             <div>
@@ -570,7 +715,7 @@ export default function MedidasPasaportePage() {
                 Tabla Comparativa de Medidas de Foto de Pasaporte por País
               </h2>
               <p className="mt-1 text-[15px] text-[#6E6E73]">
-                Consulta las dimensiones milimétricas, en cm, pulgadas, píxeles y color de fondo exigidos por las autoridades oficiales.
+                Consulta las dimensiones milimétricas, en cm, pulgadas, píxeles y color de fondo exigidos por las autoridades oficiales con fecha de verificación y enlace a la fuente pública.
               </p>
             </div>
             <Link
@@ -584,15 +729,19 @@ export default function MedidasPasaportePage() {
 
           <div className="mt-6 overflow-x-auto rounded-2xl border border-[#E5E5EA] shadow-xs">
             <table className="w-full text-left text-[14px]">
+              <caption className="sr-only">
+                Tabla comparativa de medidas de fotos de pasaporte por país, píxeles a 300 DPI, fondo oficial, fuente normativa oficial y fecha de verificación.
+              </caption>
               <thead className="bg-[#F5F5F7] text-[12px] font-semibold text-[#1D1D1F] uppercase tracking-wider border-b border-[#E5E5EA]">
                 <tr>
                   <th scope="col" className="px-4 py-3.5">País / Destino</th>
-                  <th scope="col" className="px-4 py-3.5">Tamaño mm</th>
-                  <th scope="col" className="px-4 py-3.5">Tamaño cm</th>
-                  <th scope="col" className="px-4 py-3.5">Pulgadas</th>
+                  <th scope="col" className="px-4 py-3.5">Documento</th>
+                  <th scope="col" className="px-4 py-3.5">Medidas (mm / cm)</th>
                   <th scope="col" className="px-4 py-3.5">Píxeles (300 DPI)</th>
                   <th scope="col" className="px-4 py-3.5">Fondo Oficial</th>
-                  <th scope="col" className="px-4 py-3.5 text-right">Guía y Recorte</th>
+                  <th scope="col" className="px-4 py-3.5">Fuente Oficial</th>
+                  <th scope="col" className="px-4 py-3.5">Verificación</th>
+                  <th scope="col" className="px-4 py-3.5 text-right">Herramienta</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#E5E5EA] bg-white">
@@ -609,17 +758,34 @@ export default function MedidasPasaportePage() {
                         <span className="hidden sm:inline text-[11px] text-[#8E8E93]">({row.region})</span>
                       </div>
                     </td>
-                    <td className="px-4 py-3.5 font-semibold text-[#1D1D1F]">{row.sizeMm}</td>
-                    <td className="px-4 py-3.5 text-[#6E6E73]">{row.sizeCm}</td>
-                    <td className="px-4 py-3.5 text-[#6E6E73]">{row.sizeInches}</td>
+                    <td className="px-4 py-3.5 text-[#6E6E73] text-[13px]">{row.docName}</td>
+                    <td className="px-4 py-3.5 font-semibold text-[#1D1D1F]">
+                      {row.sizeMm}
+                      <span className="block text-[12px] font-normal text-[#8E8E93]">{row.sizeCm}</span>
+                    </td>
                     <td className="px-4 py-3.5 font-mono text-[13px] text-[#0071E3]">{row.sizePx}</td>
                     <td className="px-4 py-3.5 text-[#6E6E73]">{row.bg}</td>
-                    <td className="px-4 py-3.5 text-right">
+                    <td className="px-4 py-3.5 text-[12px]">
+                      <a
+                        href={row.sourceUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 font-medium text-[#0071E3] hover:underline"
+                        title={row.sourceName}
+                      >
+                        <span className="max-w-[130px] truncate">{row.sourceName.split('(')[0]}</span>
+                        <ExternalLink className="h-3 w-3 shrink-0" />
+                      </a>
+                    </td>
+                    <td className="px-4 py-3.5 text-[12px] text-[#6E6E73] whitespace-nowrap">
+                      <time dateTime={row.verifiedDate}>{row.verifiedDate}</time>
+                    </td>
+                    <td className="px-4 py-3.5 text-right whitespace-nowrap">
                       <Link
                         href={`/foto-pasaporte/${row.slug}`}
                         className="inline-flex items-center gap-1 rounded-full bg-[#0071E3]/10 px-2.5 py-1 text-[12px] font-medium text-[#0071E3] hover:bg-[#0071E3] hover:text-white transition-colors"
                       >
-                        <span>Ver foto</span>
+                        <span>Ajustar</span>
                         <ArrowRight className="h-3 w-3" />
                       </Link>
                     </td>

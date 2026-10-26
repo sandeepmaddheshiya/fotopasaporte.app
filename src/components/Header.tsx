@@ -80,6 +80,12 @@ export function Header({ onStartClick }: HeaderProps) {
           >
             Preguntas frecuentes
           </Link>
+          <Link
+            href="/sobre-nosotros"
+            className="text-[14px] text-[#6E6E73] transition-colors hover:text-[#1D1D1F]"
+          >
+            Sobre nosotros
+          </Link>
         </nav>
 
         {/* Right CTA */}
@@ -156,6 +162,13 @@ export function Header({ onStartClick }: HeaderProps) {
               className="text-left text-[15px] text-[#6E6E73]"
             >
               Preguntas frecuentes
+            </Link>
+            <Link
+              href="/sobre-nosotros"
+              onClick={() => setMobileMenuOpen(false)}
+              className="text-left text-[15px] text-[#6E6E73]"
+            >
+              Sobre nosotros
             </Link>
             <div className="pt-2">
               <button
