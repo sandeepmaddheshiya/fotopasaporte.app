@@ -507,7 +507,7 @@ export default function DondeSacarFotoPasaportePage() {
                 <span>Impresión Local</span>
               </div>
               <h2 className="mt-3 text-[24px] font-bold text-[#1D1D1F] sm:text-[30px]">
-                Dónde imprimir tu foto de pasaporte por menos de 1 euro
+                Dónde imprimir tu foto de pasaporte de forma económica
               </h2>
               <p className="mt-3 text-[14px] sm:text-[15px] leading-relaxed text-[#6E6E73]">
                 Si preparas tu foto con FotoPasaporte.app, descargas una plantilla de impresión 10 × 15 cm con 4 o 6 fotos idénticas. Para imprimirla con calidad profesional tienes varias opciones cerca de ti:
@@ -526,6 +526,9 @@ export default function DondeSacarFotoPasaportePage() {
                   <p className="text-[#6E6E73]">Si tienes impresora de tinta y papel fotográfico a 300 DPI, seleccionando escala 100%.</p>
                 </div>
               </div>
+              <p className="mt-4 text-[12px] text-[#8E8E93]">
+                Los precios en euros de esta página son orientativos para España; en América Latina y otros países varían según la ciudad y el establecimiento.
+              </p>
             </div>
           </div>
         </div>

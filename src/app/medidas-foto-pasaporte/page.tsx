@@ -657,7 +657,19 @@ export default function MedidasPasaportePage() {
             </div>
 
             <p className="mt-3 text-[15px] sm:text-[17px] leading-relaxed text-[#6E6E73]">
-              Es común que los usuarios busquen <em>«cuánto mide un pasaporte en cm»</em> o <em>«tamaño pasaporte»</em> refiriéndose no a la foto, sino a la <strong>libreta física</strong> de viaje.
+              Es común que los usuarios busquen <em>«cuánto mide un pasaporte en cm»</em> o <em>«tamaño pasaporte»</em> refiriéndose no a la foto, sino a la <strong>libreta física</strong> de viaje. Si buscas un país concreto, consulta{' '}
+              <Link href="/foto-pasaporte/colombia" className="text-[#0071E3] hover:underline">
+                las medidas del pasaporte colombiano
+              </Link>
+              ,{' '}
+              <Link href="/foto-pasaporte/argentina" className="text-[#0071E3] hover:underline">
+                del pasaporte argentino
+              </Link>{' '}
+              o{' '}
+              <Link href="/foto-pasaporte/venezuela" className="text-[#0071E3] hover:underline">
+                del pasaporte venezolano
+              </Link>
+              .
             </p>
 
             <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
