@@ -15,6 +15,7 @@ import {
   isIndexableCountry,
   getRegionalCluster,
 } from '@/data/country-seo-data';
+import { getSizeFormatPath } from '@/data/size-formats';
 import { Header } from '@/components/Header';
 import { PhotoMaker } from '@/components/workspace/PhotoMaker';
 import { Footer } from '@/components/Footer';
@@ -123,6 +124,8 @@ export default async function CountryPage({ params }: CountryPageProps) {
   const auth = getCountryAuthorityInfo(country);
   const rejectionReasons = getCountryRejectionReasons(country);
   const faqs = getCountryFAQs(country);
+  // Only link to a size guide when one exists for these exact dimensions (e.g. no guide for 30×40 or 45×45).
+  const sizeGuidePath = getSizeFormatPath(primaryDoc.widthMm, primaryDoc.heightMm);
 
   // Schema.org JSON-LD structured data for Google Rich Results (AG-07)
   const canonicalUrl = `https://fotopasaporte.app/foto-pasaporte/${canonicalSlug}`;
@@ -247,21 +250,15 @@ export default async function CountryPage({ params }: CountryPageProps) {
                 </Link>{' '}·{' '}
                 <Link href="/medidas-foto-pasaporte" className="text-[#0071E3] hover:underline">
                   medidas de la foto de pasaporte por país
-                </Link>{' '}·{' '}
-                <Link
-                  href={
-                    primaryDoc.widthMm === 51 && primaryDoc.heightMm === 51
-                      ? '/foto-2x2-pulgadas'
-                      : primaryDoc.widthMm === 50 && primaryDoc.heightMm === 70
-                      ? '/foto-50x70-mm'
-                      : primaryDoc.widthMm === 33 && primaryDoc.heightMm === 48
-                      ? '/foto-33x48-mm'
-                      : '/foto-35x45-mm'
-                  }
-                  className="text-[#0071E3] hover:underline"
-                >
-                  Guía del formato {primaryDoc.widthMm}×{primaryDoc.heightMm} mm
                 </Link>
+                {sizeGuidePath && (
+                  <>
+                    {' '}·{' '}
+                    <Link href={sizeGuidePath} className="text-[#0071E3] hover:underline">
+                      Guía del formato {primaryDoc.widthMm}×{primaryDoc.heightMm} mm
+                    </Link>
+                  </>
+                )}
               </p>
             </div>
 
