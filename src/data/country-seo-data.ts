@@ -186,9 +186,10 @@ const COUNTRY_AUTHORITIES: Record<string, CountryAuthorityInfo> = {
     officialDocName: 'Pasaporte Colombiano y Visa Colombiana',
     regulationsStandard: 'Directrices de la Cancillería & OACI Doc 9303',
     typicalProcessingTime: 'Consulta los plazos en el portal de la Cancillería',
-    primaryDocumentTypes: ['Pasaporte (30×40 mm)', 'Visa Colombiana (30×40 mm)'],
+    primaryDocumentTypes: ['Pasaporte (foto tomada en la oficina)', 'Visa Colombiana (30×40 mm)'],
+    // Source: cancilleria.gov.co (photo, fingerprints and signature taken in person; checked 2026-11-13).
     keyDifferencesText:
-      'Para el pasaporte y la visa de Colombia, la foto mide 30 × 40 mm, a color, con fondo blanco liso y rostro despejado sin brillo ni sombras.',
+      'Para el pasaporte colombiano no necesitas llevar fotos: la Cancillería toma la fotografía en la oficina durante el trámite. Para la visa de Colombia, la foto mide 30 × 40 mm (3 × 4 cm), a color, con fondo blanco liso y rostro despejado sin brillo ni sombras.',
     specificPeculiarities: [
       'Fondo blanco puro uniforme.',
       'Rostro centrado de frente con ambos hombros visibles.',
@@ -232,19 +233,20 @@ const COUNTRY_AUTHORITIES: Record<string, CountryAuthorityInfo> = {
     officialPortalUrl: 'https://www.registrocivil.cl',
   },
   PE: {
-    authorityName: 'Superintendencia Nacional de Migraciones / RENIEC',
+    authorityName: 'Superintendencia Nacional de Migraciones (MIGRACIONES)',
     department: 'Ministerio del Interior (Perú)',
-    officialDocName: 'Pasaporte Electrónico Peruano y DNI Electrónico (DNIe)',
+    officialDocName: 'Pasaporte Electrónico Peruano',
     regulationsStandard: 'Directiva de Emisión de Pasaportes & OACI',
     typicalProcessingTime: 'Entrega el mismo día de la cita',
-    primaryDocumentTypes: ['Pasaporte Electrónico (35×45 mm)', 'DNI Electrónico (35×45 mm)', 'Visa Peruana'],
+    primaryDocumentTypes: ['Pasaporte Electrónico (foto tomada en la sede)', 'Visa Peruana (35×45 mm)'],
+    // Source: gob.pe/174 and Migraciones notice "no se requieren ... fotografías impresas" (checked 2026-11-13).
     keyDifferencesText:
-      'Migraciones Perú y RENIEC exigen fotografías de tamaño carné / pasaporte de 35 × 45 mm con fondo blanco liso, sin gafas, sin prendas oscuras en la cabeza y con las orejas visibles.',
+      'Para el pasaporte electrónico peruano no necesitas llevar fotografías: Migraciones toma la foto en la sede durante tu cita, con fondo blanco. Si necesitas una foto tamaño pasaporte para otro trámite o para un visado, el formato habitual es de 35 × 45 mm (3,5 × 4,5 cm) con fondo blanco liso.',
     specificPeculiarities: [
-      'Dimensiones 35×45 mm.',
-      'Fondo blanco liso sin sombras.',
-      'Orejas y frente descubiertas.',
-      'Sin lentes ni prendas en la cabeza.',
+      'Pasaporte electrónico: la foto se toma en la sede de Migraciones durante la cita; no se requieren fotos impresas.',
+      'El fondo de la foto es blanco: se recomienda vestir una prenda oscura o que contraste.',
+      'Sin lentes de contacto de color, prendas en la cabeza ni cabello cubriendo el rostro.',
+      'Foto tamaño pasaporte para otros trámites o visados: 35 × 45 mm (3,5 × 4,5 cm), fondo blanco.',
     ],
     officialPortalUrl: 'https://www.gob.pe/migraciones',
   },
@@ -1192,6 +1194,97 @@ const COUNTRY_SPECIFIC_FAQS: Record<string, CountryFAQItem[]> = {
 };
 
 // ---------------------------------------------------------------------------
+// 4b. SEARCH-INTENT DATA (SEO roadmap 2026-11, tasks SEO-06/07/09)
+// ---------------------------------------------------------------------------
+
+/**
+ * Countries whose passport photo is captured by the authority at the appointment
+ * (users do NOT bring a printed photo). Only add entries backed by an official source.
+ */
+export interface OfficePhotoCaptureInfo {
+  authority: string;
+  sourceUrl: string;
+}
+export const OFFICE_PHOTO_CAPTURE: Record<string, OfficePhotoCaptureInfo> = {
+  PE: { authority: 'Migraciones', sourceUrl: 'https://www.gob.pe/174-sacar-pasaporte-electronico-para-mayores-de-edad' },
+  CO: { authority: 'la Cancillería', sourceUrl: 'https://www.cancilleria.gov.co/en/node/23819' },
+};
+
+/**
+ * Demonyms for countries where GSC shows passport-BOOKLET-size queries
+ * ("cuánto mide el pasaporte colombiano"). These pages get a booklet-size answer.
+ */
+export const PASSPORT_DEMONYMS: Record<string, string> = {
+  CO: 'colombiano',
+  AR: 'argentino',
+  PE: 'peruano',
+  VE: 'venezolano',
+  EC: 'ecuatoriano',
+  CL: 'chileno',
+  MX: 'mexicano',
+};
+
+/** ICAO Doc 9303 TD3 passport book size (closed). */
+export const PASSPORT_BOOKLET_SIZE = { cm: '12,5 × 8,8 cm', mm: '125 × 88 mm' };
+
+/**
+ * Per-country title/description overrides for the controlled snippet test (SEO-06, SEO-09).
+ * Batch 1 (2026-11): PE, EC, CO, SV. Controls left on the default template: CR, CU.
+ * Do not extend without reviewing batch-1 results in GSC (roadmap task SEO-14).
+ */
+export interface CountryMetaOverride {
+  title: string;
+  description: string;
+  h1?: string;
+}
+export const COUNTRY_META_OVERRIDES: Record<string, CountryMetaOverride> = {
+  PE: {
+    title: 'Tamaño pasaporte en Perú: foto 3,5 × 4,5 cm y medidas',
+    description:
+      'Migraciones toma la foto del pasaporte en la sede. Medidas de la foto tamaño pasaporte (3,5 × 4,5 cm) y de la libreta (12,5 × 8,8 cm), fondo y requisitos.',
+    h1: 'Foto tamaño pasaporte en Perú: medidas, fondo y requisitos',
+  },
+  EC: {
+    title: 'Foto de pasaporte ecuatoriano y visa: tamaño en cm',
+    description:
+      'Foto para visa de Ecuador: 5 × 5 cm (51 × 51 mm), fondo blanco. La libreta del pasaporte ecuatoriano mide 12,5 × 8,8 cm. Requisitos y herramienta para preparar tu foto.',
+  },
+  CO: {
+    title: 'Tamaño del pasaporte colombiano y de la foto (en cm)',
+    description:
+      'La libreta del pasaporte colombiano mide 12,5 × 8,8 cm. La Cancillería toma la foto del pasaporte en la oficina; para la visa, la foto mide 3 × 4 cm con fondo blanco.',
+  },
+  SV: {
+    title: 'Foto de pasaporte salvadoreño: medidas, fondo y requisitos',
+    description:
+      'Medidas de la foto de pasaporte salvadoreño: 5,1 × 5,1 cm (2 × 2 pulgadas / 51 × 51 mm), fondo blanco y requisitos según la DGME. Prepara tu foto en el navegador.',
+  },
+};
+
+/** FAQs prepended to a country's FAQ list for the search intents above. */
+function getIntentFAQs(country: CountryInfo): CountryFAQItem[] {
+  const code = country.code.toUpperCase();
+  const extra: CountryFAQItem[] = [];
+  const capture = OFFICE_PHOTO_CAPTURE[code];
+  const demonym = PASSPORT_DEMONYMS[code];
+  if (capture) {
+    extra.push({
+      question: `¿Necesito llevar foto para el pasaporte${demonym ? ` ${demonym}` : ` de ${country.name}`}?`,
+      answer: `No. En ${country.name}, ${capture.authority} toma la fotografía del pasaporte en la oficina durante tu cita, así que no necesitas llevar fotos impresas. Sí necesitarás una foto con medidas oficiales si solicitas un visado o realizas otros trámites.`,
+      link: { href: '/donde-sacar-foto-pasaporte', text: 'si te toman la foto en la oficina', prefix: 'Consulta en qué países' },
+    });
+  }
+  if (demonym) {
+    extra.push({
+      question: `¿Cuánto mide el pasaporte ${demonym}?`,
+      answer: `La libreta del pasaporte ${demonym} cerrada mide ${PASSPORT_BOOKLET_SIZE.cm} (${PASSPORT_BOOKLET_SIZE.mm}), el formato TD3 (ID-3) que la OACI establece en el Doc 9303 para todos los pasaportes de lectura mecánica. No hay que confundirla con la medida de la foto, que se indica en esta página.`,
+      link: { href: '/medidas-foto-pasaporte#libreta', text: 'medidas de la libreta del pasaporte', prefix: 'Más detalles en' },
+    });
+  }
+  return extra;
+}
+
+// ---------------------------------------------------------------------------
 // 5. PUBLIC ACCESSOR FUNCTIONS WITH FALLBACKS
 // ---------------------------------------------------------------------------
 export function getCountryAuthorityInfo(country: CountryInfo): CountryAuthorityInfo {
@@ -1292,8 +1385,13 @@ export function getCountryRejectionReasons(country: CountryInfo): CountryRejecti
 }
 
 export function getCountryFAQs(country: CountryInfo): CountryFAQItem[] {
+  return [...getIntentFAQs(country), ...getBaseCountryFAQs(country)];
+}
+
+function getBaseCountryFAQs(country: CountryInfo): CountryFAQItem[] {
   const custom = COUNTRY_SPECIFIC_FAQS[country.code.toUpperCase()];
   if (custom) return custom;
+  const capture = OFFICE_PHOTO_CAPTURE[country.code.toUpperCase()];
 
   const primaryDoc = country.documents[0];
   const auth = getCountryAuthorityInfo(country);
@@ -1302,7 +1400,7 @@ export function getCountryFAQs(country: CountryInfo): CountryFAQItem[] {
   const faqs: CountryFAQItem[] = [
     {
       question: `¿Cuáles son las medidas oficiales exactas para la foto de pasaporte de ${country.name}?`,
-      answer: `Para ${country.name}, el tamaño oficial del pasaporte es de ${primaryDoc.widthMm} × ${primaryDoc.heightMm} mm (${(primaryDoc.widthMm / 10).toFixed(1).replace('.', ',')} × ${(primaryDoc.heightMm / 10).toFixed(1).replace('.', ',')} cm / ${primaryDoc.widthPx} × ${primaryDoc.heightPx} píxeles a 300 DPI). La altura del rostro (barbilla a coronilla) debe ocupar entre el ${Math.round(primaryDoc.faceHeightMinRatio * 100)}% y el ${Math.round(primaryDoc.faceHeightMaxRatio * 100)}% de la imagen.`,
+      answer: `${capture ? `La foto del pasaporte la toma ${capture.authority} en la oficina; para visados y otros trámites, la foto mide` : `Para ${country.name}, el tamaño oficial del pasaporte es de`} ${primaryDoc.widthMm} × ${primaryDoc.heightMm} mm (${(primaryDoc.widthMm / 10).toFixed(1).replace('.', ',')} × ${(primaryDoc.heightMm / 10).toFixed(1).replace('.', ',')} cm / ${primaryDoc.widthPx} × ${primaryDoc.heightPx} píxeles a 300 DPI). La altura del rostro (barbilla a coronilla) debe ocupar entre el ${Math.round(primaryDoc.faceHeightMinRatio * 100)}% y el ${Math.round(primaryDoc.faceHeightMaxRatio * 100)}% de la imagen.`,
     },
     {
       question: `¿Qué color de fondo exige la normativa de ${country.name}?`,

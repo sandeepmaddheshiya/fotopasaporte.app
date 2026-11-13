@@ -14,6 +14,10 @@ import {
   getCountryFAQs,
   isIndexableCountry,
   getRegionalCluster,
+  COUNTRY_META_OVERRIDES,
+  OFFICE_PHOTO_CAPTURE,
+  PASSPORT_DEMONYMS,
+  PASSPORT_BOOKLET_SIZE,
 } from '@/data/country-seo-data';
 import { getSizeFormatPath } from '@/data/size-formats';
 import { Header } from '@/components/Header';
@@ -67,8 +71,12 @@ export async function generateMetadata({ params }: CountryPageProps): Promise<Me
 
   const primaryDoc = country.documents[0];
   const auth = getCountryAuthorityInfo(country);
-  const title = `Foto de pasaporte ${country.name}: medidas y requisitos`;
-  const description = `Medidas, fondo y formato de la foto de pasaporte de ${country.name} (${primaryDoc.widthMm} × ${primaryDoc.heightMm} mm) según la fuente oficial, con fecha de verificación. Prepara tu foto en el navegador.`;
+  // Per-country overrides for the controlled snippet test (SEO-06/SEO-09); other countries keep the template.
+  const override = COUNTRY_META_OVERRIDES[country.code];
+  const title = override?.title ?? `Foto de pasaporte ${country.name}: medidas y requisitos`;
+  const description =
+    override?.description ??
+    `Medidas, fondo y formato de la foto de pasaporte de ${country.name} (${primaryDoc.widthMm} × ${primaryDoc.heightMm} mm) según la fuente oficial, con fecha de verificación. Prepara tu foto en el navegador.`;
 
   return {
     title,
@@ -126,6 +134,9 @@ export default async function CountryPage({ params }: CountryPageProps) {
   const faqs = getCountryFAQs(country);
   // Only link to a size guide when one exists for these exact dimensions (e.g. no guide for 30×40 or 45×45).
   const sizeGuidePath = getSizeFormatPath(primaryDoc.widthMm, primaryDoc.heightMm);
+  const h1 = COUNTRY_META_OVERRIDES[country.code]?.h1 ?? `Foto de pasaporte de ${country.name}: medidas, fondo y requisitos`;
+  const officeCapture = OFFICE_PHOTO_CAPTURE[country.code];
+  const demonym = PASSPORT_DEMONYMS[country.code];
 
   // Schema.org JSON-LD structured data for Google Rich Results (AG-07)
   const canonicalUrl = `https://fotopasaporte.app/foto-pasaporte/${canonicalSlug}`;
@@ -136,7 +147,7 @@ export default async function CountryPage({ params }: CountryPageProps) {
         '@type': 'WebPage',
         '@id': canonicalUrl,
         url: canonicalUrl,
-        name: `Foto de pasaporte de ${country.name}: medidas, fondo y requisitos`,
+        name: h1,
         description: `Prepara tu fotografía para pasaporte o visado de ${country.name} con las medidas oficiales de ${primaryDoc.widthMm} × ${primaryDoc.heightMm} mm.`,
         inLanguage: 'es',
         isPartOf: {
@@ -224,7 +235,7 @@ export default async function CountryPage({ params }: CountryPageProps) {
               </div>
 
               <h1 className="mt-3 text-[26px] sm:text-[36px] md:text-[44px] font-semibold tracking-tight text-[#1D1D1F] leading-tight">
-                Foto de pasaporte de {country.name}: medidas, fondo y requisitos
+                {h1}
               </h1>
 
               <p className="mt-3 text-[15px] sm:text-[18px] leading-relaxed text-[#6E6E73]">
@@ -260,6 +271,42 @@ export default async function CountryPage({ params }: CountryPageProps) {
                   </>
                 )}
               </p>
+
+              {/* Answer-first box for high-volume intents (SEO-06 office capture, SEO-07 booklet size) */}
+              {(officeCapture || demonym) && (
+                <div className="mt-5 rounded-2xl border-2 border-[#0071E3]/30 bg-[#0071E3]/5 p-4 sm:p-5">
+                  <p className="text-[12px] font-semibold text-[#0071E3] uppercase tracking-wider">Respuesta directa</p>
+                  {officeCapture && (
+                    <p className="mt-1.5 text-[15px] sm:text-[16px] font-medium leading-relaxed text-[#1D1D1F]">
+                      <strong>¿Necesitas llevar foto para el pasaporte?</strong> No: {officeCapture.authority} toma la foto en
+                      la oficina durante tu cita (
+                      <a
+                        href={officeCapture.sourceUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[#0071E3] hover:underline"
+                      >
+                        fuente oficial
+                      </a>
+                      ). Para visados y otros trámites, la foto mide{' '}
+                      <strong>
+                        {primaryDoc.widthMm} × {primaryDoc.heightMm} mm ({(primaryDoc.widthMm / 10).toString().replace('.', ',')} ×{' '}
+                        {(primaryDoc.heightMm / 10).toString().replace('.', ',')} cm)
+                      </strong>
+                      .
+                    </p>
+                  )}
+                  {demonym && (
+                    <p className="mt-1.5 text-[15px] sm:text-[16px] font-medium leading-relaxed text-[#1D1D1F]">
+                      <strong>¿Cuánto mide el pasaporte {demonym}?</strong> La libreta cerrada mide{' '}
+                      <strong>{PASSPORT_BOOKLET_SIZE.cm}</strong> ({PASSPORT_BOOKLET_SIZE.mm}), formato TD3 de la OACI.{' '}
+                      <Link href="/medidas-foto-pasaporte#libreta" className="text-[#0071E3] hover:underline">
+                        Medidas de la libreta del pasaporte
+                      </Link>
+                    </p>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Quick Specs Pill Box */}

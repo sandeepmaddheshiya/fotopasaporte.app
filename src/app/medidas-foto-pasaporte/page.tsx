@@ -14,9 +14,9 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Medidas de Foto de Pasaporte y Tamaño Oficial (cm, mm, px) · Guía Completa 2026',
+  title: 'Medidas del pasaporte y de la foto en cm (tamaño oficial)',
   description:
-    'Descubre las medidas exactas de la foto de pasaporte en cm, mm y píxeles a 300 DPI. Tabla comparativa por países, dimensiones de la libreta en cm (12,5 × 8,8 cm), diferencias con foto carnet o cédula y visas.',
+    'Foto de pasaporte: 3,5 × 4,5 cm (35 × 45 mm) o 5,1 × 5,1 cm (2 × 2"). Libreta del pasaporte: 12,5 × 8,8 cm. Tabla por país con fuente oficial, píxeles a 300 DPI y diferencias con la foto carnet.',
   keywords: [
     'tamaño pasaporte',
     'medida de pasaporte',
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     canonical: 'https://fotopasaporte.app/medidas-foto-pasaporte',
   },
   openGraph: {
-    title: 'Medidas de Foto de Pasaporte y Tamaño Oficial (cm, mm, px) · Guía Completa',
+    title: 'Medidas del pasaporte y de la foto en cm (tamaño oficial)',
     description:
       'Guía oficial de dimensiones de fotos de pasaporte (35×45 mm, 2×2", 50×70 mm, 33×48 mm), tamaño de libreta en cm y diferencias entre visa, pasaporte y foto carnet.',
     url: 'https://fotopasaporte.app/medidas-foto-pasaporte',
@@ -213,16 +213,17 @@ const PASSPORT_SIZES_TABLE: DimensionRow[] = [
     region: 'América del Sur',
     country: 'Ecuador',
     slug: 'ecuador',
-    docName: 'Pasaporte biométrico',
-    sizeMm: '35 × 45 mm',
-    sizeCm: '3,5 × 4,5 cm',
-    sizeInches: '1,38 × 1,77 in',
-    sizePx: '413 × 531 px',
+    // Passport photo is captured at the Registro Civil agency; 5 × 5 cm is the official visa photo (gob.ec).
+    docName: 'Visado (la foto del pasaporte se toma en el Registro Civil)',
+    sizeMm: '51 × 51 mm',
+    sizeCm: '5,1 × 5,1 cm',
+    sizeInches: '2 × 2 in',
+    sizePx: '600 × 600 px',
     bg: 'Blanco liso',
     faceRatio: '70% – 80%',
     sourceName: 'Ministerio de Relaciones Exteriores y Movilidad Humana',
-    sourceUrl: 'https://www.cancilleria.gob.ec/',
-    verifiedDate: '2026-10-06',
+    sourceUrl: 'https://www.gob.ec/mremh/tramites/concesion-visa-temporal-excepcion',
+    verifiedDate: '2026-11-13',
   },
   {
     region: 'América Central',
@@ -303,11 +304,14 @@ const PASSPORT_SIZES_TABLE: DimensionRow[] = [
     region: 'América del Sur',
     country: 'Chile',
     slug: 'chile',
-    docName: 'Pasaporte chileno',
-    sizeMm: '45 × 45 mm',
-    sizeCm: '4,5 × 4,5 cm',
-    sizeInches: '1,77 × 1,77 in',
-    sizePx: '531 × 531 px',
+    // Passport photo is captured digitally at the Registro Civil (chileatiende.gob.cl).
+    // Size aligned with countries.json (what the tool crops to). UNVERIFIED: an official size
+    // could not be confirmed on 2026-11-13 — re-check the consulado.gob.cl source.
+    docName: 'Visado (la foto del pasaporte se toma en el Registro Civil)',
+    sizeMm: '35 × 45 mm',
+    sizeCm: '3,5 × 4,5 cm',
+    sizeInches: '1,38 × 1,77 in',
+    sizePx: '413 × 531 px',
     bg: 'Blanco parejo',
     faceRatio: '70% – 80%',
     sourceName: 'Servicio de Registro Civil e Identificación',
@@ -318,7 +322,8 @@ const PASSPORT_SIZES_TABLE: DimensionRow[] = [
     region: 'América del Sur',
     country: 'Perú',
     slug: 'peru',
-    docName: 'Pasaporte electrónico',
+    // Migraciones takes the e-passport photo at the appointment (gob.pe); 35 × 45 mm = colloquial 'tamaño pasaporte'.
+    docName: 'Foto tamaño pasaporte (la del pasaporte se toma en Migraciones)',
     sizeMm: '35 × 45 mm',
     sizeCm: '3,5 × 4,5 cm',
     sizeInches: '1,38 × 1,77 in',
@@ -348,15 +353,16 @@ const PASSPORT_SIZES_TABLE: DimensionRow[] = [
     region: 'América del Sur',
     country: 'Colombia',
     slug: 'colombia',
-    docName: 'Pasaporte ordinario',
-    sizeMm: '30 × 40 mm / 35 × 45 mm',
+    // Passport photo is taken at the Cancillería office (cancilleria.gov.co); 3 × 4 cm is the official visa photo.
+    docName: 'Visado (la foto del pasaporte se toma en la oficina)',
+    sizeMm: '30 × 40 mm',
     sizeCm: '3,0 × 4,0 cm',
     sizeInches: '1,18 × 1,57 in',
     sizePx: '354 × 472 px',
     bg: 'Blanco liso',
     faceRatio: '70% – 80%',
     sourceName: 'Ministerio de Relaciones Exteriores (Cancillería de Colombia)',
-    sourceUrl: 'https://www.cancilleria.gov.co/atencion-y-servicio-al-ciudadano/tramites-y-servicios/pasaportes',
+    sourceUrl: 'https://www.cancilleria.gov.co/sites/default/files/2026-07/Infografia-fotografia-para-visas-espaol-e-ingles.pdf',
     verifiedDate: '2026-10-05',
   },
   {
@@ -432,7 +438,7 @@ export default function MedidasPasaportePage() {
           },
         },
         datePublished: '2026-10-14',
-        dateModified: '2026-10-26',
+        dateModified: '2026-11-13',
       },
       {
         '@type': 'BreadcrumbList',
@@ -503,10 +509,16 @@ export default function MedidasPasaportePage() {
           {/* Answer-First Box (AG-03): Cuánto mide una foto de pasaporte */}
           <div className="mt-5 rounded-2xl border-2 border-[#0071E3]/30 bg-[#0071E3]/5 p-4 sm:p-5">
             <p className="text-[12px] font-semibold text-[#0071E3] uppercase tracking-wider">
-              Respuesta directa · Cuánto mide una foto de pasaporte
+              Respuesta directa · Cuánto mide la foto y cuánto mide el pasaporte
             </p>
             <p className="mt-1.5 text-[15px] sm:text-[17px] font-medium leading-relaxed text-[#1D1D1F]">
               Una foto de pasaporte oficial mide habitualmente <strong>35 × 45 mm</strong> (3,5 × 4,5 cm / 413 × 531 px a 300 DPI) según la norma OACI en España, la Unión Europea y la mayoría de países hispanohablantes, o <strong>51 × 51 mm</strong> (2 × 2 pulgadas / 600 × 600 px a 300 DPI) para Estados Unidos y visados consulares norteamericanos.
+            </p>
+            <p className="mt-2 text-[15px] sm:text-[17px] font-medium leading-relaxed text-[#1D1D1F]">
+              La <strong>libreta del pasaporte</strong> (el documento cerrado) mide <strong>12,5 × 8,8 cm</strong> (125 × 88 mm), formato ID-3 de la OACI.{' '}
+              <a href="#libreta" className="text-[#0071E3] hover:underline">
+                Ver medidas de la libreta
+              </a>
             </p>
           </div>
 
@@ -549,7 +561,7 @@ export default function MedidasPasaportePage() {
               <p className="text-[13px] text-[#6E6E73]">3,5 × 4,5 cm · 1,38 × 1,77 in</p>
               <p className="mt-2 text-[12px] font-mono text-[#0071E3]">413 × 531 px a 300 DPI</p>
               <p className="mt-3 text-[13px] text-[#6E6E73] leading-relaxed">
-                Utilizado por España, Unión Europea, Reino Unido, México, Ecuador, Costa Rica y la mayoría de países hispanohablantes.
+                Utilizado por España, Unión Europea, Reino Unido, México, Costa Rica y la mayoría de países hispanohablantes.
               </p>
             </div>
 
@@ -567,7 +579,7 @@ export default function MedidasPasaportePage() {
               <p className="text-[13px] text-[#6E6E73]">5,1 × 5,1 cm · 2 × 2 pulgadas</p>
               <p className="mt-2 text-[12px] font-mono text-[#0071E3]">600 × 600 px a 300 DPI</p>
               <p className="mt-3 text-[13px] text-[#6E6E73] leading-relaxed">
-                Exigido para pasaporte de EE.UU., visa DS-160, República Dominicana, India y consulados salvadoreños en EE.UU.
+                Exigido para pasaporte de EE.UU., visa DS-160, pasaporte de República Dominicana y El Salvador, visado de Ecuador y e-Visa de la India.
               </p>
             </div>
 
@@ -610,7 +622,7 @@ export default function MedidasPasaportePage() {
         </section>
 
         {/* Booklet Dimensions: ¿Cuánto mide un pasaporte en cm? */}
-        <section className="mt-16 rounded-3xl bg-[#F5F5F7] p-6 sm:p-10 border border-[#E5E5EA]">
+        <section id="libreta" className="scroll-mt-24 mt-16 rounded-3xl bg-[#F5F5F7] p-6 sm:p-10 border border-[#E5E5EA]">
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 rounded-full bg-[#1D1D1F] px-3 py-1 text-[12px] font-medium text-white">
               <FileText className="h-3.5 w-3.5" />
