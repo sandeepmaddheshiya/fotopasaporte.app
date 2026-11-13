@@ -10131,19 +10131,19 @@
       "country_name": "Chile",
       "document_type": "visa",
       "size_mm": [
-        35,
-        45
+        50,
+        50
       ],
       "size_inches": [
-        1.38,
-        1.77
+        1.97,
+        1.97
       ],
       "size_px": [
-        413,
-        531
+        591,
+        591
       ],
       "dpi": 300,
-      "aspect_ratio": 0.778,
+      "aspect_ratio": 1.0,
       "background_color": "white",
       "bg_rgb_min": [
         240,
@@ -10183,9 +10183,9 @@
       "mouth_closed": true,
       "shadow_allowed": false,
       "pixel_exact": true,
-      "pixel_exact_notes": "Ministerio de Relaciones Exteriores de Chile (consulado.gob.cl) requires 35x45 mm (413x531 px at 300 DPI, JPEG max 2 MB) with 70%-80% face coverage on a plain solid white background",
+      "pixel_exact_notes": "Consulado en línea (consulado.gob.cl, autorización previa o visa) requires a colour photo, white background, 'tamaño pasaporte (5x5 cm)', full face, no glasses, scarf or cap; ChileAtiende ficha 115648 states the same 5x5 cm",
       "source_url": "https://www.consulado.gob.cl/autorizacion-previa-o-visa",
-      "lastVerified": "2026-10-06"
+      "lastVerified": "2026-11-13"
     },
     {
       "country_code": "KM",

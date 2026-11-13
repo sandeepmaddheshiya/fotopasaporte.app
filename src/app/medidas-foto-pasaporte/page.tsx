@@ -304,19 +304,17 @@ const PASSPORT_SIZES_TABLE: DimensionRow[] = [
     region: 'América del Sur',
     country: 'Chile',
     slug: 'chile',
-    // Passport photo is captured digitally at the Registro Civil (chileatiende.gob.cl).
-    // Size aligned with countries.json (what the tool crops to). UNVERIFIED: an official size
-    // could not be confirmed on 2026-11-13 — re-check the consulado.gob.cl source.
-    docName: 'Visado (la foto del pasaporte se toma en el Registro Civil)',
-    sizeMm: '35 × 45 mm',
-    sizeCm: '3,5 × 4,5 cm',
-    sizeInches: '1,38 × 1,77 in',
-    sizePx: '413 × 531 px',
+    // Official: consulado.gob.cl 'tamaño pasaporte (5x5 cm)' for autorización previa o visa (read 2026-11-13).
+    docName: 'Visado / autorización previa',
+    sizeMm: '50 × 50 mm',
+    sizeCm: '5,0 × 5,0 cm',
+    sizeInches: '1,97 × 1,97 in',
+    sizePx: '591 × 591 px',
     bg: 'Blanco parejo',
     faceRatio: '70% – 80%',
-    sourceName: 'Servicio de Registro Civil e Identificación',
+    sourceName: 'Ministerio de Relaciones Exteriores (Consulado en línea)',
     sourceUrl: 'https://www.consulado.gob.cl/autorizacion-previa-o-visa',
-    verifiedDate: '2026-10-06',
+    verifiedDate: '2026-11-13',
   },
   {
     region: 'América del Sur',

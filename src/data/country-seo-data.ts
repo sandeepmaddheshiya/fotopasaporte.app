@@ -221,11 +221,12 @@ const COUNTRY_AUTHORITIES: Record<string, CountryAuthorityInfo> = {
     officialDocName: 'Pasaporte Chileno Biométrico y Cédula de Identidad',
     regulationsStandard: 'Decreto Supremo de Identificación & OACI',
     typicalProcessingTime: '8 a 15 días hábiles',
-    primaryDocumentTypes: ['Pasaporte (35×45 mm)', 'Visa (35×45 mm)'],
+    primaryDocumentTypes: ['Pasaporte', 'Visa / autorización previa (5×5 cm)'],
+    // Visa photo: consulado.gob.cl 'tamaño pasaporte (5x5 cm)', colour, white background (read 2026-11-13).
     keyDifferencesText:
-      'Para el pasaporte y la visa de Chile, la foto mide 35 × 45 mm (3,5 × 4,5 cm) con fondo blanco liso. Si necesitas la foto para la cédula de identidad, consulta las medidas en la web del Registro Civil, ya que esta página solo cubre pasaporte y visa.',
+      'Para la visa o autorización previa de Chile, el Consulado en línea pide una foto a color de 5 × 5 cm (50 × 50 mm) con fondo blanco, rostro completo y sin lentes, pañuelo ni gorro. Para el pasaporte o la cédula de identidad, consulta las indicaciones del Registro Civil.',
     specificPeculiarities: [
-      'Medidas de 35×45 mm para pasaporte y visa.',
+      'Visa / autorización previa: foto a color de 5×5 cm con fondo blanco.',
       'Fondo blanco parejo sin sombras.',
       'Rostro despejado, sin flequillos que tapen las cejas.',
       'Sin sonreír y con expresión relajada.',
@@ -1186,9 +1187,9 @@ const COUNTRY_SPECIFIC_FAQS: Record<string, CountryFAQItem[]> = {
   ],
   CL: [
     {
-      question: '¿Cuál es el tamaño de foto para pasaporte y visa en Chile?',
+      question: '¿Cuál es el tamaño de foto para la visa de Chile?',
       answer:
-        'Para el pasaporte y la visa de Chile, la foto mide 35 × 45 mm (3,5 × 4,5 cm / 413 × 531 px a 300 DPI), con fondo blanco liso y uniforme sin sombras. Para la cédula, consulta las medidas en el Registro Civil.',
+        'Para la visa o autorización previa de Chile, el Consulado en línea (consulado.gob.cl) pide una foto a color «tamaño pasaporte (5x5 cm)», es decir 50 × 50 mm (591 × 591 px a 300 DPI), con fondo blanco, rostro completo y sin lentes, pañuelo ni gorro. Para el pasaporte y la cédula, consulta las indicaciones del Registro Civil.',
     },
   ],
 };
