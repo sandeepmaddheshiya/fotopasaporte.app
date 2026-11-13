@@ -1019,6 +1019,16 @@ const COUNTRY_SPECIFIC_FAQS: Record<string, CountryFAQItem[]> = {
   ],
   MX: [
     {
+      question: '¿Necesito llevar fotos para el pasaporte mexicano?',
+      answer:
+        'Por lo general, no. La SRE indica que para el trámite de pasaporte no es necesario llevar fotografías: por ejemplo, la Sección Consular de México en Londres lo señala expresamente para adultos, menores y renovaciones. Confirma las instrucciones de tu cita por si tu oficina pide algo adicional.',
+      link: {
+        href: '/donde-sacar-foto-pasaporte',
+        text: 'dónde se toma la foto del pasaporte en México',
+        prefix: 'Más información sobre',
+      },
+    },
+    {
       question: '¿Cuáles son las medidas oficiales del pasaporte mexicano (SRE)?',
       answer:
         'El tamaño oficial para el pasaporte mexicano ante la Secretaría de Relaciones Exteriores (SRE) es de 35 × 45 mm (3,5 × 4,5 cm / 413 × 531 píxeles a 300 DPI), a color con fondo rigurosamente blanco liso, frente y orejas totalmente despejadas.',
@@ -1042,15 +1052,6 @@ const COUNTRY_SPECIFIC_FAQS: Record<string, CountryFAQItem[]> = {
       question: '¿Puedo usar aretes o collares en la foto del pasaporte mexicano?',
       answer:
         'No. La SRE prohíbe aretes (pendientes), piercings, collares y cadenas en el cuello. Debes retirar cualquier accesorio antes de la fotografía.',
-    },
-    {
-      question: '¿Dónde se toma la foto del pasaporte en México y cuándo debo llevar fotos impresas?',
-      answer:
-        'En la gran mayoría de delegaciones de la SRE en México la foto digital se toma directamente en la ventanilla durante la cita. Sin embargo, debes llevar 2 fotos impresas de 35×45 mm en casos de menores de edad o trámites consulares en el extranjero. Consulta nuestra comparativa sobre',
-      link: {
-        href: '/donde-sacar-foto-pasaporte',
-        text: 'dónde se toma la foto del pasaporte en México',
-      },
     },
     {
       question: '¿Qué antigüedad máxima permite la SRE para la fotografía?',
@@ -1224,6 +1225,12 @@ export const PASSPORT_DEMONYMS: Record<string, string> = {
   CL: 'chileno',
   MX: 'mexicano',
 };
+
+/**
+ * Country pages ordered by Google Search Console demand (28d impressions, 2026-11-13).
+ * Used to back-fill the related-countries block (SEO-10). Review quarterly from GSC.
+ */
+export const SEARCH_DEMAND_PRIORITY: string[] = ['PE', 'EC', 'CO', 'CR', 'SV', 'AR', 'CL', 'CU', 'VE', 'UY', 'PA', 'DO', 'MX'];
 
 /** ICAO Doc 9303 TD3 passport book size (closed). */
 export const PASSPORT_BOOKLET_SIZE = { cm: '12,5 × 8,8 cm', mm: '125 × 88 mm' };
@@ -1459,12 +1466,12 @@ const REGIONAL_CLUSTERS: Record<string, RegionalClusterInfo> = {
   PE: {
     clusterTitle: 'Países vecinos (Andes)',
     clusterSubtitle: 'Requisitos y medidas biométricas en países vecinos de la región andina y el Pacífico.',
-    neighborCodes: ['EC', 'CO', 'CL', 'AR', 'BR'],
+    neighborCodes: ['EC', 'CO', 'CL', 'AR', 'VE'],
   },
   VE: {
     clusterTitle: 'Países vecinos (Andes y Caribe)',
     clusterSubtitle: 'Requisitos oficiales en países vecinos y destinos de la comunidad venezolana.',
-    neighborCodes: ['CO', 'EC', 'PE', 'ES', 'US'],
+    neighborCodes: ['CO', 'EC', 'PE', 'ES', 'DO'],
   },
 
   // Cono Sur (L-17, L-18, L-19, L-20)

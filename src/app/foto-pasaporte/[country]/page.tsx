@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { notFound, redirect } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import {
   getCountryBySlugOrCode,
   POPULAR_COUNTRIES,
@@ -18,6 +18,7 @@ import {
   OFFICE_PHOTO_CAPTURE,
   PASSPORT_DEMONYMS,
   PASSPORT_BOOKLET_SIZE,
+  SEARCH_DEMAND_PRIORITY,
 } from '@/data/country-seo-data';
 import { getSizeFormatPath } from '@/data/size-formats';
 import { Header } from '@/components/Header';
@@ -125,7 +126,7 @@ export default async function CountryPage({ params }: CountryPageProps) {
   // Canonical redirection: avoid duplicate indexing of country codes (e.g. /foto-pasaporte/es -> /foto-pasaporte/espana)
   const canonicalSlug = toCountrySlug(country);
   if (countryParam !== canonicalSlug) {
-    redirect(`/foto-pasaporte/${canonicalSlug}`);
+    permanentRedirect(`/foto-pasaporte/${canonicalSlug}`);
   }
 
   const primaryDoc = country.documents[0];
@@ -171,12 +172,6 @@ export default async function CountryPage({ params }: CountryPageProps) {
           {
             '@type': 'ListItem',
             position: 2,
-            name: 'Requisitos por País',
-            item: 'https://fotopasaporte.app/#requisitos',
-          },
-          {
-            '@type': 'ListItem',
-            position: 3,
             name: country.name,
             item: canonicalUrl,
           },
@@ -791,9 +786,17 @@ export default async function CountryPage({ params }: CountryPageProps) {
           .map((code) => COUNTRIES_DATA.find((c) => c.code === code))
           .filter((c): c is (typeof COUNTRIES_DATA)[number] => Boolean(c && c.code !== country.code));
         const existingCodes = new Set([country.code, ...neighborCountries.map((c) => c.code)]);
+        // SEO-10: among same-region candidates, pages with real search demand come first
+        // (stable sort keeps the previous order for everything else).
+        const demandRank = (c: (typeof COUNTRIES_DATA)[number]) => {
+          const idx = SEARCH_DEMAND_PRIORITY.indexOf(c.code);
+          return c.region === country.region && idx !== -1 ? idx : SEARCH_DEMAND_PRIORITY.length;
+        };
         const remainingCountries = COUNTRIES_DATA.filter(
           (c) => !existingCodes.has(c.code) && (c.region === country.region || c.isPopular)
-        ).slice(0, Math.max(0, 12 - neighborCountries.length));
+        )
+          .sort((a, b) => demandRank(a) - demandRank(b))
+          .slice(0, Math.max(0, 12 - neighborCountries.length));
         const displayedCountries = [...neighborCountries, ...remainingCountries];
 
         return (
