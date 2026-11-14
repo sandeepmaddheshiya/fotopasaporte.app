@@ -1232,6 +1232,12 @@ export const PASSPORT_DEMONYMS: Record<string, string> = {
  */
 export const SEARCH_DEMAND_PRIORITY: string[] = ['PE', 'EC', 'CO', 'CR', 'SV', 'AR', 'CL', 'CU', 'VE', 'UY', 'PA', 'DO', 'MX'];
 
+/**
+ * Other Spanish-speaking countries with searchers in GSC (Guatemala 104, Nicaragua 62, Honduras 41,
+ * Bolivia 27 impr; 28d) whose pages had 1-5 internal links. Second tier in the related-countries block.
+ */
+export const SPANISH_SPEAKING_SECONDARY: string[] = ['GT', 'HN', 'BO', 'NI', 'PY', 'PR'];
+
 /** ICAO Doc 9303 TD3 passport book size (closed). */
 export const PASSPORT_BOOKLET_SIZE = { cm: '12,5 × 8,8 cm', mm: '125 × 88 mm' };
 
@@ -1466,7 +1472,7 @@ const REGIONAL_CLUSTERS: Record<string, RegionalClusterInfo> = {
   PE: {
     clusterTitle: 'Países vecinos (Andes)',
     clusterSubtitle: 'Requisitos y medidas biométricas en países vecinos de la región andina y el Pacífico.',
-    neighborCodes: ['EC', 'CO', 'CL', 'AR', 'VE'],
+    neighborCodes: ['EC', 'CO', 'CL', 'BO', 'AR', 'VE'],
   },
   VE: {
     clusterTitle: 'Países vecinos (Andes y Caribe)',
@@ -1478,12 +1484,12 @@ const REGIONAL_CLUSTERS: Record<string, RegionalClusterInfo> = {
   AR: {
     clusterTitle: 'Países vecinos (Cono Sur)',
     clusterSubtitle: 'Medidas oficiales y requisitos en los países limítrofes del Cono Sur.',
-    neighborCodes: ['UY', 'CL', 'PY', 'BR', 'ES'],
+    neighborCodes: ['UY', 'CL', 'PY', 'BO', 'BR'],
   },
   CL: {
     clusterTitle: 'Países vecinos (Cono Sur)',
     clusterSubtitle: 'Compara especificaciones con países vecinos del Cono Sur y la región andina.',
-    neighborCodes: ['AR', 'PE', 'UY', 'ES', 'US'],
+    neighborCodes: ['AR', 'PE', 'BO', 'UY', 'ES'],
   },
   UY: {
     clusterTitle: 'Países vecinos (Cono Sur)',
@@ -1505,7 +1511,7 @@ const REGIONAL_CLUSTERS: Record<string, RegionalClusterInfo> = {
   SV: {
     clusterTitle: 'Países vecinos (Centroamérica)',
     clusterSubtitle: 'Directrices oficiales de foto de pasaporte y documento en América Central.',
-    neighborCodes: ['CR', 'PA', 'NI', 'MX', 'US'],
+    neighborCodes: ['GT', 'HN', 'CR', 'PA', 'NI', 'MX'],
   },
   CR: {
     clusterTitle: 'Países vecinos (Centroamérica)',
@@ -1520,9 +1526,24 @@ const REGIONAL_CLUSTERS: Record<string, RegionalClusterInfo> = {
   NI: {
     clusterTitle: 'Países vecinos (Centroamérica)',
     clusterSubtitle: 'Requisitos oficiales en los países vecinos de Centroamérica.',
-    neighborCodes: ['CR', 'SV', 'PA', 'MX', 'US'],
+    neighborCodes: ['HN', 'CR', 'SV', 'PA', 'MX'],
   },
 
+  GT: {
+    clusterTitle: 'Países vecinos (Centroamérica)',
+    clusterSubtitle: 'Requisitos de la foto de pasaporte en México y los países vecinos de América Central.',
+    neighborCodes: ['MX', 'SV', 'HN', 'CR', 'PA'],
+  },
+  HN: {
+    clusterTitle: 'Países vecinos (Centroamérica)',
+    clusterSubtitle: 'Medidas oficiales de la foto de pasaporte en los países vecinos de América Central.',
+    neighborCodes: ['GT', 'SV', 'NI', 'CR', 'PA'],
+  },
+  BO: {
+    clusterTitle: 'Países vecinos (Andes y Cono Sur)',
+    clusterSubtitle: 'Compara las medidas de la foto de pasaporte con los países limítrofes de Bolivia.',
+    neighborCodes: ['PE', 'CL', 'AR', 'PY', 'BR'],
+  },
   // Caribe (L-23)
   CU: {
     clusterTitle: 'Países vecinos (Caribe)',
@@ -1539,7 +1560,7 @@ const REGIONAL_CLUSTERS: Record<string, RegionalClusterInfo> = {
   MX: {
     clusterTitle: 'América del Norte y destinos frecuentes',
     clusterSubtitle: 'Medidas oficiales en Norteamérica y los principales destinos internacionales.',
-    neighborCodes: ['US', 'CA', 'ES', 'CO', 'AR'],
+    neighborCodes: ['US', 'GT', 'CA', 'ES', 'CO', 'AR'],
   },
   US: {
     clusterTitle: 'América del Norte y destinos frecuentes',
