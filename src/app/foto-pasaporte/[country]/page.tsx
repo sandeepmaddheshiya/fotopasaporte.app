@@ -19,6 +19,7 @@ import {
   PASSPORT_DEMONYMS,
   PASSPORT_BOOKLET_SIZE,
   SEARCH_DEMAND_PRIORITY,
+  SPANISH_SPEAKING_SECONDARY,
 } from '@/data/country-seo-data';
 import { getSizeFormatPath } from '@/data/size-formats';
 import { Header } from '@/components/Header';
@@ -786,17 +787,19 @@ export default async function CountryPage({ params }: CountryPageProps) {
           .map((code) => COUNTRIES_DATA.find((c) => c.code === code))
           .filter((c): c is (typeof COUNTRIES_DATA)[number] => Boolean(c && c.code !== country.code));
         const existingCodes = new Set([country.code, ...neighborCountries.map((c) => c.code)]);
-        // SEO-10: among same-region candidates, pages with real search demand come first
-        // (stable sort keeps the previous order for everything else).
+        // SEO-10: among same-region candidates, pages with real search demand come first, then other
+        // Spanish-speaking countries; a stable sort keeps the previous order for everything else.
+        const RELATED_CARDS = 18;
+        const tiered = [...SEARCH_DEMAND_PRIORITY, ...SPANISH_SPEAKING_SECONDARY];
         const demandRank = (c: (typeof COUNTRIES_DATA)[number]) => {
-          const idx = SEARCH_DEMAND_PRIORITY.indexOf(c.code);
-          return c.region === country.region && idx !== -1 ? idx : SEARCH_DEMAND_PRIORITY.length;
+          const idx = tiered.indexOf(c.code);
+          return c.region === country.region && idx !== -1 ? idx : tiered.length;
         };
         const remainingCountries = COUNTRIES_DATA.filter(
           (c) => !existingCodes.has(c.code) && (c.region === country.region || c.isPopular)
         )
           .sort((a, b) => demandRank(a) - demandRank(b))
-          .slice(0, Math.max(0, 12 - neighborCountries.length));
+          .slice(0, Math.max(0, RELATED_CARDS - neighborCountries.length));
         const displayedCountries = [...neighborCountries, ...remainingCountries];
 
         return (

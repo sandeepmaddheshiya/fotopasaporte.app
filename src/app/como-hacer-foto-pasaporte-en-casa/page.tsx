@@ -542,6 +542,54 @@ export default function ComoHacerFotoPasaporteEnCasaPage() {
               <span className="mt-2 text-[14px] font-semibold text-[#1D1D1F]">Perú</span>
               <span className="text-[11px] text-[#6E6E73]">foto de pasaporte de Perú</span>
             </Link>
+            <Link
+              href="/foto-pasaporte/ecuador"
+              className="flex flex-col rounded-2xl border border-[#D2D2D7] bg-white p-3.5 transition-all hover:border-[#0071E3] hover:shadow-md"
+            >
+              <span className="text-[24px]">🇪🇨</span>
+              <span className="mt-2 text-[14px] font-semibold text-[#1D1D1F]">Ecuador</span>
+              <span className="text-[11px] text-[#6E6E73]">foto de pasaporte de Ecuador</span>
+            </Link>
+            <Link
+              href="/foto-pasaporte/costa-rica"
+              className="flex flex-col rounded-2xl border border-[#D2D2D7] bg-white p-3.5 transition-all hover:border-[#0071E3] hover:shadow-md"
+            >
+              <span className="text-[24px]">🇨🇷</span>
+              <span className="mt-2 text-[14px] font-semibold text-[#1D1D1F]">Costa Rica</span>
+              <span className="text-[11px] text-[#6E6E73]">foto de pasaporte de Costa Rica</span>
+            </Link>
+            <Link
+              href="/foto-pasaporte/el-salvador"
+              className="flex flex-col rounded-2xl border border-[#D2D2D7] bg-white p-3.5 transition-all hover:border-[#0071E3] hover:shadow-md"
+            >
+              <span className="text-[24px]">🇸🇻</span>
+              <span className="mt-2 text-[14px] font-semibold text-[#1D1D1F]">El Salvador</span>
+              <span className="text-[11px] text-[#6E6E73]">foto de pasaporte de El Salvador</span>
+            </Link>
+            <Link
+              href="/foto-pasaporte/chile"
+              className="flex flex-col rounded-2xl border border-[#D2D2D7] bg-white p-3.5 transition-all hover:border-[#0071E3] hover:shadow-md"
+            >
+              <span className="text-[24px]">🇨🇱</span>
+              <span className="mt-2 text-[14px] font-semibold text-[#1D1D1F]">Chile</span>
+              <span className="text-[11px] text-[#6E6E73]">foto de pasaporte de Chile</span>
+            </Link>
+            <Link
+              href="/foto-pasaporte/cuba"
+              className="flex flex-col rounded-2xl border border-[#D2D2D7] bg-white p-3.5 transition-all hover:border-[#0071E3] hover:shadow-md"
+            >
+              <span className="text-[24px]">🇨🇺</span>
+              <span className="mt-2 text-[14px] font-semibold text-[#1D1D1F]">Cuba</span>
+              <span className="text-[11px] text-[#6E6E73]">foto de pasaporte de Cuba</span>
+            </Link>
+            <Link
+              href="/foto-pasaporte/venezuela"
+              className="flex flex-col rounded-2xl border border-[#D2D2D7] bg-white p-3.5 transition-all hover:border-[#0071E3] hover:shadow-md"
+            >
+              <span className="text-[24px]">🇻🇪</span>
+              <span className="mt-2 text-[14px] font-semibold text-[#1D1D1F]">Venezuela</span>
+              <span className="text-[11px] text-[#6E6E73]">foto de pasaporte de Venezuela</span>
+            </Link>
           </div>
 
           <div className="mt-8 rounded-2xl border border-[#D2D2D7]/80 bg-white p-5 text-[13px] leading-relaxed text-[#6E6E73] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
