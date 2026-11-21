@@ -34,7 +34,7 @@ export function HeroSection({ onStartClick, onSelectSamplePhoto }: HeroSectionPr
 
             {/* Supporting Copy */}
             <p className="mt-4 sm:mt-5 text-[15px] leading-relaxed text-[#6E6E73] sm:text-[18px]">
-              Herramienta online independiente para recortar, calibrar y preparar fotos de pasaporte y visado con las medidas oficiales de más de 400 países según la norma OACI Doc 9303. Vista previa gratuita, descarga de pago a 300 DPI y hojas de impresión listas para recortar.
+              Herramienta online independiente para recortar, calibrar y preparar fotos de pasaporte y visado con las medidas oficiales de más de 200 países y 400 formatos según la norma OACI Doc 9303. Vista previa gratuita, descarga de pago a 300 DPI y hojas de impresión listas para recortar.
             </p>
 
             {/* CTAs */}

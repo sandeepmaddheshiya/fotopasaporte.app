@@ -181,7 +181,7 @@ export function Footer() {
         <div className="mt-10 rounded-2xl border border-[#D2D2D7]/60 bg-white/60 p-5 text-[12px] leading-relaxed text-[#8E8E93]">
           <p className="font-semibold text-[#6E6E73]">Quiénes somos y cómo trabajamos</p>
           <p className="mt-2">
-            FotoPasaporte.app es una herramienta online independiente creada por un equipo técnico especializado en calibración geométrica y estándares biométricos (OACI Doc 9303). Permite preparar fotos de pasaporte y visado para más de 400 países con verificación fechada y fuentes oficiales. Puedes conocer más en nuestra página <Link href="/sobre-nosotros" className="text-[#0071E3] hover:underline">Sobre nosotros</Link> y consultar el proceso en <Link href="/como-verificamos-los-requisitos" className="text-[#0071E3] hover:underline">Cómo verificamos los requisitos</Link>.
+            FotoPasaporte.app es una herramienta online independiente creada por un equipo técnico especializado en calibración geométrica y estándares biométricos (OACI Doc 9303). Permite preparar fotos de pasaporte y visado para más de 200 países y 400 formatos oficiales con verificación fechada y fuentes oficiales. Puedes conocer más en nuestra página <Link href="/sobre-nosotros" className="text-[#0071E3] hover:underline">Sobre nosotros</Link> y consultar el proceso en <Link href="/como-verificamos-los-requisitos" className="text-[#0071E3] hover:underline">Cómo verificamos los requisitos</Link>.
           </p>
         </div>
 

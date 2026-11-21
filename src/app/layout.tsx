@@ -23,31 +23,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'Foto de pasaporte online: recorta tu foto al tamaño de tu país',
   description:
-    'FotoPasaporte.app es la herramienta online independiente para recortar y preparar fotos de pasaporte y visado con las medidas oficiales de más de 400 países (300 DPI) y verificación técnica.',
-  keywords: [
-    'foto pasaporte',
-    'foto para pasaporte',
-    'fotos para pasaporte',
-    'fotos de pasaporte',
-    'fotografias para pasaporte',
-    'fotografias tamaño pasaporte',
-    'convertir foto a tamaño pasaporte',
-    'convertir foto a tamaño pasaporte online gratis',
-    'convertir foto a tamaño pasaporte gratis',
-    'foto pasaporte online',
-    'foto tamaño pasaporte online',
-    'foto pasaporte gratis',
-    'foto tamaño pasaporte precio',
-    'donde sacar foto pasaporte',
-    'donde toman fotos para pasaporte',
-    'foto para visa',
-    'validar pasaporte online',
-    'foto para pasaporte requisitos',
-    'foto tipo pasaporte ejemplo',
-    'foto carnet',
-    'recortar foto 35x45',
-    'foto 2x2 pulgadas',
-  ],
+    'FotoPasaporte.app es la herramienta online independiente para recortar y preparar fotos de pasaporte y visado con las medidas oficiales de más de 200 países y 400 formatos (300 DPI).',
   authors: [{ name: 'FotoPasaporte.app' }],
   metadataBase: new URL('https://fotopasaporte.app'),
   alternates: {
@@ -56,7 +32,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Foto de pasaporte online: recorta tu foto al tamaño de tu país',
     description:
-      'FotoPasaporte.app es la herramienta online independiente para recortar y preparar fotos de pasaporte y visado con las medidas oficiales de más de 400 países (300 DPI) y verificación técnica.',
+      'FotoPasaporte.app es la herramienta online independiente para recortar y preparar fotos de pasaporte y visado con las medidas oficiales de más de 200 países y 400 formatos (300 DPI).',
     url: 'https://fotopasaporte.app',
     siteName: 'FotoPasaporte.app',
     locale: 'es_ES',
@@ -96,7 +72,7 @@ export default function RootLayout({
                   logo: 'https://fotopasaporte.app/images/logo.png',
                   email: 'soporte@fotopasaporte.app',
                   description:
-                    'Herramienta online independiente para recortar, calibrar y preparar fotografías de pasaporte, visado y documentos de identidad conforme a los requisitos biométricos de más de 400 países y normativas OACI Doc 9303.',
+                    'Herramienta online independiente para recortar, calibrar y preparar fotografías de pasaporte, visado y documentos de identidad conforme a los requisitos biométricos de más de 200 países (400+ formatos oficiales) y normativas OACI Doc 9303.',
                   knowsAbout: [
                     'Fotografía para pasaporte',
                     'Medidas biométricas OACI Doc 9303',

@@ -15,7 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const routes: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
-      lastModified: '2026-10-26',
+      lastModified: '2026-11-21',
       changeFrequency: 'weekly',
       priority: 1.0,
     },
@@ -45,7 +45,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${baseUrl}/sobre-nosotros`,
-      lastModified: '2026-10-26',
+      lastModified: '2026-11-21',
       changeFrequency: 'monthly',
       priority: 0.6,
     },
@@ -68,18 +68,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
   for (const slug of sizeSlugs) {
     routes.push({
       url: `${baseUrl}/foto-${slug}`,
-      lastModified: '2026-11-13',
+      lastModified: '2026-11-21',
       changeFrequency: 'monthly',
       priority: 0.8,
     });
   }
 
-  // 3. Canonical Country Pages (All verified sovereign destinations)
-  // lastModified = latest of (requirements verification date, last content edit) — never bumped without a change.
+  // 3. Canonical Country Pages (Curated Tier-1 destinations with bespoke Spanish content)
+  // Prevents thin/templated programmatic pages from diluting sitewide quality signals.
   for (const country of COUNTRIES_DATA) {
+    if (!isIndexableCountry(country.code)) continue;
+
     const slug = toCountrySlug(country);
     const dates = [
-      '2026-10-26',
+      '2026-11-21',
       COUNTRY_CONTENT_UPDATED[country.code],
       ...country.documents.map((d) => d.lastVerified),
     ].filter((d): d is string => Boolean(d));

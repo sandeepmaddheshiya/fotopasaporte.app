@@ -53,10 +53,11 @@ interface CountryPageProps {
 }
 
 // ---------------------------------------------------------------------------
-// Static params: pre-generate all verified country destinations
+// Static params: pre-generate only Tier-1 indexable country destinations
+// (all other countries remain dynamically accessible with noindex, follow)
 // ---------------------------------------------------------------------------
 export async function generateStaticParams() {
-  return COUNTRIES_DATA.map((c) => ({
+  return COUNTRIES_DATA.filter((c) => isIndexableCountry(c.code)).map((c) => ({
     country: toCountrySlug(c),
   }));
 }
@@ -72,7 +73,7 @@ export async function generateMetadata({ params }: CountryPageProps): Promise<Me
   }
 
   const primaryDoc = country.documents[0];
-  const auth = getCountryAuthorityInfo(country);
+  const indexable = isIndexableCountry(country.code);
   // Per-country overrides for the controlled snippet test (SEO-06/SEO-09); other countries keep the template.
   const override = COUNTRY_META_OVERRIDES[country.code];
   const title = override?.title ?? `Foto de pasaporte ${country.name}: medidas y requisitos`;
@@ -83,15 +84,6 @@ export async function generateMetadata({ params }: CountryPageProps): Promise<Me
   return {
     title,
     description,
-    keywords: [
-      `foto pasaporte ${country.name.toLowerCase()}`,
-      `foto visa ${country.name.toLowerCase()}`,
-      `medidas foto pasaporte ${country.name.toLowerCase()}`,
-      `requisitos foto ${country.name.toLowerCase()}`,
-      `tamano foto ${country.name.toLowerCase()}`,
-      `foto carnet ${country.name.toLowerCase()}`,
-      `hacer foto pasaporte ${country.name.toLowerCase()} en casa`,
-    ],
     openGraph: {
       title,
       description,
@@ -103,10 +95,10 @@ export async function generateMetadata({ params }: CountryPageProps): Promise<Me
       canonical: `https://fotopasaporte.app/foto-pasaporte/${toCountrySlug(country)}`,
     },
     robots: {
-      index: true,
+      index: indexable,
       follow: true,
       googleBot: {
-        index: true,
+        index: indexable,
         follow: true,
         'max-video-preview': -1,
         'max-image-preview': 'large',
@@ -417,7 +409,9 @@ export default async function CountryPage({ params }: CountryPageProps) {
                   <span>Verificación técnica editorial y control de calidad</span>
                 </div>
                 <span className="text-[11px] text-[#8E8E93]">
-                  Última actualización: Octubre 2026 · Estándar OACI Doc 9303
+                  {primaryDoc.lastVerified
+                    ? `Última verificación: ${primaryDoc.lastVerified} · Estándar OACI Doc 9303`
+                    : 'Estándar OACI Doc 9303'}
                 </span>
               </div>
               <p className="mt-2.5 leading-relaxed">
@@ -785,10 +779,11 @@ export default async function CountryPage({ params }: CountryPageProps) {
         const cluster = getRegionalCluster(country.code);
         const neighborCountries = cluster.neighborCodes
           .map((code) => COUNTRIES_DATA.find((c) => c.code === code))
-          .filter((c): c is (typeof COUNTRIES_DATA)[number] => Boolean(c && c.code !== country.code));
+          .filter((c): c is (typeof COUNTRIES_DATA)[number] =>
+            Boolean(c && c.code !== country.code && isIndexableCountry(c.code))
+          );
         const existingCodes = new Set([country.code, ...neighborCountries.map((c) => c.code)]);
-        // SEO-10: among same-region candidates, pages with real search demand come first, then other
-        // Spanish-speaking countries; a stable sort keeps the previous order for everything else.
+        // SEO-10: among same-region indexable candidates, pages with real search demand come first.
         const RELATED_CARDS = 18;
         const tiered = [...SEARCH_DEMAND_PRIORITY, ...SPANISH_SPEAKING_SECONDARY];
         const demandRank = (c: (typeof COUNTRIES_DATA)[number]) => {
@@ -796,7 +791,10 @@ export default async function CountryPage({ params }: CountryPageProps) {
           return c.region === country.region && idx !== -1 ? idx : tiered.length;
         };
         const remainingCountries = COUNTRIES_DATA.filter(
-          (c) => !existingCodes.has(c.code) && (c.region === country.region || c.isPopular)
+          (c) =>
+            !existingCodes.has(c.code) &&
+            isIndexableCountry(c.code) &&
+            (c.region === country.region || c.isPopular)
         )
           .sort((a, b) => demandRank(a) - demandRank(b))
           .slice(0, Math.max(0, RELATED_CARDS - neighborCountries.length));

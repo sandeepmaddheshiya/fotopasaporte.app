@@ -24,15 +24,6 @@ export const metadata: Metadata = {
   title: 'Dónde Sacar la Foto del Pasaporte: En Casa, Tiendas u Oficinas (2026)',
   description:
     'Descubre dónde tomar o sacar la foto para el pasaporte: en casa con el móvil, en fotomatón, estudio fotográfico o si te toman la foto en la propia oficina según tu país.',
-  keywords: [
-    'donde sacar foto pasaporte',
-    'donde tomar fotos para pasaporte',
-    'donde hacen fotos para pasaporte',
-    'donde sacar foto de pasaporte cerca de mi',
-    'te toman la foto en la oficina de pasaportes',
-    'donde sacar la foto del pasaporte',
-    'fotos pasaporte farmacia estudio fotomaton',
-  ],
   alternates: {
     canonical: 'https://fotopasaporte.app/donde-sacar-foto-pasaporte',
   },

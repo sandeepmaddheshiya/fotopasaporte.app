@@ -391,6 +391,88 @@ for (const entry of rawEntries) {
   countryMap.get(code)!.push(entry);
 }
 
+// Spanish normalization helpers so no raw English strings from countries.json render on es pages
+function formatGlassesNotesEs(entry: RawCountryEntry): string {
+  const raw = (entry.glasses_notes || '').toLowerCase();
+  if (!entry.glasses_allowed) {
+    if (raw.includes('medical') || raw.includes('certificate') || raw.includes('practitioner')) {
+      return 'No se permiten gafas. Las excepciones médicas requieren un certificado firmado por un médico especialista (la graduación visual por sí sola no es motivo de excepción).';
+    }
+    if (raw.includes('tinted') || raw.includes('dark')) {
+      return 'Debes quitarte las gafas para evitar reflejos del flash y rechazos biométricos; los cristales oscuros o tintados están estrictamente prohibidos.';
+    }
+    return 'Debes quitarte las gafas para evitar reflejos, brillos y rechazos en los lectores biométricos.';
+  }
+  return 'Permitidas únicamente con cristales totalmente transparentes, sin tintes ni reflejos y con montura fina que no cubra los ojos.';
+}
+
+function formatTeethNotesEs(entry: RawCountryEntry): string {
+  if (entry.smile_allowed) {
+    return 'Se admite una leve sonrisa natural manteniendo la boca cerrada y sin mostrar los dientes.';
+  }
+  return 'Expresión facial neutra con la boca completamente cerrada, sin sonreír ni mostrar los dientes.';
+}
+
+function formatHeadCoveringNotesEs(entry: RawCountryEntry): string {
+  const raw = (entry.head_covering_notes || '').toLowerCase();
+  if (entry.head_covering_allowed === false) {
+    return 'No se permiten prendas en la cabeza salvo excepciones religiosas o médicas acreditadas.';
+  }
+  const hasMedical = raw.includes('medical');
+  const hasDeclaration = raw.includes('declaration') || raw.includes('statement') || raw.includes('letter');
+  const hasPlain = raw.includes('plain') || raw.includes('without patterns');
+  const hasEars = raw.includes('ears');
+
+  const reason = hasMedical
+    ? 'motivos religiosos o médicos acreditados'
+    : 'motivos religiosos habituales';
+  const extras: string[] = [];
+  if (hasDeclaration) extras.push('con declaración firmada');
+  if (hasPlain) extras.push('en tejido liso sin estampados');
+
+  const visibility = hasEars
+    ? 'el rostro completo (de la barbilla a la frente) y las orejas deben quedar totalmente despejados y sin sombras'
+    : 'el rostro completo (de la barbilla a la frente) debe quedar totalmente visible y sin sombras';
+
+  return `Permitidas únicamente por ${reason}${extras.length ? ` (${extras.join(', ')})` : ''}; ${visibility}.`;
+}
+
+function formatDocumentNotesEs(
+  entry: RawCountryEntry,
+  spanishName: string,
+  docType: DocumentType,
+  bgInfo: { name: string; notes: string }
+): string {
+  const docLabel = docType === 'visa' ? 'visado' : 'pasaporte';
+  const [wMm, hMm] = entry.size_mm;
+  const [wPx, hPx] = entry.size_px;
+  const dpi = entry.dpi || 300;
+  const faceMin = Math.round(entry.face_height_min * 100);
+  const faceMax = Math.round(entry.face_height_max * 100);
+  const recency = entry.recency_months || 6;
+
+  const parts: string[] = [
+    `Fotografía reciente en color para ${docLabel} de ${spanishName} de ${wMm} × ${hMm} mm (${wPx} × ${hPx} px a ${dpi} DPI)`,
+  ];
+
+  if (entry.file_size_kb_min && entry.file_size_kb_max) {
+    parts.push(`archivo JPEG entre ${entry.file_size_kb_min} KB y ${entry.file_size_kb_max} KB`);
+  } else if (entry.file_size_kb_max) {
+    const maxLabel =
+      entry.file_size_kb_max >= 1024
+        ? `${(entry.file_size_kb_max / 1024).toFixed(entry.file_size_kb_max % 1024 === 0 ? 0 : 1).replace('.', ',')} MB`
+        : `${entry.file_size_kb_max} KB`;
+    parts.push(`archivo JPEG de máximo ${maxLabel}`);
+  }
+
+  parts.push(`fondo ${bgInfo.name.toLowerCase()}`);
+  parts.push(`altura del rostro del ${faceMin}% al ${faceMax}%`);
+  parts.push(`antigüedad máxima de ${recency} ${recency === 1 ? 'mes' : 'meses'}`);
+  parts.push(entry.glasses_allowed ? 'expresión neutra y boca cerrada' : 'expresión neutra, boca cerrada y sin gafas');
+
+  return `${parts.join(', ')}.`;
+}
+
 // Build structured CountryInfo array
 const parsedCountries: CountryInfo[] = [];
 
@@ -412,12 +494,10 @@ for (const [code, entries] of countryMap.entries()) {
       docName = `Pasaporte (${spanishName})`;
     }
 
-    const notes =
-      entry.pixel_exact_notes ||
-      entry.glasses_notes ||
-      entry.teeth_notes ||
-      entry.head_covering_notes ||
-      '';
+    const glassesNotes = formatGlassesNotesEs(entry);
+    const teethNotes = formatTeethNotesEs(entry);
+    const headCoveringNotes = formatHeadCoveringNotesEs(entry);
+    const notes = formatDocumentNotesEs(entry, spanishName, docType, bgInfo);
 
     return {
       id: `${code.toLowerCase()}-${entry.document_type}-${index}`,
@@ -446,12 +526,12 @@ for (const [code, entries] of countryMap.entries()) {
       bgRgbMin: entry.bg_rgb_min,
       bgRgbMax: entry.bg_rgb_max,
       maxTiltDegrees: entry.max_tilt_degrees,
-      glassesNotes: entry.glasses_notes,
+      glassesNotes,
       smileAllowed: entry.smile_allowed,
       teethVisibleAllowed: entry.teeth_visible_allowed,
-      teethNotes: entry.teeth_notes,
+      teethNotes,
       headCoveringAllowed: entry.head_covering_allowed,
-      headCoveringNotes: entry.head_covering_notes,
+      headCoveringNotes,
       recencyMonths: entry.recency_months,
       colorSpace: entry.color_space,
       lastVerified: entry.lastVerified,

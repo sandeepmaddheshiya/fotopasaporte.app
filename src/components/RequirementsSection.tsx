@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Search, ArrowUpRight, Check, Shield } from 'lucide-react';
 import { COUNTRIES_DATA, toCountrySlug } from '@/data/countries';
+import { isIndexableCountry } from '@/data/country-seo-data';
 import { CountryInfo } from '@/types';
 
 interface RequirementsSectionProps {
@@ -13,6 +14,7 @@ interface RequirementsSectionProps {
 export function RequirementsSection({ onSelectCountryForMaker }: RequirementsSectionProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeRegion, setActiveRegion] = useState<string>('Todos');
+  const [showAllCountries, setShowAllCountries] = useState(false);
 
   const regions = ['Todos', 'Europa', 'América', 'Asia / Oceanía'];
 
@@ -22,7 +24,13 @@ export function RequirementsSection({ onSelectCountryForMaker }: RequirementsSec
     return i === -1 ? spanishSpeaking.length : i;
   };
 
+  const hasActiveFilter = searchQuery.trim().length > 0 || activeRegion !== 'Todos' || showAllCountries;
+
   const filteredCountries = COUNTRIES_DATA.filter((country) => {
+    if (!hasActiveFilter && !isIndexableCountry(country.code)) {
+      return false;
+    }
+
     const matchesSearch =
       country.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       country.code.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -142,17 +150,31 @@ export function RequirementsSection({ onSelectCountryForMaker }: RequirementsSec
                     <ArrowUpRight className="h-3.5 w-3.5" />
                   </button>
 
-                  <Link
-                    href={`/foto-pasaporte/${toCountrySlug(country)}`}
-                    className="inline-flex w-full items-center justify-center gap-1.5 rounded-xl border border-[#D2D2D7] bg-white py-1.5 text-[12px] font-medium text-[#6E6E73] transition-colors hover:border-[#0071E3] hover:text-[#0071E3]"
-                  >
-                    <span>foto de pasaporte de {country.name}</span>
-                  </Link>
+                  {isIndexableCountry(country.code) && (
+                    <Link
+                      href={`/foto-pasaporte/${toCountrySlug(country)}`}
+                      className="inline-flex w-full items-center justify-center gap-1.5 rounded-xl border border-[#D2D2D7] bg-white py-1.5 text-[12px] font-medium text-[#6E6E73] transition-colors hover:border-[#0071E3] hover:text-[#0071E3]"
+                    >
+                      <span>foto de pasaporte de {country.name}</span>
+                    </Link>
+                  )}
                 </div>
               </div>
             );
           })}
         </div>
+
+        {!hasActiveFilter && (
+          <div className="mt-8 text-center">
+            <button
+              type="button"
+              onClick={() => setShowAllCountries(true)}
+              className="inline-flex items-center justify-center rounded-full border border-[#D2D2D7] bg-white px-6 py-2.5 text-[14px] font-medium text-[#1D1D1F] transition-colors hover:border-[#0071E3] hover:text-[#0071E3]"
+            >
+              Ver los {COUNTRIES_DATA.length} países disponibles
+            </button>
+          </div>
+        )}
 
         {filteredCountries.length === 0 && (
           <div className="mt-12 rounded-2xl border border-dashed border-[#D2D2D7] p-12 text-center text-[15px] text-[#6E6E73]">

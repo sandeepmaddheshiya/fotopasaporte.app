@@ -29,15 +29,49 @@ export interface CountryRejectionReason {
 }
 
 // ---------------------------------------------------------------------------
-// 1. COUNTRY INDEXABILITY
-// All sovereign countries and territories in the database provide genuine biometric
-// utility with specific dimensions, face oval proportions, background rules,
-// interactive browser-based cropping, rejection reasons, and schema metadata.
-// Full indexation is enabled so search engines can index each destination.
+// 1. TIER 1 VERIFIED DESTINATIONS (Anti-Spam Scaled Content Shield)
+// Only these 31 curated destinations with verified institutional authorities
+// and bespoke Spanish editorial data are submitted to sitemap.xml and marked
+// index, follow. All other 170+ countries remain 100% functional in the tool,
+// but use noindex, follow to protect sitewide quality signals.
 // ---------------------------------------------------------------------------
+export const INDEXABLE_COUNTRY_CODES = new Set([
+  'ES', // España
+  'US', // Estados Unidos
+  'GB', // Reino Unido
+  'CA', // Canadá
+  'MX', // México
+  'DE', // Alemania
+  'FR', // Francia
+  'IT', // Italia
+  'CO', // Colombia
+  'AR', // Argentina
+  'CL', // Chile
+  'PE', // Perú
+  'BR', // Brasil
+  'IN', // India
+  'AU', // Australia
+  'PT', // Portugal
+  'CH', // Suiza
+  'NL', // Países Bajos
+  'EC', // Ecuador
+  'DO', // República Dominicana
+  'CU', // Cuba
+  'VE', // Venezuela
+  'UY', // Uruguay
+  'CR', // Costa Rica
+  'PA', // Panamá
+  'IE', // Irlanda
+  'JP', // Japón
+  'CN', // China
+  'SV', // El Salvador
+  'NI', // Nicaragua
+  'PY', // Paraguay
+]);
+
 export function isIndexableCountry(code: string): boolean {
   if (!code) return false;
-  return code.trim().length === 2;
+  return INDEXABLE_COUNTRY_CODES.has(code.toUpperCase());
 }
 
 // ---------------------------------------------------------------------------

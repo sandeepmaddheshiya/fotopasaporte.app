@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { toCountrySlug } from '@/data/countries';
+import { isIndexableCountry } from '@/data/country-seo-data';
 import {
   SIZE_FORMATS,
   getSizeFormat,
@@ -24,8 +25,11 @@ export function SizeFormatPage({ slug }: { slug: SizeFormatSlug }) {
   const url = `https://fotopasaporte.app/foto-${format.slug}`;
 
   // Derived from countries.json (single source of truth) — see src/data/size-formats.ts
+  // Link only to Tier-1 indexable country guides to avoid sending crawl equity to noindex pages.
   const matches = getCountriesForFormat(format);
-  const shownMatches = matches.slice(0, MAX_COUNTRY_CARDS);
+  const shownMatches = matches
+    .filter(({ country }) => isIndexableCountry(country.code))
+    .slice(0, MAX_COUNTRY_CARDS);
   const hiddenCount = matches.length - shownMatches.length;
 
   const jsonLd = {

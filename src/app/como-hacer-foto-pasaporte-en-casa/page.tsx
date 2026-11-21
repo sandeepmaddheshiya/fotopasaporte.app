@@ -25,16 +25,6 @@ export const metadata: Metadata = {
   title: 'Cómo Hacer la Foto de Pasaporte en Casa con el Móvil (Guía 2026)',
   description:
     'Guía práctica y paso a paso para tomar tu foto de pasaporte en casa con el smartphone. Iluminación, fondo, vestimenta, errores frecuentes y cómo recortarla al tamaño oficial de tu país.',
-  keywords: [
-    'como hacer foto pasaporte en casa',
-    'como tomar foto de pasaporte con el celular',
-    'foto pasaporte casera',
-    'hacer foto carnet con el movil',
-    'foto de pasaporte en casa',
-    'requisitos foto pasaporte casera',
-    'foto pasaporte fondo blanco casera',
-    'como sacarse una foto de pasaporte',
-  ],
   alternates: {
     canonical: 'https://fotopasaporte.app/como-hacer-foto-pasaporte-en-casa',
   },

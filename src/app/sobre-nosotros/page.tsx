@@ -44,7 +44,7 @@ export default function SobreNosotrosPage() {
         url: 'https://fotopasaporte.app/sobre-nosotros',
         name: 'Sobre Nosotros: Qué es FotoPasaporte.app, Identidad y Principios',
         description:
-          'FotoPasaporte.app es una herramienta online independiente para recortar, calibrar y preparar fotografías de pasaporte, visado y documentos de identidad conforme a los requisitos biométricos de más de 400 países y normativas OACI Doc 9303.',
+          'FotoPasaporte.app es una herramienta online independiente para recortar, calibrar y preparar fotografías de pasaporte, visado y documentos de identidad conforme a los requisitos biométricos de más de 200 países (400+ formatos oficiales) y normativas OACI Doc 9303.',
         inLanguage: 'es',
         isPartOf: {
           '@id': 'https://fotopasaporte.app/#website',
@@ -112,7 +112,7 @@ export default function SobreNosotrosPage() {
                   Descripción oficial del producto y servicio
                 </p>
                 <p className="mt-2 text-[15px] sm:text-[17px] leading-relaxed text-[#1D1D1F]">
-                  <strong>FotoPasaporte.app</strong> es una herramienta online independiente para recortar, calibrar y preparar fotografías de pasaporte, visado y documentos de identidad conforme a los requisitos biométricos de más de 400 países y normativas OACI Doc 9303. No emite ni tramita documentos oficiales ni está afiliada a ninguna entidad gubernamental ni consular. Permite encuadrar y previsualizar tu foto de forma gratuita, y adquirir la descarga digital en alta resolución (300 DPI) o la plantilla de impresión con marcas de corte sin marcas de agua. Las fotografías se procesan de forma segura y temporal para el recorte y validación biométrica, y se eliminan automáticamente según nuestra política de privacidad.
+                  <strong>FotoPasaporte.app</strong> es una herramienta online independiente para recortar, calibrar y preparar fotografías de pasaporte, visado y documentos de identidad conforme a los requisitos biométricos de más de 200 países (400+ formatos oficiales) y normativas OACI Doc 9303. No emite ni tramita documentos oficiales ni está afiliada a ninguna entidad gubernamental ni consular. Permite encuadrar y previsualizar tu foto de forma gratuita, y adquirir la descarga digital en alta resolución (300 DPI) o la plantilla de impresión con marcas de corte sin marcas de agua. Las fotografías se procesan de forma segura y temporal para el recorte y validación biométrica, y se eliminan automáticamente según nuestra política de privacidad.
                 </p>
               </div>
             </div>
@@ -259,7 +259,7 @@ export default function SobreNosotrosPage() {
               </span>
               <p className="mt-3 text-[22px] font-bold text-[#1D1D1F]">0 € · Acceso libre</p>
               <ul className="mt-4 space-y-2 text-[14px] text-[#6E6E73]">
-                <li>• Consulta completa de requisitos de más de 400 países.</li>
+                <li>• Consulta completa de requisitos de más de 200 países y 400 formatos oficiales.</li>
                 <li>• Subida de imagen y detección biométrica.</li>
                 <li>• Ajuste manual y previsualización con marca de agua.</li>
                 <li>• Verificación de reglas (gafas, fondo, proporción).</li>
@@ -292,7 +292,7 @@ export default function SobreNosotrosPage() {
                 Verificación técnica y fuentes de datos oficiales
               </h2>
               <p className="text-[13px] text-[#6E6E73]">
-                Nuestra base de datos de 400+ países se revisa periódicamente contra fuentes gubernamentales públicas.
+                Nuestra base de datos de más de 200 países y 400 formatos oficiales se revisa periódicamente contra fuentes gubernamentales públicas.
               </p>
             </div>
           </div>
